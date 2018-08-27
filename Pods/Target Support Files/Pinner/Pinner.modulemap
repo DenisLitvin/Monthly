@@ -1,0 +1,6 @@
+framework module Pinner {
+  umbrella header "Pinner-umbrella.h"
+
+  export *
+  module * { export * }
+}

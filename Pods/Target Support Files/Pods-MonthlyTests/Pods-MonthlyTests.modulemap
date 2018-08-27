@@ -1,0 +1,6 @@
+framework module Pods_MonthlyTests {
+  umbrella header "Pods-MonthlyTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
