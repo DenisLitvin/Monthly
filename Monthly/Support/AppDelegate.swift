@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = AppDelegate.makeRootVC()
         window?.makeKeyAndVisible()
+        
+        
         print("CONFIG: ", Realm.Configuration.defaultConfiguration.fileURL?.path)
         Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")!.load() //templocal
         return true
@@ -49,24 +51,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static func makeRootVC() -> UIViewController {
         let vc = MainVC()
+        vc.view.backgroundColor = UIColor.Elements.background
         vc.view.addSubview(FPSCounter())
-        vc.viewModel.databaseManager = DatabaseManager.init(database: try! Realm())
+        vc.viewModel.databaseManager = DatabaseManager.init()
         vc.viewModel.didSetDependencies()
-        
+        vc.didSetDependencies()
         //title
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        titleLabel.font = UIFont.fixed(26, family: .proximaNova).bolded
+        titleLabel.font = UIFont.fixed(13, family: .proximaNova).bolded
         titleLabel.textColor = .white
-        let str = "Monthly".localized()
-        titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 4])
+        let str = "MONTHLY".localized()
+        titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 3.15])
         vc.navigationItem.titleView = titleLabel
         
         //nav con
         let navController = UINavigationController(rootViewController: vc)
-//        navController.navigationBar.tintColor = .white
+        navController.navigationBar.barStyle = .blackTranslucent
+        navController.navigationBar.backgroundColor = UIColor.Elements.background
         navController.navigationBar.isTranslucent = false
-        navController.navigationBar.barTintColor = UIColor.Theme.darkBlue
-        
+        navController.navigationBar.barTintColor = UIColor.Elements.background
+        navController.navigationBar.shadowImage = UIImage()
         return navController
     }
 }

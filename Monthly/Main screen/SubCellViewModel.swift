@@ -8,49 +8,63 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class SubCellViewModel {
     private let disposeBag = DisposeBag()
     
-    var model = PublishSubject<Sub>.init()
-    var titleText = BehaviorSubject<String>.init(value: "")
-    var priceText = BehaviorSubject<NSAttributedString>.init(value: NSAttributedString())
-    var dateText = BehaviorSubject<NSAttributedString>.init(value: NSAttributedString())
-    var categoryImage = BehaviorSubject<UIImage>.init(value: #imageLiteral(resourceName: "category_1"))
-    var iconImage = BehaviorSubject<UIImage>.init(value: UIImage())
+    //INPUT
+    var model: AnyObserver<Sub>!
+    
+    //OUTPUT
+    var titleText: Driver<String>!
+    var valueText: Driver<NSAttributedString>!
+    var dateText: Driver<NSAttributedString>!
+    var categoryText: Driver<NSAttributedString>!
+    var iconImage: Driver<UIImage>!
+    var bellViewIcon: Driver<UIImage>!
     
     init() {
-        let modelObs = model.asObserver()
+        let modelSubject = BehaviorSubject<Sub>.init(value: Sub())
+        model = modelSubject.asObserver()
         
-        modelObs
+        let modelObs = modelSubject.asObservable()
+        
+        titleText = modelObs
             .map { $0.name }
-            .bind(to: titleText)
-            .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: "")
         
-
-        modelObs
+        
+        valueText = modelObs
             .map { "\($0.amount)".attributedForAmount() }
-            .bind(to: priceText)
-            .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: NSAttributedString())
         
-        modelObs
-            .map { UIImage(named: "category_\($0.category)") ?? UIImage() }
-            .bind(to: categoryImage)
-            .disposed(by: disposeBag)
+        categoryText = modelObs
+            .map { (sub: Sub) -> NSAttributedString in
+                let category = Sub.Category.get(index: sub.category) ?? .daily
+                return category.rawValue.attributedForCategory()
+            }
+        .asDriver(onErrorJustReturn: NSAttributedString())
         
-        modelObs
+        iconImage = modelObs
             .filter { $0.icon != nil }
             .map { UIImage(data: $0.icon! ) ?? UIImage() } //todo default
-            .bind(to: iconImage)
-            .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: UIImage())//too  default
         
-        modelObs
+        dateText = modelObs
             .map { (sub: Sub) -> NSAttributedString in
-                let category = Sub.Category(rawValue: sub.category) ?? .daily
+                let category = Sub.Category.get(index: sub.category) ?? .daily
                 let days = PaymentPeriodCalculator.daysUntilNextPayment(firstPayment: sub.firstPayout, category: category)
                 return PaymentPeriodFormatter.string(from: days).attributedForDate()
             }
-            .bind(to: dateText)
-            .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: NSAttributedString())
+        
+        bellViewIcon = modelObs
+            .map { (sub: Sub) -> UIImage in
+                let toggle = sub.remind ? "on" : "off"
+                return UIImage(named: "bell_\(toggle)")!
+            }
+            .asDriver(onErrorJustReturn: UIImage(named: "bell_off")!)
+        
     }
 }

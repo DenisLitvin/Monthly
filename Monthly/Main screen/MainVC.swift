@@ -7,40 +7,48 @@
 //
 
 import UIKit
-import ClipLayout
-import Pinner
+
 import RxSwift
 import RxCocoa
 
-class Header: ClipCell, DataBinder {
-    func set(data: Sub) {
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .red
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
+import ClipLayout
+import Pinner
 
-class Footer: ClipCell, DataBinder {
-    let title: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 0
-        view.clip.enabled()
-        view.text = "fiaehf iae f iug i iu uigui ui  giuguiguigu iug igioaie"
-        return view
-    }()
+import VisualEffectView
+
+class SaveButton: TwoStatedButton {
     
-    func set(data: Sub) {
-    }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .blue
-        self.clip.withDistribution(.row)
-        self.addSubview(title)
+    var titleView: UIView!
+    
+    override init() {
+        super.init()
+        
+        isHidden = true
+        frame = CGRect(x: 0, y: 0, width: 160, height: 44)
+        clipsToBounds = true
+        layer.cornerRadius = 22
+        let gradientLayer = CAGradientLayer.Elements.cellCategory
+        gradientLayer.frame.size = frame.size
+        layer.addSublayer(gradientLayer)
+        
+        let maskLayer = CALayer()
+        maskLayer.contents = #imageLiteral(resourceName: "mask").cgImage
+        maskLayer.frame = CGRect(x: (frame.width - 44) / 2, y: 0, width: 44, height: 44)
+        self.layer.mask = maskLayer
+        
+        titleView = {
+           let view = UILabel()
+            view.isUserInteractionEnabled = false
+            view.textAlignment = .center
+            view.textColor = .white
+            view.attributedText = NSAttributedString(string: "SAVE".localized(), attributes: [.kern: 4])
+            view.font = UIFont.dynamic(14, family: .proximaNova).bolded
+            return view
+        }()
+        
+        addSubview(titleView)
+        titleView.fillSuperview()
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,95 +61,123 @@ class MainVC: UIViewController, MVVMView {
     
     let viewModel = MainVCViewModel()
     
-    var addButton: UIButton!
-    var newSubView: NewSubView!
-    var collectionView: ClipCollectionView<SubCell, SubCell, Footer>!
+    var saveButton = SaveButton()
+    var blurView = VisualEffectView(frame: UIScreen.main.bounds)
+    var tabBarView = TabBarView()
+    var sliderView = SliderView()
+    var collectionView: ClipCollectionView<SubCell, SubCell, SubCell>!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let window = UIApplication.shared.keyWindow
+        
+        window?.addSubview(blurView)
+        blurView.isHidden = true
+        window?.addSubview(sliderView)
+        window?.addSubview(tabBarView)
+        
+        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
+        let x = (UIScreen.main.bounds.width - saveButton.frame.width) / 2
+        let y = frame.minY + 9
+        saveButton.frame = CGRect(x: x, y: y, width: saveButton.frame.width, height: saveButton.frame.height)
+        window?.addSubview(saveButton)
 
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            Animator.presentCells(self.collectionView.visibleCells)
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setUpViews()
         setUpLayout()
+    }
+    
+    func didSetDependencies() {
+        setUpBindings()
+    }
+    
+    //MARK: - PRIVATE
+    private func setUpBindings() {
         
-        //view model
+        //INPUT
         viewModel.cellViewModels
-            .subscribe(onNext: { (subModel) in
+            .drive(onNext: { (subModel) in
                 self.collectionView.cellData = [subModel]
             })
             .disposed(by: disposeBag)
         
-        viewModel.collectionUpdate
-            .subscribe(onNext: { (update) in
+        viewModel.collectionUpdateItems
+            .drive(onNext: { (change) in
                 self.collectionView.performBatchUpdates({
-                    self.collectionView.reloadItems(at: update.reloaded.map { IndexPath.init(row: $0, section: 0)} )
-                    self.collectionView.deleteItems(at: update.deleted.map { IndexPath.init(row: $0, section: 0)} )
-                    self.collectionView.insertItems(at: update.inserted.map { IndexPath.init(row: $0, section: 0)} )
+                    self.collectionView.reloadItems(at: change.updated)
+                    self.collectionView.deleteItems(at: change.deleted)
+                    self.collectionView.insertItems(at: change.inserted)
                 })
             })
             .disposed(by: disposeBag)
         
         viewModel.collectionReloadAllItems
-            .subscribe(onNext: { self.collectionView.reloadData() })
-            .disposed(by: disposeBag)
-        
-        //interactions
-
-        addButton.rx.tap
-            .subscribe(onNext: {
-                UIApplication.shared.keyWindow?.addSubview(self.newSubView)
-                self.newSubView.isHidden = false
-//                self.newSubView.frame = self.view.convert(self.addButton.frame, to: UIApplication.shared.keyWindow)
-                let mask = CALayer()
-                mask.contents = #imageLiteral(resourceName: "mask").cgImage
-                let frame = self.view.convert(self.addButton.frame, to: UIApplication.shared.keyWindow)
-                mask.frame = CGRect(x: frame.midX, y: frame.midY, width: 0, height: 0)
-                
-                self.newSubView.layer.mask = mask
-                self.newSubView.frame = UIScreen.main.bounds
-                
-                let oldBounds = CGRect(x: 0, y: 0, width: 0, height: 0)
-                let amount = max(UIScreen.main.bounds.height, UIScreen.main.bounds.width)
-                let newBounds = CGRect(x: 0, y: 0, width: amount * 2.5, height: amount * 2.5)
-                
-                let revealAnimation = CABasicAnimation(keyPath: "bounds")
-                revealAnimation.timingFunction = CAMediaTimingFunction.init(controlPoints: 0.28, 0.36, 0.8, 0.28)
-                revealAnimation.fromValue = oldBounds
-                revealAnimation.toValue = newBounds
-                revealAnimation.duration = 0.5
-
-                self.newSubView.layer.mask?.add(revealAnimation, forKey: "m")
-                self.newSubView.layer.mask?.bounds = newBounds
-
+            .drive(onNext: {
+                self.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
-    }
-    
-    //MARK: - PRIVATE
-    private func setUpViews() {
-        collectionView = {
-            let cv = ClipCollectionView<SubCell, SubCell, Footer>.init(collectionViewLayout: UICollectionViewFlowLayout())
-            cv.alwaysBounceVertical = true
-            let layout = cv.collectionViewLayout as! UICollectionViewFlowLayout
-            layout.minimumLineSpacing = 0
-            layout.minimumInteritemSpacing = 0
-            cv.backgroundColor = UIColor.Theme.darkBlue
-            
-            //templocal
-            cv.headerEnabled = false
-            cv.footerData = [Sub()]
-            cv.maxFooterSize.width = 100
-            return cv
-        }()
-        addButton = {
-            let button = UIButton()
-            button.setImage(#imageLiteral(resourceName: "plus"), for: .normal)
-            return button
-        }()
-        newSubView = {
-            let view = NewSubView(frame: .zero)
-            view.isHidden = true
-            return view
-        }()
+        
+        //VIEWS
+        let present: () -> Void = {
+            Animator.showSave(button: self.saveButton)
+            Animator.hideTabBar(view: self.tabBarView)
+            Animator.showBlur(view: self.blurView)
+            Animator.slideUp(view: self.sliderView)
+        }
+        
+        let hide: () -> Void = {
+            Animator.hideSave(button: self.saveButton)
+            Animator.showTabBar(view: self.tabBarView)
+            Animator.hideBlur(view: self.blurView)
+            Animator.slideDown(view: self.sliderView)
+        }
+        
+        tabBarView.plusButton.isOn.asObservable()
+            .subscribe(onNext: { isOn in
+                if isOn {
+                    present()
+                }
+                else {
+                    hide()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        saveButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { _ in
+                self.tabBarView.plusButton.isOn.onNext(false)
+            })
+            .disposed(by: disposeBag)
+
+        
+        
+        sliderView.rx.panGesture()
+            .when(.changed)
+            .subscribe(onNext: { gr in
+                let deltaY = gr.translation(in: self.sliderView.superview!).y
+                self.sliderView.transform = CGAffineTransform(translationX: 0, y: deltaY)
+            })
+            .disposed(by: disposeBag)
+        
+        sliderView.rx.panGesture()
+            .when(.ended)
+            .subscribe(onNext: { gr in
+                let deltaY = gr.translation(in: self.sliderView.superview!).y
+                if deltaY > 70 {
+                    self.tabBarView.plusButton.isOn.onNext(false)
+                }
+                else {
+                    self.tabBarView.plusButton.isOn.onNext(true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setUpLayout() {
@@ -149,25 +185,30 @@ class MainVC: UIViewController, MVVMView {
         
         collectionView.clip.enabled().aligned(v: .stretch, h: .stretch)
         view.addSubview(collectionView)
-        
-        view.addSubview(addButton)
-        addButton.makeConstraints(for: .bottom, .trailing) { (make) in
-            if #available(iOS 11.0, *) {
-                let layoutGuide = self.view.safeAreaLayoutGuide
-                make.pin(to: layoutGuide.bottomAnchor, const: -25)
-                make.pin(to: layoutGuide.trailingAnchor, const: -20)
-            }
-            else {
-                make.pin(to: self.view.bottomAnchor, const: -30)
-                make.pin(to: self.view.trailingAnchor, const: -20)
-            }
-        }
+    }
+    
+    private func setUpViews() {
+        collectionView = {
+            let layout = UICollectionViewFlowLayout()
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            
+            let cv = ClipCollectionView<SubCell, SubCell, SubCell>.init(collectionViewLayout: layout)
+            cv.alwaysBounceVertical = true
+            cv.contentInset.bottom = tabBarView.bounds.height + 6
+            cv.backgroundColor = UIColor.Elements.background
+            cv.headerEnabled = false
+            cv.footerEnabled = false
+            return cv
+        }()
     }
 }
 
 extension MainVC {
     @objc func injected() {
         print("INJECTED")
-        UIApplication.shared.keyWindow?.rootViewController = AppDelegate.makeRootVC()
+        let vc = AppDelegate.makeRootVC()
+
+        UIApplication.shared.keyWindow?.rootViewController = vc
     }
 }

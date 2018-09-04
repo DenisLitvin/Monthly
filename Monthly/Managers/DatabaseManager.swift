@@ -13,49 +13,80 @@ import RxSwift
 import RxRealm
 
 class DatabaseManager {
+
+    struct Error {
+        static let write = NSError(domain: "DatabaseManager", code: 0, userInfo: nil)
+    }
     
     enum EmptyResult {
         case success
-        case failure(Error)
+        case error(NSError)
     }
     
     enum Result<Item> {
         case success(Item)
-        case failure(Error)
+        case error(NSError)
     }
     
-    private let database: Realm
+    private let mainDatabaseRef: Realm
+    private let backgroundQueue = DispatchQueue(label: "databaseBackgroundQueue")
+    private let config: Realm.Configuration
     
-    init(database: Realm) {
-        self.database = database
+    init(with configuration: Realm.Configuration = Realm.Configuration.defaultConfiguration) {
+        self.config = configuration
+        self.mainDatabaseRef = try! Realm(configuration: configuration)
     }
     
     //MARK: - PUBLIC
     @discardableResult
-    func modify<Entry: Object>(_ entry: Entry, closure: (Entry) -> Void) -> EmptyResult {
-        do {
-            try database.write {
-               closure(entry)
+    func modify<Entry: Object>(_ entry: Entry, closure: @escaping (Entry) -> Void) -> Single<Void> {
+        return Single.create(subscribe: { (single) -> Disposable in
+            self.backgroundQueue.async {
+                do {
+                    try Realm.init(configuration: self.config).write {
+                        closure(entry)
+                    }
+                    single(.success(()))
+                }
+                catch { single(.error(Error.write)) }
             }
-            return .success
-        }
-        catch {
-            return .failure(error)
-        }
+            return Disposables.create()
+        })
     }
+
+        func add<Entry: Object>(_ entry: Entry) -> Single<Void> {
+            return Single.create(subscribe: { (single) -> Disposable in
+                self.backgroundQueue.async {
+                    do {
+                        let realm = try Realm.init(configuration: self.config)
+                        try realm.write {
+                            realm.add(entry)
+                        }
+                        single(.success(()))
+                    }
+                    catch { single(.error(Error.write)) }
+                }
+                return Disposables.create()
+            })
+    }
+
     
-    @discardableResult
-    func add<Entry: Object>(_ entry: Entry) -> EmptyResult {
-        do {
-            try database.write {
-                database.add(entry)
-            }
-            return .success
-        }
-        catch {
-            return .failure(error)
-        }
-    }
+//    func add<Entry: Object>(_ entry: Entry, completion: @escaping (EmptyResult) -> Void) {
+//        self.backgroundQueue.async {
+//            do {
+//                let realm = try  Realm.init(configuration: self.config)
+//                try realm.write {
+//                    realm.add(entry)
+//                }
+//            }
+//            catch {
+//                DispatchQueue.main.async { completion(.error(Error.write)) }
+//            }
+//            DispatchQueue.main.async { completion(.success) }
+//        }
+//
+//    }
+    
     
 //    func getAllSubs(filter: String? = nil) -> Single<Result<[Sub]>> {
 //        return Single<Result<[Sub]>>.create() { single in
@@ -66,7 +97,7 @@ class DatabaseManager {
 //    }
     
     func getSubChanges(filter: String? = nil) -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
-        let objects = database.objects(Sub.self)
+        let objects = mainDatabaseRef.objects(Sub.self)
         return Observable.changeset(from: objects, synchronousStart: false)
     }
 }

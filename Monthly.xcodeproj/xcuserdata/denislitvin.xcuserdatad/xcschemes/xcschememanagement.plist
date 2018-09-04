@@ -7,12 +7,22 @@
 		<key>Monthly.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>0</integer>
+		</dict>
+		<key>MonthlyTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>3E01EB65211D9D3400CF8A43</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3E0D2726211EE3D500C39D11</key>
 		<dict>
 			<key>primary</key>
 			<true/>

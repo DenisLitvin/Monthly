@@ -39,7 +39,7 @@ open class ClipCollectionView<Cell: DataBinder, Header: DataBinder, Footer: Data
     private let manequinCell = Cell()
     private let manequinHeader = Header()
     private let manequinFooter = Footer()
-
+    
     public init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: .zero, collectionViewLayout: layout)
         register(Cell.self, forCellWithReuseIdentifier: cellId)
@@ -65,7 +65,7 @@ open class ClipCollectionView<Cell: DataBinder, Header: DataBinder, Footer: Data
                              numberOfItemsInSection section: Int) -> Int {
         return cellData[section].count
     }
-    
+
     //MARK: - CELLS
     open func collectionView(_ collectionView: UICollectionView,
                              cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -152,8 +152,8 @@ open class ClipCollectionView<Cell: DataBinder, Header: DataBinder, Footer: Data
     
     //MARK: - PRIVATE
     private func adjustForScrollDirection(size: inout CGSize,
-                        for collectionViewLayout: UICollectionViewLayout,
-                        in collectionView: UICollectionView) {
+                                          for collectionViewLayout: UICollectionViewLayout,
+                                          in collectionView: UICollectionView) {
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             if layout.scrollDirection == .vertical {

@@ -9,7 +9,10 @@ target 'Monthly' do
     pod 'ClipLayout'
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
+    pod 'RxGesture'
     pod 'RxRealm'
+    pod 'pop', '~> 1.0'
+    pod 'VisualEffectView'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests

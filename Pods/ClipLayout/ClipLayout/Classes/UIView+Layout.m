@@ -31,3 +31,23 @@ static const void *kLayoutAssociatedKey = &kLayoutAssociatedKey;
     }
 }
 @end
+
+@implementation CALayer (Layout)
+
+- (ClipLayout *)clip
+{
+    ClipLayout *layout = objc_getAssociatedObject(self, kLayoutAssociatedKey);
+    if (!layout) {
+        layout = [[ClipLayout alloc] initWith:self];
+        objc_setAssociatedObject(self, kLayoutAssociatedKey, layout, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return layout;
+}
+
+- (void)configureWithBlock:(LayoutConfigurationBlock)block {
+    self.clip.enable = YES;
+    if (block != nil) {
+        block(self.clip);
+    }
+}
+@end
