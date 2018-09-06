@@ -11,14 +11,14 @@ import VisualEffectView
 import pop
 
 class Animator {
-    static func revealOpenAnimation(from: CGRect, to: CGRect, with duration: TimeInterval) -> CABasicAnimation {
-        let anim = CABasicAnimation(keyPath: "bounds")
-        anim.timingFunction = CAMediaTimingFunction.init(controlPoints: 0.28, 0.36, 0.8, 0.28)
-        anim.fromValue = from
-        anim.toValue = to
-        anim.duration = duration
-        return anim
-    }
+//    static func revealOpenAnimation(from: CGRect, to: CGRect, with duration: TimeInterval) -> CABasicAnimation {
+//        let anim = CABasicAnimation(keyPath: "bounds")
+//        anim.timingFunction = CAMediaTimingFunction.init(controlPoints: 0.28, 0.36, 0.8, 0.28)
+//        anim.fromValue = from
+//        anim.toValue = to
+//        anim.duration = duration
+//        return anim
+//    }
     
     static func slideDown(view: UIView) {
         view.pop_removeAnimation(forKey: "slideDown")

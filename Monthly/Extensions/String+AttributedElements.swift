@@ -13,7 +13,9 @@ extension String {
     func attributedForAmount() -> NSAttributedString {
         let attrStr = NSMutableAttributedString(string: "$ \(self)",
                                                 attributes: [.kern: -0.6])
-        attrStr.addAttribute(.foregroundColor, value: UIColor.Theme.blue, range: NSRange.init(location: 0, length: 1))
+        attrStr.addAttribute(.font,
+                             value: UIFont.dynamic(14, family: .proximaNovaCond),
+                             range: NSRange.init(location: 0, length: 1))
         return attrStr
     }
     

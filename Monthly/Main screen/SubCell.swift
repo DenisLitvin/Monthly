@@ -30,11 +30,11 @@ class CategoryView: UIView {
         titleLabel = {
            let view = UILabel()
             view.clip.enabled()
-            view.textColor = .white
+            view.textColor = UIColor.Theme.blue
             view.font = UIFont.dynamic(7, family: .proximaNova)
             return view
         }()
-        titleLabel.clip.insetLeft(6).insetTop(3).insetBottom(3).insetRight(6)
+        titleLabel.clip.insetLeft(11).insetTop(6).insetBottom(6).insetRight(9)
         addSubview(titleLabel)
     }
     
@@ -78,14 +78,14 @@ class SubCell: ClipCell, DataBinder {
         viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.categoryText.drive(categoryView.titleLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.dateText.drive(dateLabel.rx.attributedText).disposed(by: disposeBag)
-        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
+//        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
         viewModel.bellViewIcon.drive(bellView.rx.image).disposed(by: disposeBag)
     }
     
     private func setUpLayout() {
         clip.withDistribution(.row)
         
-        backgroundRoundView.clip.withDistribution(.row).insetTop(3).insetBottom(3).insetLeft(6).insetRight(6)
+        backgroundRoundView.clip.withDistribution(.row).insetTop(9).insetBottom(9).insetLeft(13).insetRight(13)
         addSubview(backgroundRoundView)
         
         let rowContainer = UIView()
@@ -103,7 +103,7 @@ class SubCell: ClipCell, DataBinder {
             .insetLeft(26).insetRight(20)
         rowContainer.addSubview(midColumnContainer)
         
-        titleLabel.clip.horizontallyAligned(.head).insetBottom(8).horizontallyAligned(.stretch)
+        titleLabel.clip.horizontallyAligned(.head).insetBottom(13).horizontallyAligned(.stretch)
         midColumnContainer.addSubview(titleLabel)
         categoryView.clip.horizontallyAligned(.head)
         midColumnContainer.addSubview(categoryView)
@@ -112,7 +112,7 @@ class SubCell: ClipCell, DataBinder {
         rightColumnContainer.clip.enabled().withDistribution(.column)
         rowContainer.addSubview(rightColumnContainer)
         
-        valueLabel.clip.horizontallyAligned(.tail).insetBottom(8)
+        valueLabel.clip.horizontallyAligned(.tail).insetBottom(10)
         rightColumnContainer.addSubview(valueLabel)
         dateLabel.clip.horizontallyAligned(.tail)
         rightColumnContainer.addSubview(dateLabel)
@@ -130,13 +130,13 @@ class SubCell: ClipCell, DataBinder {
             layer.clip.enabled().aligned(v: .stretch, h: .stretch)
             view.layer.addSublayer(layer)
             view.clipsToBounds = true
-            view.layer.cornerRadius = 12
+            view.layer.cornerRadius = 8
             return view
         }()
         titleLabel = {
             let view = UILabel()
             view.font = UIFont.dynamic(18, family: .proximaNova).bolded
-            view.textColor = .white
+            view.textColor = UIColor.Theme.lightBlue
             view.numberOfLines = 0
             view.clip.enabled()
             return view
@@ -144,21 +144,22 @@ class SubCell: ClipCell, DataBinder {
         valueLabel = {
             let view = UILabel()
             view.font = UIFont.dynamic(18, family: .proximaNovaCond)
-            view.textColor = .white
+            view.textColor = UIColor.Theme.lightBlue
             view.clip.enabled()
             return view
         }()
         categoryView = CategoryView()
         dateLabel = {
             let view = UILabel()
-            view.font = UIFont.dynamic(8, family: .proximaNova)
-            view.textColor = UIColor.Theme.gray
+            view.font = UIFont.dynamic(9, family: .proximaNova)
+            view.textColor = UIColor.Theme.grayedBlue
             view.clip.enabled()
             return view
         }()
         iconView = {
             let view = UIImageView()
-            view.clip.wantsSize = CGSize(width: 33, height: 33)//templocal
+//            view.clip.wantsSize = CGSize(width: 33, height: 33)//templocal
+            view.image = #imageLiteral(resourceName: "signature")
             view.clip.enabled()
             return view
         }()

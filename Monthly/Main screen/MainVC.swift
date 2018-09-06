@@ -23,17 +23,19 @@ class SaveButton: TwoStatedButton {
     override init() {
         super.init()
         
+        let diameter: CGFloat = 45
         isHidden = true
-        frame = CGRect(x: 0, y: 0, width: 160, height: 44)
-        clipsToBounds = true
-        layer.cornerRadius = 22
-        let gradientLayer = CAGradientLayer.Elements.cellCategory
-        gradientLayer.frame.size = frame.size
-        layer.addSublayer(gradientLayer)
+        frame = CGRect(x: 0, y: 0, width: 160, height: diameter + 9)
+//        clipsToBounds = true
+//        layer.cornerRadius = 23
+        let backgroundLayer = CALayer()
+        backgroundLayer.contents = #imageLiteral(resourceName: "save_rect").cgImage
+        backgroundLayer.frame.size = frame.size
+        layer.addSublayer(backgroundLayer)
         
         let maskLayer = CALayer()
         maskLayer.contents = #imageLiteral(resourceName: "mask").cgImage
-        maskLayer.frame = CGRect(x: (frame.width - 44) / 2, y: 0, width: 44, height: 44)
+        maskLayer.frame = CGRect(x: (frame.width - diameter + 1.5) / 2, y: 5, width: diameter, height: diameter)
         self.layer.mask = maskLayer
         
         titleView = {
@@ -77,7 +79,11 @@ class MainVC: UIViewController, MVVMView {
         
         let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
         let x = (UIScreen.main.bounds.width - saveButton.frame.width) / 2
-        let y = frame.minY + 9
+        var y = frame.origin.y + 3.5
+        if #available(iOS 11.0, *),
+            self.view.safeAreaInsets.bottom > 0 {
+            y += 9
+        }
         saveButton.frame = CGRect(x: x, y: y, width: saveButton.frame.width, height: saveButton.frame.height)
         window?.addSubview(saveButton)
 
@@ -124,6 +130,7 @@ class MainVC: UIViewController, MVVMView {
             .disposed(by: disposeBag)
         
         //VIEWS
+        
         let present: () -> Void = {
             Animator.showSave(button: self.saveButton)
             Animator.hideTabBar(view: self.tabBarView)
