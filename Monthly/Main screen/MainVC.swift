@@ -23,11 +23,11 @@ class SaveButton: TwoStatedButton {
     override init() {
         super.init()
         
+        isUserInteractionEnabled = true
         let diameter: CGFloat = 45
         isHidden = true
         frame = CGRect(x: 0, y: 0, width: 160, height: diameter + 9)
-//        clipsToBounds = true
-//        layer.cornerRadius = 23
+        
         let backgroundLayer = CALayer()
         backgroundLayer.contents = #imageLiteral(resourceName: "save_rect").cgImage
         backgroundLayer.frame.size = frame.size
@@ -40,7 +40,7 @@ class SaveButton: TwoStatedButton {
         
         titleView = {
            let view = UILabel()
-            view.isUserInteractionEnabled = false
+            view.isUserInteractionEnabled = true
             view.textAlignment = .center
             view.textColor = .white
             view.attributedText = NSAttributedString(string: "SAVE".localized(), attributes: [.kern: 4])
@@ -52,7 +52,7 @@ class SaveButton: TwoStatedButton {
         titleView.fillSuperview()
 
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -84,7 +84,7 @@ class MainVC: UIViewController, MVVMView {
             self.view.safeAreaInsets.bottom > 0 {
             y += 9
         }
-        saveButton.frame = CGRect(x: x, y: y, width: saveButton.frame.width, height: saveButton.frame.height)
+        saveButton.frame.origin = CGPoint(x: x, y: y)
         window?.addSubview(saveButton)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
@@ -165,26 +165,14 @@ class MainVC: UIViewController, MVVMView {
 
         
         
-        sliderView.rx.panGesture()
-            .when(.changed)
-            .subscribe(onNext: { gr in
-                let deltaY = gr.translation(in: self.sliderView.superview!).y
-                self.sliderView.transform = CGAffineTransform(translationX: 0, y: deltaY)
-            })
-            .disposed(by: disposeBag)
-        
-        sliderView.rx.panGesture()
-            .when(.ended)
-            .subscribe(onNext: { gr in
-                let deltaY = gr.translation(in: self.sliderView.superview!).y
-                if deltaY > 70 {
+        sliderView.rx.didEndDragging
+            .subscribe(onNext: { _ in
+                if self.sliderView.contentOffset.y < -5 {
                     self.tabBarView.plusButton.isOn.onNext(false)
                 }
-                else {
-                    self.tabBarView.plusButton.isOn.onNext(true)
-                }
             })
             .disposed(by: disposeBag)
+
     }
     
     private func setUpLayout() {

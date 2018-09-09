@@ -17,6 +17,8 @@
 		3E01EB82211DEF5800CF8A43 /* SubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01EB81211DEF5800CF8A43 /* SubCell.swift */; };
 		3E01EB84211DEF6300CF8A43 /* SubCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01EB83211DEF6300CF8A43 /* SubCellViewModel.swift */; };
 		3E01EB87211DEF8F00CF8A43 /* Sub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01EB86211DEF8F00CF8A43 /* Sub.swift */; };
+		3E0A6AB0214449810035826A /* SliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0A6AAF214449800035826A /* SliderViewModel.swift */; };
+		3E0A6AB3214496010035826A /* SliderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0A6AB2214496010035826A /* SliderTextField.swift */; };
 		3E0D2732211EE3E700C39D11 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0D2731211EE3E700C39D11 /* DatabaseManagerTests.swift */; };
 		3E0D2734211EE47000C39D11 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0D2733211EE47000C39D11 /* DatabaseManager.swift */; };
 		3E1138362137934C00028202 /* CAGradientLayer+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1138352137934C00028202 /* CAGradientLayer+Theme.swift */; };
@@ -60,6 +62,8 @@
 		3E01EB81211DEF5800CF8A43 /* SubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCell.swift; sourceTree = "<group>"; };
 		3E01EB83211DEF6300CF8A43 /* SubCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCellViewModel.swift; sourceTree = "<group>"; };
 		3E01EB86211DEF8F00CF8A43 /* Sub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub.swift; sourceTree = "<group>"; };
+		3E0A6AAF214449800035826A /* SliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewModel.swift; sourceTree = "<group>"; };
+		3E0A6AB2214496010035826A /* SliderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderTextField.swift; sourceTree = "<group>"; };
 		3E0D2727211EE3D500C39D11 /* MonthlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MonthlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E0D272B211EE3D500C39D11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E0D2731211EE3E700C39D11 /* DatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTests.swift; sourceTree = "<group>"; };
@@ -139,6 +143,14 @@
 				3E96D8632130ED3D004A7660 /* Fonts */,
 			);
 			path = Monthly;
+			sourceTree = "<group>";
+		};
+		3E0A6AB1214495E70035826A /* Slider Text Elements */ = {
+			isa = PBXGroup;
+			children = (
+				3E0A6AB2214496010035826A /* SliderTextField.swift */,
+			);
+			path = "Slider Text Elements";
 			sourceTree = "<group>";
 		};
 		3E0D2728211EE3D500C39D11 /* MonthlyTests */ = {
@@ -225,7 +237,9 @@
 		3EB9A8D721335CE2006CDE4D /* Add Sub Screen */ = {
 			isa = PBXGroup;
 			children = (
+				3E0A6AB1214495E70035826A /* Slider Text Elements */,
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
+				3E0A6AAF214449800035826A /* SliderViewModel.swift */,
 				3E1138372137AA5C00028202 /* TabBarView.swift */,
 				3ED7E833213A35C1009D889F /* TabBarViewModel.swift */,
 			);
@@ -470,6 +484,7 @@
 				3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */,
 				3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */,
 				3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */,
+				3E0A6AB3214496010035826A /* SliderTextField.swift in Sources */,
 				3E01EB84211DEF6300CF8A43 /* SubCellViewModel.swift in Sources */,
 				3E23A605212FBD470034732B /* UIColor+Theme.swift in Sources */,
 				3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */,
@@ -481,6 +496,7 @@
 				3E01EB87211DEF8F00CF8A43 /* Sub.swift in Sources */,
 				3E01EB6A211D9D3400CF8A43 /* AppDelegate.swift in Sources */,
 				3E1138382137AA5C00028202 /* TabBarView.swift in Sources */,
+				3E0A6AB0214449810035826A /* SliderViewModel.swift in Sources */,
 				3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

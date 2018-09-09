@@ -31,7 +31,7 @@ class CategoryView: UIView {
            let view = UILabel()
             view.clip.enabled()
             view.textColor = UIColor.Theme.blue
-            view.font = UIFont.dynamic(7, family: .proximaNova)
+            view.font = UIFont.dynamic(8, family: .proximaNova)
             return view
         }()
         titleLabel.clip.insetLeft(11).insetTop(6).insetBottom(6).insetRight(9)
@@ -103,7 +103,7 @@ class SubCell: ClipCell, DataBinder {
             .insetLeft(26).insetRight(20)
         rowContainer.addSubview(midColumnContainer)
         
-        titleLabel.clip.horizontallyAligned(.head).insetBottom(13).horizontallyAligned(.stretch)
+        titleLabel.clip.horizontallyAligned(.head).insetBottom(10).horizontallyAligned(.stretch)
         midColumnContainer.addSubview(titleLabel)
         categoryView.clip.horizontallyAligned(.head)
         midColumnContainer.addSubview(categoryView)

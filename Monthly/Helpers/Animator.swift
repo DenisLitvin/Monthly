@@ -21,7 +21,7 @@ class Animator {
 //    }
     
     static func slideDown(view: UIView) {
-        view.pop_removeAnimation(forKey: "slideDown")
+        view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = view.frame.height
         view.layer.pop_add(animation, forKey: "slideDown")
@@ -31,13 +31,24 @@ class Animator {
             }
         }
     }
-    
+  
     static func slideUp(view: UIView, initial: Bool = false) {
         view.isHidden = false
-        view.pop_removeAnimation(forKey: "slideUp")
+        view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = 0.0
         view.layer.pop_add(animation, forKey: "slideUp")
+    }
+    
+    static func stopAllAnimations(view: UIView) {
+        view.layer.pop_removeAllAnimations()
+    }
+    
+    static func decayY(view: UIView, velocity: CGFloat) {
+        view.layer.pop_removeAnimation(forKey: "decay")
+        let anim = POPDecayAnimation(propertyNamed: kPOPLayerTranslationY)
+        anim?.velocity = velocity
+        view.layer.pop_add(anim, forKey: "decay")
     }
     
     static func presentCells(_ cells: [UIView]) {
