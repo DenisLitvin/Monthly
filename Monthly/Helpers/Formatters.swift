@@ -1,12 +1,35 @@
 //
-//  PaymentPeriodFormatter.swift
+//  Formatters.swift
 //  Monthly
 //
-//  Created by Denis Litvin on 26.08.2018.
+//  Created by Denis Litvin on 09.09.2018.
 //  Copyright © 2018 Denis Litvin. All rights reserved.
 //
 
 import Foundation
+
+extension NumberFormatter {
+    
+    static var price: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.zeroSymbol = "0"
+        return formatter
+    }
+    
+    static var priceWithCurrencyMark: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        return formatter
+    }
+}
+
+extension DateFormatter {
+    static var billDate: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }
+}
 
 class PaymentPeriodFormatter {
     

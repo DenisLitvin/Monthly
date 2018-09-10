@@ -26,6 +26,7 @@ class SubCellViewModel {
     
     init() {
         let modelSubject = BehaviorSubject<Sub>.init(value: Sub())
+        
         model = modelSubject.asObserver()
         
         let modelObs = modelSubject.asObservable()

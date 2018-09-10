@@ -100,6 +100,7 @@ class MainVC: UIViewController, MVVMView {
     }
     
     func didSetDependencies() {
+        sliderView.set(viewModel: viewModel.sliderViewModel)
         setUpBindings()
     }
     

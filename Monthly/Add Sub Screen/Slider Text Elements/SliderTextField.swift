@@ -10,10 +10,12 @@ import UIKit
 
 class SliderTextField: UIView {
     
-    var textField: UITextField!
-    
     private weak var nextField: SliderTextField?
     private weak var previousField: SliderTextField?
+    
+    var textField: UITextField!
+    var nextFieldButton: UIBarButtonItem!
+    var previousFieldButton: UIBarButtonItem!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,12 +23,13 @@ class SliderTextField: UIView {
         setUpViews()
         setUpLayout()
         setUpSelf()
-        
     }
     
     func next(textField: SliderTextField) {
         nextField = textField
         textField.previousField = self
+        nextFieldButton.isEnabled = true
+        textField.previousFieldButton.isEnabled = true
     }
     
     //MARK: PRIVATE
@@ -46,16 +49,22 @@ class SliderTextField: UIView {
         
         let toolbar = UIToolbar()
         toolbar.barStyle = UIBarStyle.blackTranslucent
+        
         let flexibleSeparator = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backTapped))
         backButton.tintColor = .white
         backButton.isEnabled = false
-        let forwardButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(forwardTapped))
+        self.previousFieldButton = backButton
+        
+        let forwardButton = UIBarButtonItem(image: #imageLiteral(resourceName: "forward"), style: .plain, target: self, action: #selector(forwardTapped))
         forwardButton.tintColor = .white
         forwardButton.isEnabled = false
+        self.nextFieldButton = forwardButton
+
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         doneButton.tintColor = .white
-        toolbar.items = [backButton, flexibleSeparator, doneButton]
+        
+        toolbar.items = [backButton, forwardButton, flexibleSeparator, doneButton]
         toolbar.sizeToFit()
         self.textField.inputAccessoryView = toolbar
     }

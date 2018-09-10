@@ -43,7 +43,7 @@ class CategoryView: UIView {
     }
 }
 
-class SubCell: ClipCell, DataBinder {
+class SubCell: ClipCell, MVVMBinder {
     private var disposeBag = DisposeBag()
     
     private var backgroundRoundView: UIView!
@@ -65,14 +65,14 @@ class SubCell: ClipCell, DataBinder {
         setUpLayout()
     }
     
-    func set(data: SubCellViewModel) {
-        viewModel = data
+    func set(viewModel: SubCellViewModel) {
+        disposeBag = DisposeBag()
+        self.viewModel = viewModel
         setUpBindings()
     }
     
     //MARK: - PRIVATE
     private func setUpBindings() {
-        disposeBag = DisposeBag()
         
         viewModel.titleText.drive(titleLabel.rx.text).disposed(by: disposeBag)
         viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)

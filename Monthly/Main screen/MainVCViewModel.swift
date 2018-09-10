@@ -26,11 +26,10 @@ class MainVCViewModel {
     
     var databaseManager: DatabaseManager!
 
-    //OUTPUT
-    
-    //view models
+    var sliderViewModel = SliderViewViewModel()
     var tabBarViewModel = TabBarViewModel()
 
+    //OUTPUT
     var cellViewModels: Driver<[SubCellViewModel]>!
     var collectionUpdateItems: Driver<MainVCViewModel.Changeset>!
     var collectionReloadAllItems: Driver<Void>!
@@ -74,6 +73,8 @@ class MainVCViewModel {
             .delay(0.01, scheduler: MainScheduler.instance)
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+        
+//        sliderViewModel.dateDidChange.
     }
 }
 
