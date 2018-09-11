@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void(^LayoutConfigurationBlock)(ClipLayout *layout);
 
 @interface UIView (Layout)
-@property (nonatomic, readonly, strong) ClipLayout *clip;
+@property (nonatomic, strong) ClipLayout *clip;
 
 /**
  In ObjC land, every time you access `view.layout.*` you are adding another `objc_msgSend`
@@ -28,7 +28,7 @@ NS_SWIFT_NAME(configureLayout(layout:));
 
 
 @interface CALayer (Layout)
-@property (nonatomic, readonly, strong) ClipLayout *clip;
+@property (nonatomic, strong) ClipLayout *clip;
 
 /**
  In ObjC land, every time you access `view.layout.*` you are adding another `objc_msgSend`

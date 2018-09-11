@@ -162,8 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				3E25208C2145B6AC000799CB /* Protocols */,
-				3E0A6AB2214496010035826A /* SliderTextField.swift */,
 				3E0A6AB42144A16B0035826A /* SliderLabel.swift */,
+				3E0A6AB2214496010035826A /* SliderTextField.swift */,
 				3E25208821459C22000799CB /* SliderDateTextField.swift */,
 				3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */,
 			);

@@ -27,6 +27,12 @@ class SliderView: UIScrollView {
     var youSpendTextField: SliderTextField!
     var firstBillLabel: SliderLabel!
     var firstBillTextField: SliderDateTextField!
+    var nameLabel: SliderLabel!
+    var nameTextField: SliderTextField!
+    var notesLabel: SliderLabel!
+    var notesTextField: SliderTextField!
+    var remindLabel: SliderLabel!
+    var remindSwitch: UISwitch!
 
     init() {
         super.init(frame: .zero)
@@ -51,13 +57,18 @@ class SliderView: UIScrollView {
         youSpendTextField.textField.rx.text.orEmpty
             .subscribe(onNext: { new in
                 if !new.isEmpty {
-                    let number = NumberFormatter.price.number(from: new)
+                    var string = new.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if string.starts(with: "0") {
+                        string.remove(at: string.startIndex)
+                    }
+                    let number = NumberFormatter.price.number(from: string)
                     if number == nil {
-                        self.youSpendTextField.textField.text = old
+                        string = old
                     }
                     else {
-                        old = new
+                        old = string
                     }
+                    self.youSpendTextField.textField.text = string
                 }
             })
             .disposed(by: disposeBag)
@@ -69,7 +80,7 @@ class SliderView: UIScrollView {
         contentView.clip.enabled().withDistribution(.column)
         self.addSubview(contentView)
         
-        lineView.clip.insetTop(16.5).insetBottom(17.5)
+        lineView.clip.insetTop(16).insetBottom(17)
         contentView.addSubview(lineView)
         
         let paddingsContainer = UIView()
@@ -94,6 +105,16 @@ class SliderView: UIScrollView {
         firstBillLabel.clip.insetRight(10).horizontallyAligned(.stretch)
         secondRow.addSubview(firstBillLabel)
         secondRow.addSubview(firstBillTextField)
+        
+        nameLabel.clip.horizontallyAligned(.stretch).insetTop(25).insetBottom(10)
+        paddingsContainer.addSubview(nameLabel)
+        nameTextField.clip.insetLeft(-3)
+        paddingsContainer.addSubview(nameTextField)
+        
+        notesLabel.clip.horizontallyAligned(.stretch).insetTop(19).insetBottom(10)
+        paddingsContainer.addSubview(notesLabel)
+        notesTextField.clip.insetLeft(-3)
+        paddingsContainer.addSubview(notesTextField)
     }
     
     private func setUpViews() {
@@ -106,7 +127,9 @@ class SliderView: UIScrollView {
         youSpendLabel = {
             let view = SliderLabel()
             view.textAlignment = .right
-            view.attributedText = "YOU SPEND".localized().attributedForSliderText()
+            view.attributedText = "YOU SPEND"
+                .localized()
+                .attributedForSliderText()
             return view
         }()
         youSpendTextField = {
@@ -122,7 +145,9 @@ class SliderView: UIScrollView {
         }()
         firstBillLabel = {
             let view = SliderLabel()
-            view.attributedText = "FIRST BILL WAS".localized().attributedForSliderText()
+            view.attributedText = "FIRST BILL WAS"
+                .localized()
+                .attributedForSliderText()
             return view
         }()
         firstBillTextField = {
@@ -134,8 +159,42 @@ class SliderView: UIScrollView {
             view.clip.withWidth(105)
             return view
         }()
-        
         youSpendTextField.next(textField: firstBillTextField)
+        
+        nameLabel = SliderLabel()
+        nameLabel.attributedText = "NAME"
+            .localized()
+            .attributedForSliderText()
+        
+        nameTextField = SliderTextField()
+        nameTextField.textField.attributedPlaceholder = "Enter company name …"
+            .localized()
+            .attributedForSliderPlaceholder()
+        
+        notesLabel = {
+            let view = SliderLabel()
+            view.attributedText = "NOTES"
+                .localized()
+                .attributedForSliderText()
+            return view
+        }()
+        
+        notesTextField = {
+            let view = SliderTextField()
+            view.clip.withHeight(80)
+            view.textField.attributedPlaceholder = "Enter some notes …"
+                .localized()
+                .attributedForSliderPlaceholder()
+            return view
+        }()
+        
+        remindLabel = {
+            let view = SliderLabel()
+            view.attributedText = "REMIND ME"
+                .localized()
+                .attributedForSliderText()
+            return view
+        }()
     }
     
     private func setUpSelf() {

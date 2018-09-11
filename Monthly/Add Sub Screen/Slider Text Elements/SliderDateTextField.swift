@@ -18,6 +18,7 @@ class SliderDateTextField: SliderTextField, DatePickerField {
         super.init(frame: frame)
         
         setUpDatePicker()
+        textField.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,5 +39,11 @@ extension SliderDateTextField: MVVMBinder {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel
         setUpBindings()
+    }
+}
+
+extension SliderDateTextField: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return false
     }
 }

@@ -63,7 +63,7 @@ extension CALayer: ClipLayoutable {
 }
 
 @objc
-public class ClipLayout: NSObject {
+open class ClipLayout: NSObject {
     private unowned let view: ClipLayoutable
     
     @objc public var enable = false
