@@ -11,15 +11,7 @@ import VisualEffectView
 import pop
 
 class Animator {
-//    static func revealOpenAnimation(from: CGRect, to: CGRect, with duration: TimeInterval) -> CABasicAnimation {
-//        let anim = CABasicAnimation(keyPath: "bounds")
-//        anim.timingFunction = CAMediaTimingFunction.init(controlPoints: 0.28, 0.36, 0.8, 0.28)
-//        anim.fromValue = from
-//        anim.toValue = to
-//        anim.duration = duration
-//        return anim
-//    }
-    
+
     static func slideDown(view: UIView) {
         view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
@@ -71,34 +63,6 @@ class Animator {
         }
     }
     
-    static let property: POPAnimatableProperty =
-    {
-        let property = (POPAnimatableProperty.property(withName: "blurRadius", initializer: { prop in
-            guard let prop = prop else {
-                return
-            }
-            // read value
-            prop.readBlock = { obj, values in
-                guard let obj = obj as? VisualEffectView, let values = values else {
-                    return
-                }
-                
-                values[0] = obj.blurRadius
-            }
-            // write value
-            prop.writeBlock = { obj, values in
-                guard var obj = obj as? VisualEffectView, let values = values else {
-                    return
-                }
-                
-                obj.blurRadius = values[0]
-            }
-            // dynamics threshold
-            prop.threshold = 0.01
-        })) as! POPAnimatableProperty
-        return property
-    }()
-    
     static func showBlur(view: VisualEffectView) {
         view.isHidden = false
         view.pop_removeAllAnimations()
@@ -106,7 +70,7 @@ class Animator {
         let animation = POPBasicAnimation()
         animation.toValue = 14
         animation.duration = 0.3
-        animation.property = property
+        animation.property = VisualEffectView.popBlurRadius
         view.pop_add(animation, forKey: "blurRadius")
     }
     
@@ -116,7 +80,7 @@ class Animator {
         let animation = POPBasicAnimation()
         animation.toValue = 0
         animation.duration = 0.3
-        animation.property = property
+        animation.property = VisualEffectView.popBlurRadius
         view.pop_add(animation, forKey: "blurRadius")
         animation.completionBlock = { _, finished  in
             if finished {

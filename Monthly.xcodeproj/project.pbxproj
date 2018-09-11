@@ -37,6 +37,7 @@
 		3E96D86D2130EEC7004A7660 /* ProximaNovaCond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */; };
 		3E96D86E2130EECB004A7660 /* ProximaNovaCond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */; };
 		3E96D8702130EF10004A7660 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */; };
+		3E9FFDF9214742CC00F0511A /* VisualEffectView+PopProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */; };
 		3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8D821335D1F006CDE4D /* SliderView.swift */; };
 		3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8DA21336709006CDE4D /* Animator.swift */; };
 		3ED7E834213A35C1009D889F /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7E833213A35C1009D889F /* TabBarViewModel.swift */; };
@@ -89,6 +90,7 @@
 		3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Regular.ttf"; sourceTree = "<group>"; };
 		3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Bold.ttf"; sourceTree = "<group>"; };
 		3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
+		3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisualEffectView+PopProperty.swift"; sourceTree = "<group>"; };
 		3EB9A8D821335D1F006CDE4D /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		3EB9A8DA21336709006CDE4D /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		3ED7E833213A35C1009D889F /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				3E23A604212FBD470034732B /* UIColor+Theme.swift */,
 				3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */,
 				3ED7E835213A4177009D889F /* UIView+roundedCorners.swift */,
+				3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				3E01EB87211DEF8F00CF8A43 /* Sub.swift in Sources */,
 				3E01EB6A211D9D3400CF8A43 /* AppDelegate.swift in Sources */,
 				3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */,
+				3E9FFDF9214742CC00F0511A /* VisualEffectView+PopProperty.swift in Sources */,
 				3E2520912145BE1A000799CB /* SliderViewViewModel.swift in Sources */,
 				3E1138382137AA5C00028202 /* TabBarView.swift in Sources */,
 				3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */,
