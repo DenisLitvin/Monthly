@@ -27,7 +27,7 @@ extension String {
     func attributedForSliderText() -> NSAttributedString {
         return NSAttributedString(string: self.uppercased(), attributes: [.kern: 2])
     }
-
+    
     func attributedForCategory() -> NSAttributedString {
         return NSAttributedString(string: self.uppercased(), attributes: [.kern: 2])
     }

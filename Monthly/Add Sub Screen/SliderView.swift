@@ -25,6 +25,8 @@ class SliderView: UIScrollView {
     var iconView: UIImageView!
     var youSpendLabel: SliderLabel!
     var youSpendTextField: SliderTextField!
+    var everyLabel: SliderLabel!
+    var everyCategoryPicker: CategoryPicker!
     var firstBillLabel: SliderLabel!
     var firstBillTextField: SliderDateTextField!
     var nameLabel: SliderLabel!
@@ -75,7 +77,6 @@ class SliderView: UIScrollView {
     }
     
     private func setUplayout() {
-        self.clip.enabled()
         
         contentView.clip.enabled().withDistribution(.column)
         self.addSubview(contentView)
@@ -99,12 +100,20 @@ class SliderView: UIScrollView {
         firstRow.addSubview(youSpendTextField)
         
         let secondRow = UIView()
-        secondRow.clip.enabled().withDistribution(.row).insetTop(35)
+        secondRow.clip.enabled().withDistribution(.row).insetTop(10)
         paddingsContainer.addSubview(secondRow)
         
+        everyLabel.clip.horizontallyAligned(.stretch)
+        secondRow.addSubview(everyLabel)
+        secondRow.addSubview(everyCategoryPicker)
+        
+        let thirdRow = UIView()
+        thirdRow.clip.enabled().withDistribution(.row).insetTop(10)
+        paddingsContainer.addSubview(thirdRow)
+        
         firstBillLabel.clip.insetRight(10).horizontallyAligned(.stretch)
-        secondRow.addSubview(firstBillLabel)
-        secondRow.addSubview(firstBillTextField)
+        thirdRow.addSubview(firstBillLabel)
+        thirdRow.addSubview(firstBillTextField)
         
         nameLabel.clip.horizontallyAligned(.stretch).insetTop(25).insetBottom(10)
         paddingsContainer.addSubview(nameLabel)
@@ -143,6 +152,16 @@ class SliderView: UIScrollView {
             view.clip.withWidth(90)
             return view
         }()
+        everyLabel = {
+            let view = SliderLabel()
+            view.textAlignment = .right
+            view.attributedText = "EVERY"
+                .localized()
+                .attributedForSliderText()
+            return view
+        }()
+        everyCategoryPicker = CategoryPicker()
+        
         firstBillLabel = {
             let view = SliderLabel()
             view.attributedText = "FIRST BILL WAS"
@@ -159,18 +178,20 @@ class SliderView: UIScrollView {
             view.clip.withWidth(105)
             return view
         }()
-        youSpendTextField.next(textField: firstBillTextField)
-        
-        nameLabel = SliderLabel()
-        nameLabel.attributedText = "NAME"
-            .localized()
-            .attributedForSliderText()
-        
-        nameTextField = SliderTextField()
-        nameTextField.textField.attributedPlaceholder = "Enter company name …"
-            .localized()
-            .attributedForSliderPlaceholder()
-        
+        nameLabel = {
+            let view = SliderLabel()
+            view.attributedText = "NAME"
+                .localized()
+                .attributedForSliderText()
+            return view
+        }()
+        nameTextField = {
+            let view = SliderTextField()
+            view.textField.attributedPlaceholder = "Enter company name …"
+                .localized()
+                .attributedForSliderPlaceholder()
+            return view
+        }()
         notesLabel = {
             let view = SliderLabel()
             view.attributedText = "NOTES"
@@ -179,14 +200,7 @@ class SliderView: UIScrollView {
             return view
         }()
         
-        notesTextField = {
-            let view = SliderTextField()
-            view.clip.withHeight(80)
-            view.textField.attributedPlaceholder = "Enter some notes …"
-                .localized()
-                .attributedForSliderPlaceholder()
-            return view
-        }()
+        notesTextField = SliderNotesTextField()
         
         remindLabel = {
             let view = SliderLabel()
@@ -195,6 +209,8 @@ class SliderView: UIScrollView {
                 .attributedForSliderText()
             return view
         }()
+        youSpendTextField.next(textField: firstBillTextField)
+        firstBillTextField.next(textField: nameTextField)
     }
     
     private func setUpSelf() {
@@ -206,6 +222,7 @@ class SliderView: UIScrollView {
         let screenSize = UIScreen.main.bounds.size
         let contentHeight = contentView.clip.measureSize(within: CGSize(width: screenSize.width,
                                                                         height: .greatestFiniteMagnitude)).height
+        contentView.frame.size = CGSize(width: screenSize.width, height: contentHeight)
         var maxFrameHeight = screenSize.height - 70
         if #available(iOS 11.0, *) {
             maxFrameHeight -= safeAreaInsets.top
@@ -219,8 +236,6 @@ class SliderView: UIScrollView {
         layer.cornerRadius = 35
         layer.frame.size = CGSize(width: screenSize.width, height: contentHeight + screenSize.height)
         contentView.layer.insertSublayer(layer, at: 0)
-        
-        
     }
 }
 

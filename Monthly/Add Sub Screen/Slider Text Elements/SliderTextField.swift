@@ -10,8 +10,8 @@ import UIKit
 
 class SliderTextField: UIView {
     
-    private weak var nextField: SliderTextField?
-    private weak var previousField: SliderTextField?
+    weak var nextField: SliderTextField?
+    weak var previousField: SliderTextField?
     
     var textField: UITextField!
     var nextFieldButton: UIBarButtonItem!
@@ -23,6 +23,20 @@ class SliderTextField: UIView {
         setUpViews()
         setUpLayout()
         setUpSelf()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @discardableResult
+    override func resignFirstResponder() -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    @discardableResult
+    override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
     
     func next(textField: SliderTextField) {
@@ -60,7 +74,7 @@ class SliderTextField: UIView {
         forwardButton.tintColor = .white
         forwardButton.isEnabled = false
         self.nextFieldButton = forwardButton
-
+        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         doneButton.tintColor = .white
         
@@ -76,31 +90,35 @@ class SliderTextField: UIView {
             view.font = UIFont.dynamic(11, family: .proximaNova)
             view.textColor = UIColor.Theme.lightBlue
             view.clip.enabled()
+            view.delegate = self
             return view
         }()
     }
     
     @objc private func backTapped() {
         if let previous = previousField {
-            previous.textField.becomeFirstResponder()
+            previous.becomeFirstResponder()
         } else {
-            textField.resignFirstResponder()
+            resignFirstResponder()
         }
     }
     
     @objc private func forwardTapped() {
         if let next = nextField {
-            next.textField.becomeFirstResponder()
+            next.becomeFirstResponder()
         } else {
-            textField.resignFirstResponder()
+            resignFirstResponder()
         }
     }
     
     @objc private func doneButtonTapped() {
-        textField.resignFirstResponder()
+        resignFirstResponder()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+}
+
+extension SliderTextField: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        resignFirstResponder()
+        return true
     }
 }

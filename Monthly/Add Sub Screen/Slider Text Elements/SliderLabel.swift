@@ -12,11 +12,10 @@ class SliderLabel: UILabel {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        clip.enabled()
-        adjustsFontSizeToFitWidth = true
         textColor = UIColor.Theme.lightBlue
         font = UIFont.dynamic(12, family: .proximaNova).bolded
+        clip.enabled()
+        adjustsFontSizeToFitWidth = true
     }
     
     required init?(coder aDecoder: NSCoder) {

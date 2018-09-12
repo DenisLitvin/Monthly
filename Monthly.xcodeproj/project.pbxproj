@@ -31,6 +31,8 @@
 		3E25208F2145B702000799CB /* MVVMBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208E2145B702000799CB /* MVVMBinder.swift */; };
 		3E2520912145BE1A000799CB /* SliderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520902145BE1A000799CB /* SliderViewViewModel.swift */; };
 		3E2520932145CD48000799CB /* SliderDateTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */; };
+		3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */; };
+		3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F47214875510032831B /* CategoryPicker.swift */; };
 		3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C42132019500D74819 /* String+AttributedElements.swift */; };
 		3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */; };
 		3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */; };
@@ -84,6 +86,8 @@
 		3E25208E2145B702000799CB /* MVVMBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVMBinder.swift; sourceTree = "<group>"; };
 		3E2520902145BE1A000799CB /* SliderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewViewModel.swift; sourceTree = "<group>"; };
 		3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderDateTextFieldViewModel.swift; sourceTree = "<group>"; };
+		3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderNotesTextField.swift; sourceTree = "<group>"; };
+		3E7F2F47214875510032831B /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		3E7F56C42132019500D74819 /* String+AttributedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedElements.swift"; sourceTree = "<group>"; };
 		3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+DynamicLocalized.swift"; sourceTree = "<group>"; };
 		3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPeriodCalculator.swift; sourceTree = "<group>"; };
@@ -161,11 +165,12 @@
 		3E0A6AB1214495E70035826A /* Slider Text Elements */ = {
 			isa = PBXGroup;
 			children = (
-				3E25208C2145B6AC000799CB /* Protocols */,
 				3E0A6AB42144A16B0035826A /* SliderLabel.swift */,
 				3E0A6AB2214496010035826A /* SliderTextField.swift */,
 				3E25208821459C22000799CB /* SliderDateTextField.swift */,
+				3E7F2F47214875510032831B /* CategoryPicker.swift */,
 				3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */,
+				3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */,
 			);
 			path = "Slider Text Elements";
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 		3EB9A8D721335CE2006CDE4D /* Add Sub Screen */ = {
 			isa = PBXGroup;
 			children = (
+				3E25208C2145B6AC000799CB /* Protocols */,
 				3E0A6AB1214495E70035826A /* Slider Text Elements */,
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
 				3E2520902145BE1A000799CB /* SliderViewViewModel.swift */,
@@ -515,6 +521,7 @@
 				3E01EB6C211D9D3400CF8A43 /* MainVC.swift in Sources */,
 				3E25208721459B16000799CB /* DatePicker.swift in Sources */,
 				3E20C9E82125609A00D9D313 /* FPSCounter.swift in Sources */,
+				3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */,
 				3E1138362137934C00028202 /* CAGradientLayer+Theme.swift in Sources */,
 				3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */,
 				3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */,
@@ -526,6 +533,7 @@
 				3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */,
 				3E01EB82211DEF5800CF8A43 /* SubCell.swift in Sources */,
 				3E01EB7E211DB86100CF8A43 /* Router.swift in Sources */,
+				3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */,
 				3E01EB80211DB8E000CF8A43 /* MainVCViewModel.swift in Sources */,
 				3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */,
 				3E0A6AB52144A16B0035826A /* SliderLabel.swift in Sources */,
