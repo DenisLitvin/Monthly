@@ -11,7 +11,7 @@ import VisualEffectView
 import pop
 
 class Animator {
-
+    
     static func slideDown(view: UIView) {
         view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
@@ -23,7 +23,7 @@ class Animator {
             }
         }
     }
-  
+    
     static func slideUp(view: UIView, initial: Bool = false) {
         view.isHidden = false
         view.pop_removeAllAnimations()
@@ -76,7 +76,7 @@ class Animator {
     
     static func hideBlur(view: VisualEffectView) {
         view.pop_removeAllAnimations()
-
+        
         let animation = POPBasicAnimation()
         animation.toValue = 0
         animation.duration = 0.3
@@ -134,7 +134,7 @@ class Animator {
         let mask = button.layer.mask
         mask?.pop_removeAllAnimations()
         button.titleView.pop_removeAllAnimations()
-
+        
         let alphaAnim = POPSpringAnimation(propertyNamed: kPOPViewAlpha)
         alphaAnim?.toValue = 0
         button.titleView.pop_add(alphaAnim, forKey: "alpha")
@@ -154,6 +154,51 @@ class Animator {
                 anim?.duration = 0.1
                 button.pop_add(anim, forKey: "alpha")
             }
+        }
+    }
+    
+    static func scaleUp(view: UIView) {
+        let makeAnimation = {
+            let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+            anim?.dynamicsMass = 1.5
+            anim?.dynamicsFriction = 30
+            anim?.dynamicsTension = 1000
+            anim?.toValue = CGPoint(x: 1, y: 1)
+            view.layer.pop_add(anim, forKey: "scale")
+        }
+        if let anim = view.layer.pop_animation(forKey: "scale") as? POPBasicAnimation {
+            anim.completionBlock = { _, _ in
+                makeAnimation()
+            }
+        }
+        else { makeAnimation() }
+    }
+    
+    static func scaleDown(view: UIView) {
+        view.pop_removeAllAnimations()
+        let anim = POPBasicAnimation(propertyNamed: kPOPLayerScaleXY)
+        anim?.duration = 0.05
+        anim?.toValue = CGPoint(x: 0.7, y: 0.7)
+        view.layer.pop_add(anim, forKey: "scale")
+    }
+    
+    static func showSearch(tabBar: TabBarView) {
+        let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
+        anim?.toValue = UIScreen.main.bounds.width
+        views.forEach { view in
+            view?.layer.pop_removeAnimation(forKey: "translation")
+            view?.layer.pop_add(anim, forKey: "translation")
+        }
+    }
+    
+    static func hideSearch(tabBar: TabBarView) {
+        let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
+        anim?.toValue = 0
+        views.forEach { view in
+            view?.layer.pop_removeAnimation(forKey: "translation")
+            view?.layer.pop_add(anim, forKey: "translation")
         }
     }
 }

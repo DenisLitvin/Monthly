@@ -167,10 +167,10 @@
 			children = (
 				3E0A6AB42144A16B0035826A /* SliderLabel.swift */,
 				3E0A6AB2214496010035826A /* SliderTextField.swift */,
+				3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */,
 				3E25208821459C22000799CB /* SliderDateTextField.swift */,
 				3E7F2F47214875510032831B /* CategoryPicker.swift */,
 				3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */,
-				3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */,
 			);
 			path = "Slider Text Elements";
 			sourceTree = "<group>";
@@ -422,6 +422,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/VisualEffectView/VisualEffectView.framework",
@@ -435,6 +436,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VisualEffectView.framework",

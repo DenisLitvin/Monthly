@@ -8,45 +8,82 @@
 //
 
 import UIKit
+
 import RxSwift
 import RxCocoa
+import RxGesture
+
 import VisualEffectView
 
-class PlusButton: TwoStatedButton {
+class PlusButton: TabBarButton {
+//    override init() {
+//        super.init()
+//
+//    }
     
-    override init() {
-        super.init()
-        
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 }
     
-class TwoStatedButton: UIButton {
+class TabBarButton: UIButton {
+    var disposeBag = DisposeBag()
+
     //OUTPUT
     var isOn = BehaviorSubject<Bool>.init(value: false)
     
+    var selectedImage: UIImage? { willSet { changeImage() } }
+    var deselectedImage: UIImage? { willSet { changeImage() } }
+    var animate = true
+    var concurrentButtons: [TabBarButton] = []
     
     init() {
         super.init(frame: .zero)
+        imageView?.contentMode = .scaleAspectFit
+
         self.addTarget(self, action: #selector(didTouchUpInside), for: .touchUpInside)
-        
+        self.addTarget(self, action: #selector(didTouchDown), for: .touchDown)
+        self.addTarget(self, action: #selector(didDragOutside), for: .touchDragOutside)
+        isOn
+            .subscribe(onNext: { _ in
+                self.changeImage()
+            })
+            .disposed(by: disposeBag)
+
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func reverseState() {
-        isOn.onNext(!(try! isOn.value()))
+        let current = try! isOn.value()
+        concurrentButtons.forEach { $0.isOn.onNext(false) }
+        isOn.onNext(!current)
     }
+    
+    private func changeImage () {
+        let image = try! self.isOn.value() ? self.selectedImage : self.deselectedImage
+        self.setImage(image, for: .normal)
+    }
+    
     @objc private func didTouchUpInside() {
         reverseState()
+        if animate { Animator.scaleUp(view: self) }
+    }
+    
+    @objc private func didDragOutside() {
+        if animate { Animator.scaleUp(view: self) }
+    }
+    
+    @objc private func didTouchDown() {
+        if animate { Animator.scaleDown(view: self) }
     }
 }
 
 class TabBarView: UIView {
     private let disposeBag = DisposeBag()
+    
     private let viewModel = TabBarViewModel()
     private let height: CGFloat = 60
     
@@ -54,11 +91,13 @@ class TabBarView: UIView {
     private var blurView: VisualEffectView!
     private let rowContainer = UIView()
 
-    var searchButton: TwoStatedButton!
-    var statButton: TwoStatedButton!
-    var plusButton: PlusButton!
-    var filterButton: TwoStatedButton!
-    var menuButton: TwoStatedButton!
+    var searchButton: TabBarButton!
+    var statButton: TabBarButton!
+    var plusButton: TabBarButton!
+    var filterButton: TabBarButton!
+    var menuButton: TabBarButton!
+    
+//    var searchBar: UISearchBar!
     
     init() {
         super.init(frame: .zero)
@@ -66,6 +105,19 @@ class TabBarView: UIView {
         setUpViews()
         setUpLayout()
         setUpSelf()
+        
+        searchButton.isOn
+            .subscribe(onNext: { isOn in
+                if isOn {
+                    Animator.showSearch(tabBar: self)
+                }
+                else {
+                    Animator.hideSearch(tabBar: self)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -82,13 +134,21 @@ class TabBarView: UIView {
 
         rowContainer.clip.enabled().withDistribution(.row)
         addSubview(rowContainer)
-        
+//        rowContainer.addSubview(searchBar)
+//        searchBar.makeConstraints(for: .left, .right, .centerX, .centerY) { (make) in
+//            make.pin(to: self.rowContainer.leftAnchor, const: UIScreen.main.bounds.width / 4)
+//            make.pin(to: self.rowContainer.rightAnchor)
+//            make.pin(to: self.rowContainer.centerXAnchor)
+//            make.pin(to: self.rowContainer.centerYAnchor)
+//        }
+        searchButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(20)
         rowContainer.addSubview(searchButton)
-        statButton.clip.insetLeft(40).insetRight(36)
+        statButton.clip.aligned(v: .stretch, h: .stretch).insetRight(10)
         rowContainer.addSubview(statButton)
         rowContainer.addSubview(plusButton)
-        filterButton.clip.insetLeft(36).insetRight(45)
+        filterButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(10)
         rowContainer.addSubview(filterButton)
+        menuButton.clip.aligned(v: .stretch, h: .stretch).insetRight(20)
         rowContainer.addSubview(menuButton)
 
     }
@@ -102,42 +162,45 @@ class TabBarView: UIView {
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
         }()
-        
         searchButton = {
-           let view = TwoStatedButton()
+           let view = TabBarButton()
             view.clip.enabled()
-            view.setImage(#imageLiteral(resourceName: "magnifier"), for: .normal)
-            view.imageView?.contentMode = .scaleAspectFit
+            view.deselectedImage = #imageLiteral(resourceName: "magnifier")
+            view.selectedImage = #imageLiteral(resourceName: "magnifier_blue")
             return view
         }()
         statButton = {
-            let view = TwoStatedButton()
+            let view = TabBarButton()
             view.clip.enabled()
-            view.setImage(#imageLiteral(resourceName: "stat"), for: .normal)
-            view.imageView?.contentMode = .scaleAspectFit
+            view.deselectedImage = #imageLiteral(resourceName: "stat")
+            view.selectedImage = #imageLiteral(resourceName: "stat_blue")
             return view
         }()
         plusButton = {
-            let view = PlusButton()
+            let view = TabBarButton()
             view.clip.enabled()
+            view.animate = false
+            view.selectedImage = #imageLiteral(resourceName: "addButton")
+            view.deselectedImage = #imageLiteral(resourceName: "addButton")
             view.setImage(#imageLiteral(resourceName: "addButton"), for: .normal)
-            view.imageView?.contentMode = .scaleAspectFit
             return view
         }()
         filterButton = {
-            let view = TwoStatedButton()
+            let view = TabBarButton()
             view.clip.enabled()
-            view.setImage(#imageLiteral(resourceName: "filter"), for: .normal)
-            view.imageView?.contentMode = .scaleAspectFit
+            view.deselectedImage = #imageLiteral(resourceName: "filter")
+            view.selectedImage = #imageLiteral(resourceName: "filter_blue")
             return view
         }()
         menuButton = {
-            let view = TwoStatedButton()
+            let view = TabBarButton()
             view.clip.enabled()
-            view.setImage(#imageLiteral(resourceName: "menu"), for: .normal)
-            view.imageView?.contentMode = .scaleAspectFit
+            view.deselectedImage = #imageLiteral(resourceName: "menu")
+            view.selectedImage = #imageLiteral(resourceName: "menu_blue")
             return view
         }()
+        let concurrentButtons = [menuButton!, searchButton!, filterButton!, statButton!]
+        concurrentButtons.forEach { $0.concurrentButtons = concurrentButtons }
     }
     
     private func setUpSelf() {

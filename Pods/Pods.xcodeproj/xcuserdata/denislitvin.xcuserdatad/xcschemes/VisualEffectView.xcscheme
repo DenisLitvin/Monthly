@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AF73EE355588F1384BF0B0AE49C5234D"
+               BlueprintIdentifier = "EBEFF24A7D5CA378DB25E52920F4DA10"
                BuildableName = "VisualEffectView.framework"
                BlueprintName = "VisualEffectView"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "AF73EE355588F1384BF0B0AE49C5234D"
+            BlueprintIdentifier = "EBEFF24A7D5CA378DB25E52920F4DA10"
             BuildableName = "VisualEffectView.framework"
             BlueprintName = "VisualEffectView"
             ReferencedContainer = "container:Pods.xcodeproj">

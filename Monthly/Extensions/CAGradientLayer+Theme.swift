@@ -14,20 +14,13 @@ extension CAGradientLayer {
         static var cellCategory: CALayer {
             let layer = CALayer()
             layer.contents = #imageLiteral(resourceName: "category").cgImage
-//            let layer = CAGradientLayer()
-//            layer.colors = [
-//                UIColor(red: 27/255, green: 97/255, blue: 204/255, alpha: 1).cgColor,
-//                UIColor(red: 14/255, green: 153/255, blue: 211/255, alpha: 1).cgColor
-//            ]
-//            layer.startPoint = CGPoint(x: 0.0, y: 1)
-//            layer.endPoint = CGPoint(x: 0.8, y: 0.0)
             return layer
         }
         
         static var cellBackground: CAGradientLayer {
             let layer = CAGradientLayer()
             layer.colors = [
-                UIColor(red: 24/255, green: 30/255, blue: 75/255, alpha: 1).cgColor,
+                UIColor(red: 25/255, green: 33/255, blue: 75/255, alpha: 1).cgColor,
                 UIColor(red: 21/255, green: 41/255, blue: 90/255, alpha: 1).cgColor
             ]
             layer.startPoint = CGPoint(x: 0.0, y: 0.8)

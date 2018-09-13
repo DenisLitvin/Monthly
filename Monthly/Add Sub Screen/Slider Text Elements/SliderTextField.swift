@@ -46,21 +46,7 @@ class SliderTextField: UIView {
         textField.previousFieldButton.isEnabled = true
     }
     
-    //MARK: PRIVATE
-    private func setUpLayout() {
-        self.clip.enabled().withHeight(38)
-        
-        textField.clip
-            .insetLeft(15).insetRight(15)
-            .verticallyAligned(.stretch).horizontallyAligned(.stretch)
-        addSubview(textField)
-    }
-    
-    private func setUpSelf() {
-        clipsToBounds = true
-        layer.cornerRadius = 19
-        backgroundColor = UIColor.init(white: 0, alpha: 0.2)
-        
+    func toolBar() -> UIToolbar{
         let toolbar = UIToolbar()
         toolbar.barStyle = UIBarStyle.blackTranslucent
         
@@ -80,7 +66,24 @@ class SliderTextField: UIView {
         
         toolbar.items = [backButton, forwardButton, flexibleSeparator, doneButton]
         toolbar.sizeToFit()
-        self.textField.inputAccessoryView = toolbar
+        return toolbar
+    }
+    
+    //MARK: PRIVATE
+    private func setUpLayout() {
+        self.clip.enabled().withHeight(38)
+        
+        textField.clip
+            .insetLeft(15).insetRight(15)
+            .verticallyAligned(.stretch).horizontallyAligned(.stretch)
+        addSubview(textField)
+    }
+    
+    private func setUpSelf() {
+        clipsToBounds = true
+        layer.cornerRadius = 19
+        backgroundColor = UIColor.init(white: 0, alpha: 0.2)
+        self.textField.inputAccessoryView = toolBar()
     }
     
     private func setUpViews() {

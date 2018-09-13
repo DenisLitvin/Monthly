@@ -10,6 +10,7 @@ target 'Monthly' do
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
     pod 'RxGesture'
+    pod 'RxKeyboard'
     pod 'RxRealm'
     pod 'pop', '~> 1.0'
     pod 'VisualEffectView'

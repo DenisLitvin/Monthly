@@ -16,7 +16,7 @@ import Pinner
 
 import VisualEffectView
 
-class SaveButton: TwoStatedButton {
+class SaveButton: TabBarButton {
     
     var titleView: UIView!
     

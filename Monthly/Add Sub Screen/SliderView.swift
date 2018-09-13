@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import RxKeyboard
 
 import VisualEffectView
 
@@ -74,6 +75,18 @@ class SliderView: UIScrollView {
                 }
             })
             .disposed(by: disposeBag)
+        
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { keyboardVisibleHeight in
+                self.contentInset.bottom = keyboardVisibleHeight
+            })
+            .disposed(by: disposeBag)
+//        
+//        RxKeyboard.instance.visibleHeight
+//            .drive(onNext: { keyboardVisibleHeight in
+//                self.contentOffset.y += keyboardVisibleHeight
+//            })
+//            .disposed(by: disposeBag)
     }
     
     private func setUplayout() {
@@ -161,7 +174,6 @@ class SliderView: UIScrollView {
             return view
         }()
         everyCategoryPicker = CategoryPicker()
-        
         firstBillLabel = {
             let view = SliderLabel()
             view.attributedText = "FIRST BILL WAS"
@@ -199,9 +211,7 @@ class SliderView: UIScrollView {
                 .attributedForSliderText()
             return view
         }()
-        
         notesTextField = SliderNotesTextField()
-        
         remindLabel = {
             let view = SliderLabel()
             view.attributedText = "REMIND ME"
@@ -209,8 +219,10 @@ class SliderView: UIScrollView {
                 .attributedForSliderText()
             return view
         }()
+        
         youSpendTextField.next(textField: firstBillTextField)
         firstBillTextField.next(textField: nameTextField)
+        nameTextField.next(textField: notesTextField)
     }
     
     private func setUpSelf() {

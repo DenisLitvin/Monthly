@@ -25,6 +25,8 @@ class SliderNotesTextField: SliderTextField {
             view.font = UIFont.dynamic(11, family: .proximaNova)
             view.textColor = UIColor.Theme.lightBlue
             view.backgroundColor = .clear
+            view.inputAccessoryView = toolBar()
+            view.delegate = self
             view.clip.enabled()
             return view
         }()
@@ -67,4 +69,10 @@ class SliderNotesTextField: SliderTextField {
         return textView.becomeFirstResponder()
     }
     
+}
+extension SliderNotesTextField: UITextViewDelegate {
+    func textViewShouldReturn(_ textField: UITextField) -> Bool {
+        resignFirstResponder()
+        return true
+    }
 }
