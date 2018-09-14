@@ -61,6 +61,7 @@ class DatabaseManager {
                         let realm = try Realm.init(configuration: self.config)
                         try realm.write {
                             realm.add(entry)
+                            print("sss")
                         }
                         single(.success(()))
                     }

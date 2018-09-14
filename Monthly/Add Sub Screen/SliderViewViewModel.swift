@@ -10,19 +10,25 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+struct NotEnoughInfoError: Error {
+    
+}
+
 class SliderViewViewModel {
+    var disposeBag = DisposeBag()
     
-    var dateTextFieldViewModel = SliderDateTextFieldViewModel()
-
     //MARK: INPUT
-
-    //MARK: OUTPUT
-    //view
+    //    var imageData: AnyObserver<Data>!
+    var save: AnyObserver<Sub>!
     
+    //MARK: OUTPUT
     //view model
-    var didChangeDate: Driver<Date>!
+    var didTryToSave: Observable<Sub>!
+//    var didRequestedImagePicker: Driver<Void>!
     
     init() {
-        didChangeDate = dateTextFieldViewModel.didChangeDate
+       let didTryToSave = PublishSubject<Sub>()
+        self.didTryToSave = didTryToSave.asObservable()
+        self.save = didTryToSave.asObserver()
     }
 }

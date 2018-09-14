@@ -28,20 +28,23 @@ class MainVCViewModel {
 
     var sliderViewModel = SliderViewViewModel()
     var tabBarViewModel = TabBarViewModel()
-
-    //OUTPUT
-    var cellViewModels: Driver<[SubCellViewModel]>!
-    var collectionUpdateItems: Driver<MainVCViewModel.Changeset>!
-    var collectionReloadAllItems: Driver<Void>!
     
-    //INPUT
+    //MARK: - INPUT
+    //    var imageData: AnyObserver<Data>!
     
+    //MAERK: - OUTPUT
+    //views
+    var didSetCellViewModels: Driver<[SubCellViewModel]>!
+    var didUpdateCollectionViewItems: Driver<MainVCViewModel.Changeset>!
+    var didReloadAllItems: Driver<Void>!
+//    var didRequestImagePicker: Driver<Void>!
+  
     
-    //PRIVATE
+    //MARK: - PRIVATE
     private func setUpBindings() {
         let subChanges = databaseManager.getSubChanges().share()
         
-        collectionUpdateItems = subChanges
+        didUpdateCollectionViewItems = subChanges
             .map {(results, changeset) in changeset }
             .filter { $0 != nil } //has changes
             .map { (result: RealmChangeset?) -> Changeset in
@@ -59,7 +62,7 @@ class MainVCViewModel {
         let results = subChanges
             .map { (results, changeset) in results }
         
-        cellViewModels = results
+        didSetCellViewModels = results
             .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
                     let vm = SubCellViewModel.init()
@@ -69,12 +72,19 @@ class MainVCViewModel {
             }
             .asDriver(onErrorJustReturn: [])
         
-        collectionReloadAllItems = results
+        didReloadAllItems = results
             .delay(0.01, scheduler: MainScheduler.instance)
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-//        sliderViewModel.dateDidChange.
+        sliderViewModel.didTryToSave
+            .flatMap { self.databaseManager.add($0) }
+            .subscribe(onNext: {
+                print("success")
+            })
+        
+            .disposed(by: disposeBag)
+
     }
 }
 

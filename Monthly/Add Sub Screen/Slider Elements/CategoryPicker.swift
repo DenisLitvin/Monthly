@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class CategoryPicker: UIPickerView {
+    var disposeBag = DisposeBag()
+    
+    private var viewModel: SliderViewViewModel!
     
     let data = [
         "DAY",
@@ -27,9 +32,13 @@ class CategoryPicker: UIPickerView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
-
+extension CategoryPicker: MVVMBinder {
+    func set(viewModel: SliderViewViewModel) {
+        disposeBag = DisposeBag()
+        self.viewModel = viewModel
+    }
+}
 extension CategoryPicker: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

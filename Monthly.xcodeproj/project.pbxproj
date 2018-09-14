@@ -30,7 +30,6 @@
 		3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208821459C22000799CB /* SliderDateTextField.swift */; };
 		3E25208F2145B702000799CB /* MVVMBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208E2145B702000799CB /* MVVMBinder.swift */; };
 		3E2520912145BE1A000799CB /* SliderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520902145BE1A000799CB /* SliderViewViewModel.swift */; };
-		3E2520932145CD48000799CB /* SliderDateTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */; };
 		3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */; };
 		3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F47214875510032831B /* CategoryPicker.swift */; };
 		3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C42132019500D74819 /* String+AttributedElements.swift */; };
@@ -44,6 +43,7 @@
 		3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8DA21336709006CDE4D /* Animator.swift */; };
 		3ED7E834213A35C1009D889F /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7E833213A35C1009D889F /* TabBarViewModel.swift */; };
 		3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7E835213A4177009D889F /* UIView+roundedCorners.swift */; };
+		3ED94981214B0F7F0055C96F /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED94980214B0F7F0055C96F /* SaveButton.swift */; };
 		DC54D3EDD58B03ED61F50455 /* Pods_Monthly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18F1458873C428054C8D6D87 /* Pods_Monthly.framework */; };
 /* End PBXBuildFile section */
 
@@ -85,7 +85,6 @@
 		3E25208821459C22000799CB /* SliderDateTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderDateTextField.swift; sourceTree = "<group>"; };
 		3E25208E2145B702000799CB /* MVVMBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVMBinder.swift; sourceTree = "<group>"; };
 		3E2520902145BE1A000799CB /* SliderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewViewModel.swift; sourceTree = "<group>"; };
-		3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderDateTextFieldViewModel.swift; sourceTree = "<group>"; };
 		3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderNotesTextField.swift; sourceTree = "<group>"; };
 		3E7F2F47214875510032831B /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		3E7F56C42132019500D74819 /* String+AttributedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedElements.swift"; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		3EB9A8DA21336709006CDE4D /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		3ED7E833213A35C1009D889F /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		3ED7E835213A4177009D889F /* UIView+roundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+roundedCorners.swift"; sourceTree = "<group>"; };
+		3ED94980214B0F7F0055C96F /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		4023D4CF8818A39081204A8D /* Pods-MonthlyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonthlyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MonthlyTests/Pods-MonthlyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5B413561EC19E515ABDAAE7B /* Pods-MonthlyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MonthlyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MonthlyTests/Pods-MonthlyTests.release.xcconfig"; sourceTree = "<group>"; };
 		7E05CE0841DA76BD3E4DCD22 /* Pods_MonthlyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MonthlyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,7 +162,7 @@
 			path = Monthly;
 			sourceTree = "<group>";
 		};
-		3E0A6AB1214495E70035826A /* Slider Text Elements */ = {
+		3E0A6AB1214495E70035826A /* Slider Elements */ = {
 			isa = PBXGroup;
 			children = (
 				3E0A6AB42144A16B0035826A /* SliderLabel.swift */,
@@ -170,9 +170,9 @@
 				3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */,
 				3E25208821459C22000799CB /* SliderDateTextField.swift */,
 				3E7F2F47214875510032831B /* CategoryPicker.swift */,
-				3E2520922145CD48000799CB /* SliderDateTextFieldViewModel.swift */,
+				3ED94980214B0F7F0055C96F /* SaveButton.swift */,
 			);
-			path = "Slider Text Elements";
+			path = "Slider Elements";
 			sourceTree = "<group>";
 		};
 		3E0D2728211EE3D500C39D11 /* MonthlyTests */ = {
@@ -277,7 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				3E25208C2145B6AC000799CB /* Protocols */,
-				3E0A6AB1214495E70035826A /* Slider Text Elements */,
+				3E0A6AB1214495E70035826A /* Slider Elements */,
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
 				3E2520902145BE1A000799CB /* SliderViewViewModel.swift */,
 				3E1138372137AA5C00028202 /* TabBarView.swift */,
@@ -532,6 +532,7 @@
 				3E01EB84211DEF6300CF8A43 /* SubCellViewModel.swift in Sources */,
 				3E23A605212FBD470034732B /* UIColor+Theme.swift in Sources */,
 				3E25208F2145B702000799CB /* MVVMBinder.swift in Sources */,
+				3ED94981214B0F7F0055C96F /* SaveButton.swift in Sources */,
 				3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */,
 				3E01EB82211DEF5800CF8A43 /* SubCell.swift in Sources */,
 				3E01EB7E211DB86100CF8A43 /* Router.swift in Sources */,
@@ -540,7 +541,6 @@
 				3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */,
 				3E0A6AB52144A16B0035826A /* SliderLabel.swift in Sources */,
 				3E0D2734211EE47000C39D11 /* DatabaseManager.swift in Sources */,
-				3E2520932145CD48000799CB /* SliderDateTextFieldViewModel.swift in Sources */,
 				3E01EB87211DEF8F00CF8A43 /* Sub.swift in Sources */,
 				3E01EB6A211D9D3400CF8A43 /* AppDelegate.swift in Sources */,
 				3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */,

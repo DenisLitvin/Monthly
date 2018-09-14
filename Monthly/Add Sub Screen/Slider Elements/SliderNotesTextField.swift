@@ -11,8 +11,7 @@ import RxCocoa
 import RxSwift
 
 class SliderNotesTextField: SliderTextField {
-    let disposeBag = DisposeBag()
-    
+
     var textView: UITextView!
     
     override init(frame: CGRect) {

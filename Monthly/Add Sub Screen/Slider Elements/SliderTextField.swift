@@ -8,8 +8,12 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class SliderTextField: UIView {
-    
+    var disposeBag = DisposeBag()
+
     weak var nextField: SliderTextField?
     weak var previousField: SliderTextField?
     

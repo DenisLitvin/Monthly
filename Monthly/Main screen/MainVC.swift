@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 import RxSwift
 import RxCocoa
@@ -16,77 +17,18 @@ import Pinner
 
 import VisualEffectView
 
-class SaveButton: TabBarButton {
-    
-    var titleView: UIView!
-    
-    override init() {
-        super.init()
-        
-        isUserInteractionEnabled = true
-        let diameter: CGFloat = 45
-        isHidden = true
-        frame = CGRect(x: 0, y: 0, width: 160, height: diameter + 9)
-        
-        let backgroundLayer = CALayer()
-        backgroundLayer.contents = #imageLiteral(resourceName: "save_rect").cgImage
-        backgroundLayer.frame.size = frame.size
-        layer.addSublayer(backgroundLayer)
-        
-        let maskLayer = CALayer()
-        maskLayer.contents = #imageLiteral(resourceName: "mask").cgImage
-        maskLayer.frame = CGRect(x: (frame.width - diameter + 1.5) / 2, y: 5, width: diameter, height: diameter)
-        self.layer.mask = maskLayer
-        
-        titleView = {
-           let view = UILabel()
-            view.isUserInteractionEnabled = true
-            view.textAlignment = .center
-            view.textColor = .white
-            view.attributedText = NSAttributedString(string: "SAVE".localized(), attributes: [.kern: 4])
-            view.font = UIFont.dynamic(14, family: .proximaNova).bolded
-            return view
-        }()
-        
-        addSubview(titleView)
-        titleView.fillSuperview()
-
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class MainVC: UIViewController, MVVMView {
     private let disposeBag = DisposeBag()
     
     let viewModel = MainVCViewModel()
     
-    var saveButton = SaveButton()
     var blurView = VisualEffectView(frame: UIScreen.main.bounds)
     var tabBarView = TabBarView()
     var sliderView = SliderView()
     var collectionView: ClipCollectionView<SubCell, SubCell, SubCell>!
     
     override func viewDidAppear(_ animated: Bool) {
-        let window = UIApplication.shared.keyWindow
-        
-        window?.addSubview(blurView)
-        blurView.isHidden = true
-        window?.addSubview(sliderView)
-        window?.addSubview(tabBarView)
-        
-        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
-        let x = (UIScreen.main.bounds.width - saveButton.frame.width) / 2
-        var y = frame.origin.y + 3.5
-        if #available(iOS 11.0, *),
-            self.view.safeAreaInsets.bottom > 0 {
-            y += 9
-        }
-        saveButton.frame.origin = CGPoint(x: x, y: y)
-        window?.addSubview(saveButton)
-
+        setUpElements()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             Animator.presentCells(self.collectionView.visibleCells)
         })
@@ -107,14 +49,14 @@ class MainVC: UIViewController, MVVMView {
     //MARK: - PRIVATE
     private func setUpBindings() {
         
-        //INPUT
-        viewModel.cellViewModels
+        //VIEW MODEL
+        viewModel.didSetCellViewModels
             .drive(onNext: { (subModel) in
                 self.collectionView.cellData = [subModel]
             })
             .disposed(by: disposeBag)
         
-        viewModel.collectionUpdateItems
+        viewModel.didUpdateCollectionViewItems
             .drive(onNext: { (change) in
                 self.collectionView.performBatchUpdates({
                     self.collectionView.reloadItems(at: change.updated)
@@ -124,23 +66,31 @@ class MainVC: UIViewController, MVVMView {
             })
             .disposed(by: disposeBag)
         
-        viewModel.collectionReloadAllItems
+        viewModel.didReloadAllItems
             .drive(onNext: {
                 self.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
-        //VIEWS
+//        viewModel.didRequestImagePicker
+//            .drive(onNext: { _ in
+//                let picker = UIImagePickerController()
+//                picker.delegate = self
+//                picker.mediaTypes = [kUTTypeImage as String]
+//                self.present(picker, animated: true)
+//            })
+//            .disposed(by: disposeBag)
         
+        //VIEWS
         let present: () -> Void = {
-            Animator.showSave(button: self.saveButton)
+            Animator.showSave(button: self.sliderView.saveButton)
             Animator.hideTabBar(view: self.tabBarView)
             Animator.showBlur(view: self.blurView)
             Animator.slideUp(view: self.sliderView)
         }
         
         let hide: () -> Void = {
-            Animator.hideSave(button: self.saveButton)
+            Animator.hideSave(button: self.sliderView.saveButton)
             Animator.showTabBar(view: self.tabBarView)
             Animator.hideBlur(view: self.blurView)
             Animator.slideDown(view: self.sliderView)
@@ -157,15 +107,13 @@ class MainVC: UIViewController, MVVMView {
             })
             .disposed(by: disposeBag)
         
-        saveButton.rx.tapGesture()
+        sliderView.saveButton.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { _ in
                 self.tabBarView.plusButton.isOn.onNext(false)
             })
             .disposed(by: disposeBag)
 
-        
-        
         sliderView.rx.didEndDragging
             .subscribe(onNext: { _ in
                 if self.sliderView.contentOffset.y < -5 {
@@ -183,6 +131,25 @@ class MainVC: UIViewController, MVVMView {
         view.addSubview(collectionView)
     }
     
+    private func setUpElements() {
+        let window = UIApplication.shared.keyWindow
+
+        window?.addSubview(blurView)
+        blurView.isHidden = true
+        window?.addSubview(sliderView)
+        window?.addSubview(tabBarView)
+        
+        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
+        let x = (UIScreen.main.bounds.width - sliderView.saveButton.frame.width) / 2
+        var y = frame.origin.y + 2.5
+        if #available(iOS 11.0, *),
+            self.view.safeAreaInsets.bottom > 0 {
+            y += 9
+        }
+        sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
+        window?.addSubview(sliderView.saveButton)
+
+    }
     private func setUpViews() {
         collectionView = {
             let layout = UICollectionViewFlowLayout()
@@ -199,6 +166,18 @@ class MainVC: UIViewController, MVVMView {
         }()
     }
 }
+
+//extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        picker.dismiss(animated: true)
+//        let image = info[UIImagePickerControllerEditedImage] ??
+//            info[UIImagePickerControllerOriginalImage] ??
+//            info[UIImagePickerControllerCropRect] ?? UIImage()
+//        viewModel.imageData = UIImagePNGRepresentation(image)
+//    }
+//
+//}
 
 extension MainVC {
     @objc func injected() {

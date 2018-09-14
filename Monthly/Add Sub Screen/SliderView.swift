@@ -22,12 +22,14 @@ class SliderView: UIScrollView {
     
     private let contentView = UIView()
     
+    var saveButton = SaveButton()
+    
     var lineView: UIImageView!
     var iconView: UIImageView!
     var youSpendLabel: SliderLabel!
     var youSpendTextField: SliderTextField!
     var everyLabel: SliderLabel!
-    var everyCategoryPicker: CategoryPicker!
+    var categoryPicker: CategoryPicker!
     var firstBillLabel: SliderLabel!
     var firstBillTextField: SliderDateTextField!
     var nameLabel: SliderLabel!
@@ -36,7 +38,7 @@ class SliderView: UIScrollView {
     var notesTextField: SliderTextField!
     var remindLabel: SliderLabel!
     var remindSwitch: UISwitch!
-
+    
     init() {
         super.init(frame: .zero)
         setUpViews()
@@ -54,7 +56,6 @@ class SliderView: UIScrollView {
     }
     
     //MARK: - PRIVATE
-    
     private func setUpBindings() {
         var old = ""
         youSpendTextField.textField.rx.text.orEmpty
@@ -81,12 +82,34 @@ class SliderView: UIScrollView {
                 self.contentInset.bottom = keyboardVisibleHeight
             })
             .disposed(by: disposeBag)
-//        
-//        RxKeyboard.instance.visibleHeight
-//            .drive(onNext: { keyboardVisibleHeight in
-//                self.contentOffset.y += keyboardVisibleHeight
-//            })
-//            .disposed(by: disposeBag)
+        
+        saveButton.rx.tapGesture().when(.recognized)
+            .map { _ -> Sub? in
+                let sub = Sub()
+                sub.id = UUID().uuidString
+                guard
+                    let name = self.nameTextField.textField.text,
+                    let price = Float(self.youSpendTextField.textField.text ?? "")
+                    else { return nil }
+                let date = DateFormatter.billDate.date(
+                    from: self.firstBillTextField.textField.text ?? ""
+                    ) ?? Date()
+                sub.amount = price
+                sub.name = name
+                sub.firstPayout = date
+                sub.note = self.notesTextField.textField.text
+                sub.category = self.categoryPicker.selectedRow(inComponent: 0)
+                if let image = self.iconView.image {
+                    sub.icon = UIImagePNGRepresentation(image)
+                }
+                return sub
+            }
+            .filter { $0 != nil }
+            .map { $0! }
+            .subscribe(self.viewModel.save)
+            .disposed(by: disposeBag)
+        
+        
     }
     
     private func setUplayout() {
@@ -118,7 +141,7 @@ class SliderView: UIScrollView {
         
         everyLabel.clip.horizontallyAligned(.stretch)
         secondRow.addSubview(everyLabel)
-        secondRow.addSubview(everyCategoryPicker)
+        secondRow.addSubview(categoryPicker)
         
         let thirdRow = UIView()
         thirdRow.clip.enabled().withDistribution(.row).insetTop(10)
@@ -173,7 +196,7 @@ class SliderView: UIScrollView {
                 .attributedForSliderText()
             return view
         }()
-        everyCategoryPicker = CategoryPicker()
+        categoryPicker = CategoryPicker()
         firstBillLabel = {
             let view = SliderLabel()
             view.attributedText = "FIRST BILL WAS"
@@ -243,7 +266,7 @@ class SliderView: UIScrollView {
         frame = CGRect(x: 0, y: screenSize.height - height, width: screenSize.width, height: height)
         contentSize = CGSize(width: UIScreen.main.bounds.width, height: contentHeight)
         transform = CGAffineTransform(translationX: 0, y: frame.height)
-
+        
         let layer = CAGradientLayer.Elements.slider
         layer.cornerRadius = 35
         layer.frame.size = CGSize(width: screenSize.width, height: contentHeight + screenSize.height)
@@ -255,7 +278,6 @@ extension SliderView: MVVMBinder {
     func set(viewModel: SliderViewViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel
-        self.firstBillTextField.set(viewModel: viewModel.dateTextFieldViewModel)
         setUpBindings()
     }
 }

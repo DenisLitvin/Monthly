@@ -11,13 +11,13 @@ import RxSwift
 import RxCocoa
 
 class SliderDateTextField: SliderTextField, DatePickerField {
-    private var disposeBag = DisposeBag()
-    
-    private var viewModel: SliderDateTextFieldViewModel!
-    
+        
+    var date: AnyObserver<Date>!
+    var didChangeDate: Driver<Date>!
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setUpBindings()
         setUpDatePicker()
     }
     
@@ -26,19 +26,23 @@ class SliderDateTextField: SliderTextField, DatePickerField {
     }
     
     @objc func dateChanged(_ datePicker: UIDatePicker) {
-        viewModel.date.onNext(datePicker.date)
+        date.onNext(datePicker.date)
     }
     
+    //MARK: - PRIVATE
     private func setUpBindings() {
-        viewModel.dateString.drive(textField.rx.text).disposed(by: disposeBag)
-    }
-}
-
-extension SliderDateTextField: MVVMBinder {
-    func set(viewModel: SliderDateTextFieldViewModel) {
-        self.disposeBag = DisposeBag()
-        self.viewModel = viewModel
-        setUpBindings()
+        let didChangeDate = PublishSubject<Date>.init()
+        date = didChangeDate.asObserver()
+        
+        self.didChangeDate = didChangeDate
+            .asDriver(onErrorJustReturn: Date())
+        
+        self.didChangeDate
+            .map { date in
+                return DateFormatter.billDate.string(from: date)
+            }
+            .drive(textField.rx.text)
+            .disposed(by: disposeBag)
     }
 }
 

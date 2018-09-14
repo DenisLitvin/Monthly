@@ -143,10 +143,10 @@ class TabBarView: UIView {
 //        }
         searchButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(20)
         rowContainer.addSubview(searchButton)
-        statButton.clip.aligned(v: .stretch, h: .stretch).insetRight(10)
+        statButton.clip.aligned(v: .stretch, h: .stretch)
         rowContainer.addSubview(statButton)
         rowContainer.addSubview(plusButton)
-        filterButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(10)
+        filterButton.clip.aligned(v: .stretch, h: .stretch)
         rowContainer.addSubview(filterButton)
         menuButton.clip.aligned(v: .stretch, h: .stretch).insetRight(20)
         rowContainer.addSubview(menuButton)
@@ -157,7 +157,7 @@ class TabBarView: UIView {
         
         blurView = {
             let blurView = VisualEffectView(frame: .zero)
-            blurView.blurRadius = 8
+            blurView.blurRadius = 5
             tintLayer = CAGradientLayer.Elements.tabBar
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
