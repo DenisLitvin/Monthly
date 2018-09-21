@@ -132,7 +132,7 @@ class TabBarView: UIView {
     private func setUpLayout() {
         addSubview(blurView)
 
-        rowContainer.clip.enabled().withDistribution(.row)
+        rowContainer.clip.enable().withDistribution(.row)
         addSubview(rowContainer)
 //        rowContainer.addSubview(searchBar)
 //        searchBar.makeConstraints(for: .left, .right, .centerX, .centerY) { (make) in
@@ -164,21 +164,21 @@ class TabBarView: UIView {
         }()
         searchButton = {
            let view = TabBarButton()
-            view.clip.enabled()
+            view.clip.enable()
             view.deselectedImage = #imageLiteral(resourceName: "magnifier")
             view.selectedImage = #imageLiteral(resourceName: "magnifier_blue")
             return view
         }()
         statButton = {
             let view = TabBarButton()
-            view.clip.enabled()
+            view.clip.enable()
             view.deselectedImage = #imageLiteral(resourceName: "stat")
             view.selectedImage = #imageLiteral(resourceName: "stat_blue")
             return view
         }()
         plusButton = {
             let view = TabBarButton()
-            view.clip.enabled()
+            view.clip.enable()
             view.animate = false
             view.selectedImage = #imageLiteral(resourceName: "addButton")
             view.deselectedImage = #imageLiteral(resourceName: "addButton")
@@ -187,14 +187,14 @@ class TabBarView: UIView {
         }()
         filterButton = {
             let view = TabBarButton()
-            view.clip.enabled()
+            view.clip.enable()
             view.deselectedImage = #imageLiteral(resourceName: "filter")
             view.selectedImage = #imageLiteral(resourceName: "filter_blue")
             return view
         }()
         menuButton = {
             let view = TabBarButton()
-            view.clip.enabled()
+            view.clip.enable()
             view.deselectedImage = #imageLiteral(resourceName: "menu")
             view.selectedImage = #imageLiteral(resourceName: "menu_blue")
             return view
@@ -204,7 +204,7 @@ class TabBarView: UIView {
     }
     
     private func setUpSelf() {
-        clip.enabled()
+        clip.enable()
         clipsToBounds = true
         
         let screenSize = UIScreen.main.bounds.size

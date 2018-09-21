@@ -75,7 +75,7 @@ class SliderTextField: UIView {
     
     //MARK: PRIVATE
     private func setUpLayout() {
-        self.clip.enabled().withHeight(38)
+        self.clip.enable().withHeight(38)
         
         textField.clip
             .insetLeft(15).insetRight(15)
@@ -94,9 +94,9 @@ class SliderTextField: UIView {
         textField = {
             let view = UITextField()
             view.keyboardAppearance = UIKeyboardAppearance.dark
-            view.font = UIFont.dynamic(11, family: .proximaNova)
+            view.font = UIFont.dynamic(12, family: .proximaNova)
             view.textColor = UIColor.Theme.lightBlue
-            view.clip.enabled()
+            view.clip.enable()
             view.delegate = self
             return view
         }()

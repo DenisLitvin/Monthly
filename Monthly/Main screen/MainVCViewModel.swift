@@ -59,10 +59,8 @@ class MainVCViewModel {
             .delay(0.01, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
         
-        let results = subChanges
+        didSetCellViewModels = subChanges
             .map { (results, changeset) in results }
-        
-        didSetCellViewModels = results
             .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
                     let vm = SubCellViewModel.init()
@@ -72,8 +70,13 @@ class MainVCViewModel {
             }
             .asDriver(onErrorJustReturn: [])
         
-        didReloadAllItems = results
-            .delay(0.01, scheduler: MainScheduler.instance)
+        didReloadAllItems = subChanges
+//            .filter {
+//                return $0.1?.inserted.count == 0
+//                    && $0.1?.deleted.count == 0
+//                    && $0.1?.updated.count == 0
+//            }
+            .map { (results, changeset) in results }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         

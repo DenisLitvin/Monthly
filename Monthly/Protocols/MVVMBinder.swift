@@ -9,7 +9,7 @@
 import Foundation
 import ClipLayout
 
-protocol MVVMBinder: DataBinder {
+protocol MVVMBinder: ClipDataBinder {
     associatedtype ViewModel
     func set(viewModel: ViewModel)
 }

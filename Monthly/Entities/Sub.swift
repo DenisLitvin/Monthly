@@ -35,10 +35,10 @@ class Sub: Object {
     dynamic var name = ""
     dynamic var firstPayout = Date()
     dynamic var category = 0
-    dynamic var amount: Float = 0.0 //value
+    dynamic var value: Float = 0.0
     dynamic var remind = false
     dynamic var icon: Data? = nil
-    dynamic var note: String? = nil
+    dynamic var notes: String? = nil
     
     override static func primaryKey() -> String? {
         return "id"

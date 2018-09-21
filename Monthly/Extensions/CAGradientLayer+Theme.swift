@@ -31,7 +31,7 @@ extension CAGradientLayer {
         
         static var slider: CAGradientLayer {
             let layer = CAGradientLayer()
-            layer.opacity = 0.9
+            layer.opacity = 0.85
             layer.colors = [
                 UIColor(red: 21/255, green: 47/255, blue: 129/255, alpha: 0.7).cgColor,
                 UIColor(red: 3/255, green: 78/255, blue: 146/255, alpha: 0.7).cgColor

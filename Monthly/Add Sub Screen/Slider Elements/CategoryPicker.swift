@@ -26,7 +26,7 @@ class CategoryPicker: UIPickerView {
         super.init(frame: frame)
         delegate = self
         dataSource = self
-        clip.enabled().withWidth(90).withHeight(120)
+        clip.enable().withWidth(90).withHeight(120)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +44,7 @@ extension CategoryPicker: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let label = (view as? SliderLabel) ?? SliderLabel()
-        label.clip.enable = false
+        label.clip.enabled = false
         label.textAlignment = .center
         label.attributedText = data[row].localized().attributedForSliderText()
         return label

@@ -68,7 +68,7 @@ class Animator {
         view.pop_removeAllAnimations()
         
         let animation = POPBasicAnimation()
-        animation.toValue = 7
+        animation.toValue = 9
         animation.duration = 0.3
         animation.property = VisualEffectView.popBlurRadius
         view.pop_add(animation, forKey: "blurRadius")

@@ -47,26 +47,28 @@ public protocol ClipLayoutable {
 
 
 extension UIView: ClipLayoutable {
+    
     public var sublayoutables: [ClipLayoutable] {
         return subviews
     }
 }
 
 extension CALayer: ClipLayoutable {
+    
     public func sizeThatFits(_ size: CGSize) -> CGSize {
         return preferredFrameSize()
     }
     
-     public var sublayoutables: [ClipLayoutable] {
+    public var sublayoutables: [ClipLayoutable] {
         return sublayers ?? []
     }
 }
 
 @objc
-open class ClipLayout: NSObject {
+public class ClipLayout: NSObject {
     private unowned let view: ClipLayoutable
     
-    @objc public var enable = false
+    @objc public var enabled = false
     @objc public var cache: CGSize = .zero
     
     @objc public var alignment: ClipPosition = ClipPosition(vertical: .mid, horizontal: .mid)
@@ -74,16 +76,16 @@ open class ClipLayout: NSObject {
     @objc public var wantsSize = CGSize.zero
     @objc public var distribution = ClipDistribution.none
     @objc public var supportRightToLeft = true
-
+    
     @objc
     public init(with view: ClipLayoutable) {
         self.view = view
     }
-
+    
     //MARK: - SWIFTY WAY TO CONFIGURE
     @discardableResult
-    public func enabled() -> Self {
-        enable = true
+    public func enable() -> Self {
+        enabled = true
         return self
     }
     
@@ -176,14 +178,14 @@ open class ClipLayout: NSObject {
     public func invalidateLayout() {
         layoutSubviews()
         view.sublayoutables
-            .filter { $0.clip.enable }
+            .filter { $0.clip.enabled }
             .forEach { $0.clip.invalidateLayout() }
     }
-
+    
     public func invalidateCache() {
         cache = .zero
         view.sublayoutables
-            .filter { $0.clip.enable }
+            .filter { $0.clip.enabled }
             .forEach { $0.clip.cache = .zero }
     }
     
@@ -191,7 +193,7 @@ open class ClipLayout: NSObject {
     public func layoutSubviews() {
         let sizeBounds = view.bounds.size
         var subviews = view.sublayoutables
-            .filter { $0.clip.enable }
+            .filter { $0.clip.enabled }
         let sizes = subviews
             .map { $0.clip.measureSize(within: sizeBounds) }
         
@@ -270,7 +272,7 @@ open class ClipLayout: NSObject {
         return wantsSize.height == 0
             && (alignment.vertical == .stretch
                 || view.sublayoutables
-                    .filter { $0.clip.enable }
+                    .filter { $0.clip.enabled }
                     .contains { $0.clip.verticallyStretched && $0.clip.wantsSize.height == 0 })
     }
     
@@ -278,14 +280,14 @@ open class ClipLayout: NSObject {
         return wantsSize.width == 0
             && (alignment.horizontal == .stretch
                 || view.sublayoutables
-                    .filter { $0.clip.enable }
+                    .filter { $0.clip.enabled }
                     .contains { $0.clip.horizontallyStretched && $0.clip.wantsSize.width == 0 })
     }
     
     private var rightToLeftLanguage: Bool {
         return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
     }
-
+    
     private func pixelRound(_ value: CGFloat) -> CGFloat {
         let scale = Float(UIScreen.main.scale)
         let result = roundf(Float(value) * scale) / scale
@@ -302,7 +304,7 @@ open class ClipLayout: NSObject {
         else if horizontallyStretched { width = sizeBounds.width }
         else if distribution == .row {
             width = view.sublayoutables
-                .filter { $0.clip.enable }
+                .filter { $0.clip.enabled }
                 .reduce(0) { $0 + $1.clip.measureSize(within: sizeBounds).width
                     + $1.clip.insets.left
                     + $1.clip.insets.right
@@ -310,7 +312,7 @@ open class ClipLayout: NSObject {
         }
         else if distribution == .column {
             width = view.sublayoutables
-                .filter { $0.clip.enable }
+                .filter { $0.clip.enabled }
                 .map { $0.clip.measureSize(within: sizeBounds).width
                     + $0.clip.insets.left
                     + $0.clip.insets.right
@@ -337,7 +339,7 @@ open class ClipLayout: NSObject {
         else if verticallyStretched { height = sizeBounds.height }
         else if distribution == .column {
             height = view.sublayoutables
-                .filter { $0.clip.enable }
+                .filter { $0.clip.enabled }
                 .reduce(0, { $0 + $1.clip.measureSize(within: sizeBounds).height
                     + $1.clip.insets.top
                     + $1.clip.insets.bottom
@@ -345,7 +347,7 @@ open class ClipLayout: NSObject {
         }
         else if distribution == .row {
             height = view.sublayoutables
-                .filter { $0.clip.enable }
+                .filter { $0.clip.enabled }
                 .map { $0.clip.measureSize(within: sizeBounds).height
                     + $0.clip.insets.top
                     + $0.clip.insets.bottom
@@ -368,7 +370,7 @@ open class ClipLayout: NSObject {
         //Allow view to adjust height if width will be trimmed
         //Primarily for UITextInput
         if distribution == .row {
-            let subviews = view.sublayoutables.filter { $0.clip.enable }
+            let subviews = view.sublayoutables.filter { $0.clip.enabled }
             let widths = trimmedWidths(for: subviews, within: sizeBounds)
             for i in 0 ..< subviews.count {
                 subviews[i].clip.invalidateCache()

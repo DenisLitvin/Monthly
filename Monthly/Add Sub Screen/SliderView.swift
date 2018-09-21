@@ -94,11 +94,12 @@ class SliderView: UIScrollView {
                 let date = DateFormatter.billDate.date(
                     from: self.firstBillTextField.textField.text ?? ""
                     ) ?? Date()
-                sub.amount = price
+                sub.value = price
                 sub.name = name
                 sub.firstPayout = date
-                sub.note = self.notesTextField.textField.text
+                sub.notes = self.notesTextField.textField.text
                 sub.category = self.categoryPicker.selectedRow(inComponent: 0)
+                sub.remind = self.remindSwitch.isOn
                 if let image = self.iconView.image {
                     sub.icon = UIImagePNGRepresentation(image)
                 }
@@ -114,20 +115,20 @@ class SliderView: UIScrollView {
     
     private func setUplayout() {
         
-        contentView.clip.enabled().withDistribution(.column)
+        contentView.clip.enable().withDistribution(.column)
         self.addSubview(contentView)
         
         lineView.clip.insetTop(16).insetBottom(17)
         contentView.addSubview(lineView)
         
         let paddingsContainer = UIView()
-        paddingsContainer.clip.enabled().withDistribution(.column)
-            .insetLeft(50).insetRight(50).insetBottom(80)
+        paddingsContainer.clip.enable().withDistribution(.column)
+            .insetLeft(40).insetRight(40).insetBottom(80)
         contentView.addSubview(paddingsContainer)
         
         //main content
         let firstRow = UIView()
-        firstRow.clip.enabled().withDistribution(.row)
+        firstRow.clip.enable().withDistribution(.row)
         paddingsContainer.addSubview(firstRow)
         
         firstRow.addSubview(iconView)
@@ -136,7 +137,7 @@ class SliderView: UIScrollView {
         firstRow.addSubview(youSpendTextField)
         
         let secondRow = UIView()
-        secondRow.clip.enabled().withDistribution(.row).insetTop(10)
+        secondRow.clip.enable().withDistribution(.row).insetTop(10)
         paddingsContainer.addSubview(secondRow)
         
         everyLabel.clip.horizontallyAligned(.stretch)
@@ -144,7 +145,7 @@ class SliderView: UIScrollView {
         secondRow.addSubview(categoryPicker)
         
         let thirdRow = UIView()
-        thirdRow.clip.enabled().withDistribution(.row).insetTop(10)
+        thirdRow.clip.enable().withDistribution(.row).insetTop(10)
         paddingsContainer.addSubview(thirdRow)
         
         firstBillLabel.clip.insetRight(10).horizontallyAligned(.stretch)
@@ -160,14 +161,22 @@ class SliderView: UIScrollView {
         paddingsContainer.addSubview(notesLabel)
         notesTextField.clip.insetLeft(-3)
         paddingsContainer.addSubview(notesTextField)
+        
+        let lastRow = UIView()
+        lastRow.clip.enable().withDistribution(.row).insetTop(30)
+        paddingsContainer.addSubview(lastRow)
+        
+        remindLabel.clip.horizontallyAligned(.stretch)
+        lastRow.addSubview(remindLabel)
+        lastRow.addSubview(remindSwitch)
     }
     
     private func setUpViews() {
         lineView = UIImageView(image: #imageLiteral(resourceName: "line"))
-        lineView.clip.enabled()
+        lineView.clip.enable()
         
         iconView = UIImageView(image: #imageLiteral(resourceName: "icon_holder"))
-        iconView.clip.enabled()
+        iconView.clip.enable()
         
         youSpendLabel = {
             let view = SliderLabel()
@@ -242,6 +251,9 @@ class SliderView: UIScrollView {
                 .attributedForSliderText()
             return view
         }()
+        remindSwitch = UISwitch()
+        remindSwitch.clip.enable()
+        remindSwitch.onTintColor = UIColor(red: 0/255, green: 161/255, blue: 213/255, alpha: 1)
         
         youSpendTextField.next(textField: firstBillTextField)
         firstBillTextField.next(textField: nameTextField)

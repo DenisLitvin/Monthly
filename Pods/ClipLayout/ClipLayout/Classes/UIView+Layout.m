@@ -6,9 +6,10 @@
 //  Copyright © 2018 Denis Litvin. All rights reserved.
 //
 
-#import "UIView+Layout.h"
 #import <ClipLayout/ClipLayout-Swift.h>
 #import <objc/runtime.h>
+
+#import "UIView+Layout.h"
 
 static const void *kLayoutAssociatedKey = &kLayoutAssociatedKey;
 
@@ -25,12 +26,13 @@ static const void *kLayoutAssociatedKey = &kLayoutAssociatedKey;
 }
 
 - (void)configureWithBlock:(LayoutConfigurationBlock)block {
-    self.clip.enable = YES;
+    self.clip.enabled = YES;
     if (block != nil) {
         block(self.clip);
     }
 }
 @end
+
 
 @implementation CALayer (Layout)
 
@@ -45,7 +47,7 @@ static const void *kLayoutAssociatedKey = &kLayoutAssociatedKey;
 }
 
 - (void)configureWithBlock:(LayoutConfigurationBlock)block {
-    self.clip.enable = YES;
+    self.clip.enabled = YES;
     if (block != nil) {
         block(self.clip);
     }

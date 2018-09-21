@@ -56,19 +56,19 @@ class MainVC: UIViewController, MVVMView {
             })
             .disposed(by: disposeBag)
         
-        viewModel.didUpdateCollectionViewItems
-            .drive(onNext: { (change) in
-                self.collectionView.performBatchUpdates({
-                    self.collectionView.reloadItems(at: change.updated)
-                    self.collectionView.deleteItems(at: change.deleted)
-                    self.collectionView.insertItems(at: change.inserted)
-                })
-            })
-            .disposed(by: disposeBag)
-        
+//        viewModel.didUpdateCollectionViewItems
+//            .drive(onNext: { (change) in
+//                self.collectionView.performBatchUpdates({
+//                    self.collectionView.reloadItems(at: change.updated)
+//                    self.collectionView.deleteItems(at: change.deleted)
+//                    self.collectionView.insertItems(at: change.inserted)
+//                })
+//            })
+//            .disposed(by: disposeBag)
+//
         viewModel.didReloadAllItems
             .drive(onNext: {
-                self.collectionView.reloadData()
+                    self.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
@@ -125,9 +125,9 @@ class MainVC: UIViewController, MVVMView {
     }
     
     private func setUpLayout() {
-        self.view.clip.enabled()
+        self.view.clip.enable()
         
-        collectionView.clip.enabled().aligned(v: .stretch, h: .stretch)
+        collectionView.clip.enable().aligned(v: .stretch, h: .stretch)
         view.addSubview(collectionView)
     }
     
@@ -156,12 +156,10 @@ class MainVC: UIViewController, MVVMView {
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0
             
-            let cv = ClipCollectionView<SubCell, SubCell, SubCell>.init(collectionViewLayout: layout)
+            let cv = ClipCollectionView<SubCell, SubCell, SubCell>.init(collectionViewLayout: UICollectionViewFlowLayout())
             cv.alwaysBounceVertical = true
             cv.contentInset.bottom = tabBarView.bounds.height + 6
             cv.backgroundColor = UIColor.Elements.background
-            cv.headerEnabled = false
-            cv.footerEnabled = false
             return cv
         }()
     }
@@ -187,3 +185,4 @@ extension MainVC {
         UIApplication.shared.keyWindow?.rootViewController = vc
     }
 }
+

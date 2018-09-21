@@ -26,7 +26,7 @@ class SliderNotesTextField: SliderTextField {
             view.backgroundColor = .clear
             view.inputAccessoryView = toolBar()
             view.delegate = self
-            view.clip.enabled()
+            view.clip.enable()
             return view
         }()
         addSubview(textView)

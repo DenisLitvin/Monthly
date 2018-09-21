@@ -37,7 +37,7 @@ class SubCellViewModel {
         
         
         valueText = modelObs
-            .map { "\($0.amount)".attributedForAmount() }
+            .map { "\($0.value)".attributedForAmount() }
             .asDriver(onErrorJustReturn: NSAttributedString())
         
         categoryText = modelObs
