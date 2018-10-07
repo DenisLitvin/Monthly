@@ -71,11 +71,6 @@ class MainVCViewModel {
             .asDriver(onErrorJustReturn: [])
         
         didReloadAllItems = subChanges
-//            .filter {
-//                return $0.1?.inserted.count == 0
-//                    && $0.1?.deleted.count == 0
-//                    && $0.1?.updated.count == 0
-//            }
             .map { (results, changeset) in results }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())

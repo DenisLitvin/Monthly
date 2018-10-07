@@ -68,10 +68,16 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        contentView.clip.invalidateLayout()
+//    }
+    
     func set(viewModel: SubCellViewModel) {
         disposeBag = DisposeBag()
         self.viewModel = viewModel
         setUpBindings()
+        contentView.clip.invalidateLayout()
     }
     
     //MARK: - PRIVATE
@@ -86,17 +92,16 @@ class SubCell: UICollectionViewCell, MVVMBinder {
     }
     
     private func setUpLayout() {
-        contentView.clip.withDistribution(.row)
+        contentView.clip.enable().withDistribution(.column)
         
-        backgroundRoundView.clip.withDistribution(.row).insetTop(9).insetBottom(9).insetLeft(13).insetRight(13)
-        contentView.addSubview(backgroundRoundView)
+        backgroundRoundView.clip.withDistribution(.column).insetTop(9).insetBottom(9).insetLeft(13).insetRight(13)
+//        contentView.addSubview(backgroundRoundView)
         
         let rowContainer = UIView()
         rowContainer.clip.enable()
-            .horizontallyAligned(.stretch)
             .withDistribution(.row)
             .insetLeft(33).insetTop(20).insetBottom(20).insetRight(13)
-        backgroundRoundView.addSubview(rowContainer)
+        contentView.addSubview(rowContainer)
         
         rowContainer.addSubview(iconView)
         
@@ -104,6 +109,7 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         midColumnContainer.clip.enable()
             .withDistribution(.column)
             .insetLeft(26).insetRight(20)
+        .horizontallyAligned(.stretch)
         rowContainer.addSubview(midColumnContainer)
         
         titleLabel.clip.horizontallyAligned(.head).insetBottom(10)
@@ -182,5 +188,22 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         }()
     }
 
-   
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    fileprivate func layout(size: CGSize) {
+        flex.size(size).layout()
+    }
+    
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        layout(size: CGSize(width: size.width, height: size.height))
+        return CGSize(width: contentView.frame.width, height: contentView.frame.height)
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return sizeThatFits(CGSize(width: frame.width, height: frame.height))
+    }
+    
 }

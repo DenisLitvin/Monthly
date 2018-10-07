@@ -80,10 +80,10 @@ open class ClipCollectionView<Cell: ClipDataBinder, Header: ClipDataBinder, Foot
         )
         
         //test
-        //        manequinCell.frame.size = finalMaxSize
-        //        manequinCell.clip.invalidateLayout()
-        //        let size = manequinCell.contentView.bounds.size
-        //        manequinCell.contentView.clip.invalidateCache()
+//                manequinCell.frame.size = finalMaxSize
+//                manequinCell.clip.invalidateLayout()
+//                let size = manequinCell.contentView.bounds.size
+//                manequinCell.contentView.clip.invalidateCache()
         
         let size = manequinCell.contentView.clip.measureSize(within: finalMaxSize)
         manequinCell.contentView.clip.invalidateCache()

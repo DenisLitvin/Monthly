@@ -1,5 +1,6 @@
 PODS:
-  - ClipLayout (1.3.1)
+  - ClipLayout (1.3.2)
+  - FlexLayout (1.3.11)
   - Pinner (0.1.5)
   - pop (1.0.10)
   - Realm (3.10.0):
@@ -27,6 +28,7 @@ PODS:
 
 DEPENDENCIES:
   - ClipLayout
+  - FlexLayout
   - Pinner
   - pop (~> 1.0)
   - RxBlocking (~> 4.0)
@@ -41,6 +43,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ClipLayout
+    - FlexLayout
     - Pinner
     - pop
     - Realm
@@ -55,7 +58,8 @@ SPEC REPOS:
     - VisualEffectView
 
 SPEC CHECKSUMS:
-  ClipLayout: 47108d0c5bff96c16d883a49a8d77997880c7c34
+  ClipLayout: 6f760282e52c937f33d3fb2d5f79ef08fd8c70a7
+  FlexLayout: b008184d23aae0c56e1c916e803445a13a6f4e5a
   Pinner: 840fcf493267052b45e4724ec861f4f2fdf7f912
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   Realm: 85ab9e4f779d66f6e9ffeb118dc25b7f130c96ac
@@ -69,6 +73,6 @@ SPEC CHECKSUMS:
   RxTest: 831444848ac3c5efdd7d80ff5dc4b50ba08877a9
   VisualEffectView: 42c25f5a3c643d7c3021a3e50dac9946642225d7
 
-PODFILE CHECKSUM: f9ec4d7e2bb3408cc5445f984c65aadbe535f15d
+PODFILE CHECKSUM: 6ac2c0ca439eaa0e9acdef311ebebaaa35b7db30
 
 COCOAPODS: 1.5.3

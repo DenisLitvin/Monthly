@@ -7,6 +7,7 @@
 target 'Monthly' do
     pod 'Pinner'
     pod 'ClipLayout'
+    pod 'FlexLayout'
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
     pod 'RxGesture'
