@@ -29,7 +29,7 @@ class DatabaseManager {
     }
     
     private let mainDatabaseRef: Realm
-    private let backgroundQueue = DispatchQueue(label: "databaseBackgroundQueue")
+    private let backgroundQueue = DispatchQueue(label: "databaseBackgroundQueue", qos: .background)
     private let config: Realm.Configuration
     
     init(with configuration: Realm.Configuration = Realm.Configuration.defaultConfiguration) {

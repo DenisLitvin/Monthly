@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ClipLayout
+import FlexLayout
 import RxCocoa
 import RxSwift
 
@@ -47,9 +47,9 @@ class SubCell: UICollectionViewCell, MVVMBinder {
     private var disposeBag = DisposeBag()
     
     private var backgroundRoundView: UIView!
-
+    
     private var viewModel: SubCellViewModel!
-
+    
     var titleLabel: UILabel!
     var categoryView: UILabel!
     var iconView: UIImageView!
@@ -64,20 +64,21 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         setUpLayout()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        contentView.clip.invalidateLayout()
-//    }
+    //    override func layoutSubviews() {
+    //        super.layoutSubviews()
+    //        contentView.clip.invalidateLayout()
+    //    }
     
     func set(viewModel: SubCellViewModel) {
         disposeBag = DisposeBag()
         self.viewModel = viewModel
         setUpBindings()
-        contentView.clip.invalidateLayout()
+        
+        titleLabel.flex.markDirty()
+        categoryView.flex.markDirty()
+        valueLabel.flex.markDirty()
+        dateLabel.flex.markDirty()
+        flex.layout()
     }
     
     //MARK: - PRIVATE
@@ -87,49 +88,35 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.categoryText.drive(categoryView.rx.attributedText).disposed(by: disposeBag)
         viewModel.dateText.drive(dateLabel.rx.attributedText).disposed(by: disposeBag)
-//        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
+        //        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
         viewModel.bellViewIcon.drive(bellView.rx.image).disposed(by: disposeBag)
     }
     
     private func setUpLayout() {
-        contentView.clip.enable().withDistribution(.column)
-        
-        backgroundRoundView.clip.withDistribution(.column).insetTop(9).insetBottom(9).insetLeft(13).insetRight(13)
-//        contentView.addSubview(backgroundRoundView)
-        
-        let rowContainer = UIView()
-        rowContainer.clip.enable()
-            .withDistribution(.row)
-            .insetLeft(33).insetTop(20).insetBottom(20).insetRight(13)
-        contentView.addSubview(rowContainer)
-        
-        rowContainer.addSubview(iconView)
-        
-        let midColumnContainer = UIView()
-        midColumnContainer.clip.enable()
-            .withDistribution(.column)
-            .insetLeft(26).insetRight(20)
-        .horizontallyAligned(.stretch)
-        rowContainer.addSubview(midColumnContainer)
-        
-        titleLabel.clip.horizontallyAligned(.head).insetBottom(10)
-        midColumnContainer.addSubview(titleLabel)
-        categoryView.clip.horizontallyAligned(.head)
-        midColumnContainer.addSubview(categoryView)
-        
-        let rightColumnContainer = UIView()
-        rightColumnContainer.clip.enable().withDistribution(.column)
-        rowContainer.addSubview(rightColumnContainer)
-        
-        valueLabel.clip.horizontallyAligned(.tail).insetBottom(10)
-        rightColumnContainer.addSubview(valueLabel)
-        dateLabel.clip.horizontallyAligned(.tail)
-        rightColumnContainer.addSubview(dateLabel)
-        
-        bellView.clip.verticallyAligned(.head).insetLeft(14).insetTop(-7)
-        rowContainer.addSubview(bellView)
+        contentView.flex.define { (flex) in
+            flex.addItem(backgroundRoundView)
+                .marginTop(5).marginBottom(5).marginLeft(13).marginRight(13)
+                .define { (flex) in
+                    //row container
+                    flex.addItem().direction(.row).alignItems(.center)
+                        .marginTop(20).marginLeft(20).marginBottom(20).marginRight(13)
+                        .define { (flex) in
+                            flex.addItem(iconView)
+                            flex.addItem().marginLeft(15).marginRight(5).grow(1).shrink(1).define { (flex) in
+                                    flex.addItem(titleLabel).marginBottom(10)
+                                    flex.addItem(categoryView)
+                            }
+                            flex.addItem().alignItems(.end).define { (flex) in
+                                flex.addItem(valueLabel).marginBottom(10)
+                                flex.addItem(dateLabel)
+                            }
+                            flex.addItem(bellView).marginLeft(14).marginRight(0).alignSelf(.start)
+                    }
+            }
+        }
+        flex.layout()
     }
-
+    
     private func setUpViews() {
         backgroundRoundView = {
             let view = UIView()
@@ -175,23 +162,22 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         }()
         iconView = {
             let view = UIImageView()
-//            view.clip.wantsSize = CGSize(width: 33, height: 33)//templocal
+            //            view.clip.wantsSize = CGSize(width: 33, height: 33)//templocal
             view.image = #imageLiteral(resourceName: "signature")
             view.clip.enable()
             return view
         }()
         bellView = {
-           let view = UIImageView()
+            let view = UIImageView()
             view.clip.enable()
             view.image = #imageLiteral(resourceName: "bell_off")
             return view
         }()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     fileprivate func layout(size: CGSize) {
         flex.size(size).layout()

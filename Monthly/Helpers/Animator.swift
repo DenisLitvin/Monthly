@@ -190,15 +190,25 @@ class Animator {
             view?.layer.pop_removeAnimation(forKey: "translation")
             view?.layer.pop_add(anim, forKey: "translation")
         }
+        let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
+        searchFieldAnim?.toValue = 1
+        let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
+        layer.pop_removeAnimation(forKey: "stroke")
+        layer.pop_add(searchFieldAnim, forKey: "stroke")
     }
     
     static func hideSearch(tabBar: TabBarView) {
         let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
-        let anim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
-        anim?.toValue = 0
+        let subviewsAnim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
+        subviewsAnim?.toValue = 0
         views.forEach { view in
             view?.layer.pop_removeAnimation(forKey: "translation")
-            view?.layer.pop_add(anim, forKey: "translation")
+            view?.layer.pop_add(subviewsAnim, forKey: "translation")
         }
+        let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
+        searchFieldAnim?.toValue = 0
+        let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
+        layer.pop_removeAnimation(forKey: "stroke")
+        layer.pop_add(searchFieldAnim, forKey: "stroke")
     }
 }

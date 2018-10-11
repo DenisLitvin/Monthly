@@ -29,7 +29,6 @@ class PlusButton: TabBarButton {
 class TabBarButton: UIButton {
     var disposeBag = DisposeBag()
 
-    //OUTPUT
     var isOn = BehaviorSubject<Bool>.init(value: false)
     
     var selectedImage: UIImage? { willSet { changeImage() } }
@@ -49,7 +48,7 @@ class TabBarButton: UIButton {
                 self.changeImage()
             })
             .disposed(by: disposeBag)
-
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -96,9 +95,7 @@ class TabBarView: UIView {
     var plusButton: TabBarButton!
     var filterButton: TabBarButton!
     var menuButton: TabBarButton!
-    
-//    var searchBar: UISearchBar!
-    
+    var searchField: UITextField!
     init() {
         super.init(frame: .zero)
         
@@ -116,8 +113,6 @@ class TabBarView: UIView {
                 }
             })
             .disposed(by: disposeBag)
-
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -134,13 +129,7 @@ class TabBarView: UIView {
 
         rowContainer.clip.enable().withDistribution(.row)
         addSubview(rowContainer)
-//        rowContainer.addSubview(searchBar)
-//        searchBar.makeConstraints(for: .left, .right, .centerX, .centerY) { (make) in
-//            make.pin(to: self.rowContainer.leftAnchor, const: UIScreen.main.bounds.width / 4)
-//            make.pin(to: self.rowContainer.rightAnchor)
-//            make.pin(to: self.rowContainer.centerXAnchor)
-//            make.pin(to: self.rowContainer.centerYAnchor)
-//        }
+        addSubview(searchField)
         searchButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(20)
         rowContainer.addSubview(searchButton)
         statButton.clip.aligned(v: .stretch, h: .stretch)
@@ -150,17 +139,36 @@ class TabBarView: UIView {
         rowContainer.addSubview(filterButton)
         menuButton.clip.aligned(v: .stretch, h: .stretch).insetRight(20)
         rowContainer.addSubview(menuButton)
-
     }
     
     private func setUpViews() {
-        
         blurView = {
             let blurView = VisualEffectView(frame: .zero)
             blurView.blurRadius = 5
             tintLayer = CAGradientLayer.Elements.tabBar
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
+        }()
+        searchField = {
+           let view = UITextField()
+            view.textColor = .white
+            view.backgroundColor = .red
+            let screenWidth = UIScreen.main.bounds.size.width
+            let width = screenWidth * 0.65
+            view.frame = CGRect(x: screenWidth * 0.3, y: 15, width: width, height: 32)
+            let separator: CAShapeLayer = {
+               let layer = CAShapeLayer()
+                layer.frame = CGRect(x: 0, y: 32, width: width, height: 2)
+                let path = UIBezierPath()
+                path.move(to: .zero)
+                path.addLine(to: CGPoint(x: view.bounds.width, y: 0))
+                layer.path = path.cgPath
+                layer.lineWidth = 2
+                layer.strokeColor = UIColor.white.cgColor
+                return layer
+            }()
+            view.layer.addSublayer(separator)
+            return view
         }()
         searchButton = {
            let view = TabBarButton()

@@ -25,7 +25,7 @@ class MainVC: UIViewController, MVVMView {
     var blurView = VisualEffectView(frame: UIScreen.main.bounds)
     var tabBarView = TabBarView()
     var sliderView = SliderView()
-    var collectionView: ClipCollectionView<SubCell, SubCell, SubCell>!
+    var collectionView: CollectionView<SubCell, SubCell, SubCell>!
     
     override func viewDidAppear(_ animated: Bool) {
         setUpElements()
@@ -156,7 +156,7 @@ class MainVC: UIViewController, MVVMView {
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0
             
-            let cv = ClipCollectionView<SubCell, SubCell, SubCell>.init(collectionViewLayout: UICollectionViewFlowLayout())
+            let cv = CollectionView<SubCell, SubCell, SubCell>.init(collectionViewLayout: UICollectionViewFlowLayout())
             cv.alwaysBounceVertical = true
             cv.contentInset.bottom = tabBarView.bounds.height + 6
             cv.backgroundColor = UIColor.Elements.background
