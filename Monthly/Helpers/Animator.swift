@@ -190,6 +190,7 @@ class Animator {
             view?.layer.pop_removeAnimation(forKey: "translation")
             view?.layer.pop_add(anim, forKey: "translation")
         }
+        
         let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
         searchFieldAnim?.toValue = 1
         let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
@@ -205,6 +206,7 @@ class Animator {
             view?.layer.pop_removeAnimation(forKey: "translation")
             view?.layer.pop_add(subviewsAnim, forKey: "translation")
         }
+        
         let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
         searchFieldAnim?.toValue = 0
         let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
