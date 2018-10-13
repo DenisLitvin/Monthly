@@ -8,12 +8,7 @@
 import UIKit
 import FlexLayout
 
-public protocol DataBinder {
-    associatedtype Data
-    func set(data: Data)
-}
-
-open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBinder>:
+public class CollectionView<Cell: MVVMBinder, Header: MVVMBinder, Footer: MVVMBinder>:
     UICollectionView,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout
@@ -25,9 +20,9 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
     public var footerEnabled = false
     public var headerEnabled = false
     
-    public var cellData: [[Cell.Data]] = []
-    public var headerData: [Header.Data] = []
-    public var footerData: [Footer.Data] = []
+    public var cellData: [[Cell.ViewModel]] = []
+    public var headerData: [Header.ViewModel] = []
+    public var footerData: [Footer.ViewModel] = []
     
     public var maxCellSize = CGSize(width: 0, height: 10000)
     public var maxHeaderSize = CGSize(width: 0, height: 10000)
@@ -73,7 +68,7 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
                              layout collectionViewLayout: UICollectionViewLayout,
                              sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        manequinCell.set(data: cellData[indexPath.section][indexPath.row])
+        manequinCell.set(viewModel: cellData[indexPath.section][indexPath.row])
         
         let finalMaxSize = CGSize(
             width: maxCellSize.width == 0 ? collectionView.bounds.width : maxCellSize.width,
@@ -90,7 +85,7 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
         
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId,
                                                          for: indexPath) as? Cell {
-            cell.set(data: cellData[indexPath.section][indexPath.row])
+            cell.set(viewModel: cellData[indexPath.section][indexPath.row])
             return cell
         }
         
@@ -103,7 +98,7 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
                              referenceSizeForHeaderInSection section: Int) -> CGSize {
         
         guard headerEnabled else { return .zero }
-        manequinHeader.set(data: headerData[section])
+        manequinHeader.set(viewModel: headerData[section])
         
         var finalMaxSize = CGSize(
             width: maxHeaderSize.width == 0 ? collectionView.bounds.width : maxHeaderSize.width,
@@ -120,7 +115,7 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
                              referenceSizeForFooterInSection section: Int) -> CGSize {
         
         guard footerEnabled else { return .zero }
-        manequinFooter.set(data: footerData[section])
+        manequinFooter.set(viewModel: footerData[section])
         
         var finalMaxSize = CGSize(
             width: maxFooterSize.width == 0 ? collectionView.bounds.width : maxFooterSize.width,
@@ -140,14 +135,14 @@ open class CollectionView<Cell: DataBinder, Header: DataBinder, Footer: DataBind
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                          withReuseIdentifier: headerId,
                                                                          for: indexPath) as? Header {
-            header.set(data: headerData[indexPath.row])
+            header.set(viewModel: headerData[indexPath.row])
             return header
         }
         
         if let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                         withReuseIdentifier: footerId,
                                                                         for: indexPath) as? Footer {
-            footer.set(data: footerData[indexPath.row])
+            footer.set(viewModel: footerData[indexPath.row])
             return footer
         }
         

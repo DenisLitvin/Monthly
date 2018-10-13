@@ -9,13 +9,8 @@
 import Foundation
 import ClipLayout
 
-protocol MVVMBinder: DataBinder {
+public protocol MVVMBinder {
     associatedtype ViewModel
     func set(viewModel: ViewModel)
 }
 
-extension MVVMBinder {
-    func set(data: ViewModel) {
-        set(viewModel: data)
-    }
-}

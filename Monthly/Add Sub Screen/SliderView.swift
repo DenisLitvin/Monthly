@@ -18,7 +18,7 @@ import VisualEffectView
 class SliderView: UIScrollView {
     private var disposeBag = DisposeBag()
     
-    private var viewModel: SliderViewViewModel!
+    private var viewModel: SliderViewModel!
     
     private let contentView = UIView()
     
@@ -57,6 +57,12 @@ class SliderView: UIScrollView {
     
     //MARK: - PRIVATE
     private func setUpBindings() {
+        RxKeyboard.instance.visibleHeight
+            .drive(onNext: { keyboardVisibleHeight in
+                self.contentInset.bottom = keyboardVisibleHeight
+            })
+            .disposed(by: disposeBag)
+        
         var old = ""
         youSpendTextField.textField.rx.text.orEmpty
             .subscribe(onNext: { new in
@@ -74,12 +80,6 @@ class SliderView: UIScrollView {
                     }
                     self.youSpendTextField.textField.text = string
                 }
-            })
-            .disposed(by: disposeBag)
-        
-        RxKeyboard.instance.visibleHeight
-            .drive(onNext: { keyboardVisibleHeight in
-                self.contentInset.bottom = keyboardVisibleHeight
             })
             .disposed(by: disposeBag)
         
@@ -109,8 +109,6 @@ class SliderView: UIScrollView {
             .map { $0! }
             .subscribe(self.viewModel.save)
             .disposed(by: disposeBag)
-        
-        
     }
     
     private func setUplayout() {
@@ -270,7 +268,7 @@ class SliderView: UIScrollView {
         let contentHeight = contentView.clip.measureSize(within: CGSize(width: screenSize.width,
                                                                         height: .greatestFiniteMagnitude)).height
         contentView.frame.size = CGSize(width: screenSize.width, height: contentHeight)
-        var maxFrameHeight = screenSize.height - 70
+        var maxFrameHeight = screenSize.height
         if #available(iOS 11.0, *) {
             maxFrameHeight -= safeAreaInsets.top
         }
@@ -287,7 +285,7 @@ class SliderView: UIScrollView {
 }
 
 extension SliderView: MVVMBinder {
-    func set(viewModel: SliderViewViewModel) {
+    func set(viewModel: SliderViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel
         setUpBindings()

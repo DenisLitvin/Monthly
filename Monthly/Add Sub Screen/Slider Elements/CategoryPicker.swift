@@ -13,7 +13,7 @@ import RxCocoa
 class CategoryPicker: UIPickerView {
     var disposeBag = DisposeBag()
     
-    private var viewModel: SliderViewViewModel!
+    private var viewModel: SliderViewModel!
     
     let data = [
         "DAY",
@@ -34,7 +34,7 @@ class CategoryPicker: UIPickerView {
     }
 }
 extension CategoryPicker: MVVMBinder {
-    func set(viewModel: SliderViewViewModel) {
+    func set(viewModel: SliderViewModel) {
         disposeBag = DisposeBag()
         self.viewModel = viewModel
     }

@@ -12,10 +12,10 @@ import pop
 
 class Animator {
     
-    static func slideDown(view: UIView) {
+    static func slideDown(view: SliderView) {
         view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
-        animation?.toValue = view.frame.height
+        animation?.toValue = max(0, view.contentOffset.y) + view.frame.height
         view.layer.pop_add(animation, forKey: "slideDown")
         animation?.completionBlock = { _, finished  in
             if finished {
@@ -24,7 +24,7 @@ class Animator {
         }
     }
     
-    static func slideUp(view: UIView, initial: Bool = false) {
+    static func slideUp(view: SliderView, initial: Bool = false) {
         view.isHidden = false
         view.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
@@ -190,13 +190,13 @@ class Animator {
             view?.layer.pop_removeAnimation(forKey: "translation")
             view?.layer.pop_add(anim, forKey: "translation")
         }
-        
+        tabBar.searchField.alpha = 1
         let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
         searchFieldAnim?.toValue = 1
-        let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
+        let layer = tabBar.searchField.layer.sublayers!.filter { $0 is CAShapeLayer }.first!
         layer.pop_removeAnimation(forKey: "stroke")
         layer.pop_add(searchFieldAnim, forKey: "stroke")
-    }
+        }
     
     static func hideSearch(tabBar: TabBarView) {
         let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
@@ -207,10 +207,15 @@ class Animator {
             view?.layer.pop_add(subviewsAnim, forKey: "translation")
         }
         
-        let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
-        searchFieldAnim?.toValue = 0
-        let layer = tabBar.searchField.layer.sublayers!.filter {$0 is CAShapeLayer}.first!
+        let strokeAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
+        strokeAnim?.toValue = 0
+        let layer = tabBar.searchField.layer.sublayers!.filter { $0 is CAShapeLayer }.first!
         layer.pop_removeAnimation(forKey: "stroke")
-        layer.pop_add(searchFieldAnim, forKey: "stroke")
+        layer.pop_add(strokeAnim, forKey: "stroke")
+        strokeAnim?.completionBlock = { _,finished in
+            if finished {
+                tabBar.searchField.alpha = 0
+            }
+        }
     }
 }

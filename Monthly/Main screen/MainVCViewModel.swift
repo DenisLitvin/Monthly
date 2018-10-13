@@ -26,13 +26,13 @@ class MainVCViewModel {
     
     var databaseManager: DatabaseManager!
 
-    var sliderViewModel = SliderViewViewModel()
+    var sliderViewModel = SliderViewModel()
     var tabBarViewModel = TabBarViewModel()
     
     //MARK: - INPUT
     //    var imageData: AnyObserver<Data>!
     
-    //MAERK: - OUTPUT
+    //MARK: - OUTPUT
     //views
     var didSetCellViewModels: Driver<[SubCellViewModel]>!
     var didUpdateCollectionViewItems: Driver<MainVCViewModel.Changeset>!
@@ -75,7 +75,7 @@ class MainVCViewModel {
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
         
-        sliderViewModel.didTryToSave
+        sliderViewModel.save.asObservable()
             .flatMap { self.databaseManager.add($0) }
             .subscribe(onNext: {
                 print("success")

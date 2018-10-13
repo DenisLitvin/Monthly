@@ -23,13 +23,12 @@
 		3E0D2734211EE47000C39D11 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E0D2733211EE47000C39D11 /* DatabaseManager.swift */; };
 		3E1138362137934C00028202 /* CAGradientLayer+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1138352137934C00028202 /* CAGradientLayer+Theme.swift */; };
 		3E1138382137AA5C00028202 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1138372137AA5C00028202 /* TabBarView.swift */; };
-		3E20C9E82125609A00D9D313 /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E20C9E72125609A00D9D313 /* FPSCounter.swift */; };
 		3E23A605212FBD470034732B /* UIColor+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23A604212FBD470034732B /* UIColor+Theme.swift */; };
 		3E252085214599B2000799CB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E252084214599B2000799CB /* Formatters.swift */; };
 		3E25208721459B16000799CB /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208621459B16000799CB /* DatePicker.swift */; };
 		3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208821459C22000799CB /* SliderDateTextField.swift */; };
 		3E25208F2145B702000799CB /* MVVMBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208E2145B702000799CB /* MVVMBinder.swift */; };
-		3E2520912145BE1A000799CB /* SliderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520902145BE1A000799CB /* SliderViewViewModel.swift */; };
+		3E2520912145BE1A000799CB /* SliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520902145BE1A000799CB /* SliderViewModel.swift */; };
 		3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E60882A216AAEF600D8D916 /* CollectionView.swift */; };
 		3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */; };
 		3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F47214875510032831B /* CategoryPicker.swift */; };
@@ -39,6 +38,9 @@
 		3E96D86D2130EEC7004A7660 /* ProximaNovaCond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */; };
 		3E96D86E2130EECB004A7660 /* ProximaNovaCond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */; };
 		3E96D8702130EF10004A7660 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */; };
+		3E99397121727CE000BCB9CA /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E99397021727CE000BCB9CA /* SearchTextField.swift */; };
+		3E99397321727D3500BCB9CA /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E99397221727D3500BCB9CA /* PlusButton.swift */; };
+		3E99397521727D5F00BCB9CA /* TabBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E99397421727D5F00BCB9CA /* TabBarButton.swift */; };
 		3E9FFDF9214742CC00F0511A /* VisualEffectView+PopProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */; };
 		3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8D821335D1F006CDE4D /* SliderView.swift */; };
 		3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8DA21336709006CDE4D /* Animator.swift */; };
@@ -79,13 +81,12 @@
 		3E0D2733211EE47000C39D11 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		3E1138352137934C00028202 /* CAGradientLayer+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CAGradientLayer+Theme.swift"; sourceTree = "<group>"; };
 		3E1138372137AA5C00028202 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		3E20C9E72125609A00D9D313 /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
 		3E23A604212FBD470034732B /* UIColor+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Theme.swift"; sourceTree = "<group>"; };
 		3E252084214599B2000799CB /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		3E25208621459B16000799CB /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
 		3E25208821459C22000799CB /* SliderDateTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderDateTextField.swift; sourceTree = "<group>"; };
 		3E25208E2145B702000799CB /* MVVMBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVMBinder.swift; sourceTree = "<group>"; };
-		3E2520902145BE1A000799CB /* SliderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewViewModel.swift; sourceTree = "<group>"; };
+		3E2520902145BE1A000799CB /* SliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewModel.swift; sourceTree = "<group>"; };
 		3E60882A216AAEF600D8D916 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderNotesTextField.swift; sourceTree = "<group>"; };
 		3E7F2F47214875510032831B /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
@@ -95,6 +96,9 @@
 		3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Regular.ttf"; sourceTree = "<group>"; };
 		3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Bold.ttf"; sourceTree = "<group>"; };
 		3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
+		3E99397021727CE000BCB9CA /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		3E99397221727D3500BCB9CA /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
+		3E99397421727D5F00BCB9CA /* TabBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarButton.swift; sourceTree = "<group>"; };
 		3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisualEffectView+PopProperty.swift"; sourceTree = "<group>"; };
 		3EB9A8D821335D1F006CDE4D /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		3EB9A8DA21336709006CDE4D /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
@@ -240,7 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				3E01EB7D211DB86100CF8A43 /* Router.swift */,
-				3E20C9E72125609A00D9D313 /* FPSCounter.swift */,
 				3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */,
 				3E252084214599B2000799CB /* Formatters.swift */,
 				3EB9A8DA21336709006CDE4D /* Animator.swift */,
@@ -276,13 +279,24 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		3E99396F21727CC400BCB9CA /* Tab Bar Elements */ = {
+			isa = PBXGroup;
+			children = (
+				3E99397021727CE000BCB9CA /* SearchTextField.swift */,
+				3E99397421727D5F00BCB9CA /* TabBarButton.swift */,
+				3E99397221727D3500BCB9CA /* PlusButton.swift */,
+			);
+			path = "Tab Bar Elements";
+			sourceTree = "<group>";
+		};
 		3EB9A8D721335CE2006CDE4D /* Add Sub Screen */ = {
 			isa = PBXGroup;
 			children = (
 				3E25208C2145B6AC000799CB /* Protocols */,
 				3E0A6AB1214495E70035826A /* Slider Elements */,
+				3E99396F21727CC400BCB9CA /* Tab Bar Elements */,
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
-				3E2520902145BE1A000799CB /* SliderViewViewModel.swift */,
+				3E2520902145BE1A000799CB /* SliderViewModel.swift */,
 				3E1138372137AA5C00028202 /* TabBarView.swift */,
 				3ED7E833213A35C1009D889F /* TabBarViewModel.swift */,
 			);
@@ -527,13 +541,15 @@
 				3E252085214599B2000799CB /* Formatters.swift in Sources */,
 				3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */,
 				3E01EB6C211D9D3400CF8A43 /* MainVC.swift in Sources */,
+				3E99397521727D5F00BCB9CA /* TabBarButton.swift in Sources */,
 				3E25208721459B16000799CB /* DatePicker.swift in Sources */,
-				3E20C9E82125609A00D9D313 /* FPSCounter.swift in Sources */,
 				3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */,
 				3E1138362137934C00028202 /* CAGradientLayer+Theme.swift in Sources */,
 				3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */,
 				3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */,
 				3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */,
+				3E99397121727CE000BCB9CA /* SearchTextField.swift in Sources */,
+				3E99397321727D3500BCB9CA /* PlusButton.swift in Sources */,
 				3E0A6AB3214496010035826A /* SliderTextField.swift in Sources */,
 				3E01EB84211DEF6300CF8A43 /* SubCellViewModel.swift in Sources */,
 				3E23A605212FBD470034732B /* UIColor+Theme.swift in Sources */,
@@ -551,7 +567,7 @@
 				3E01EB6A211D9D3400CF8A43 /* AppDelegate.swift in Sources */,
 				3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */,
 				3E9FFDF9214742CC00F0511A /* VisualEffectView+PopProperty.swift in Sources */,
-				3E2520912145BE1A000799CB /* SliderViewViewModel.swift in Sources */,
+				3E2520912145BE1A000799CB /* SliderViewModel.swift in Sources */,
 				3E1138382137AA5C00028202 /* TabBarView.swift in Sources */,
 				3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */,
 			);

@@ -22,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         
-        print("CONFIG: ", Realm.Configuration.defaultConfiguration.fileURL?.path)
-        Bundle(path: "/Applications/InjectionX.app/Contents/Resources/iOSInjection.bundle")!.load() //templocal
+//        print("CONFIG: ", Realm.Configuration.defaultConfiguration.fileURL?.path)
+//        Bundle(path: "/Applications/InjectionX.app/Contents/Resources/iOSInjection.bundle")!.load() //templocal
         return true
     }
 
@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static func makeRootVC() -> UIViewController {
         let vc = MainVC()
         vc.view.backgroundColor = UIColor.Elements.background
-        vc.view.addSubview(FPSCounter())
         vc.viewModel.databaseManager = DatabaseManager.init()
         vc.viewModel.didSetDependencies()
         vc.didSetDependencies()

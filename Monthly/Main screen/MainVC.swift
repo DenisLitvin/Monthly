@@ -17,8 +17,8 @@ import Pinner
 
 import VisualEffectView
 
-class MainVC: UIViewController, MVVMView {
-    private let disposeBag = DisposeBag()
+class MainVC: UIViewController {
+    var disposeBag = DisposeBag()
     
     let viewModel = MainVCViewModel()
     
@@ -36,14 +36,8 @@ class MainVC: UIViewController, MVVMView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setUpViews()
         setUpLayout()
-    }
-    
-    func didSetDependencies() {
-        sliderView.set(viewModel: viewModel.sliderViewModel)
-        setUpBindings()
     }
     
     //MARK: - PRIVATE
@@ -186,3 +180,11 @@ extension MainVC {
     }
 }
 
+extension MainVC: MVVMView {
+    func didSetDependencies() {
+        disposeBag = DisposeBag()
+        sliderView.set(viewModel: viewModel.sliderViewModel)
+        tabBarView.set(viewModel: viewModel.tabBarViewModel)
+        setUpBindings()
+    }
+}

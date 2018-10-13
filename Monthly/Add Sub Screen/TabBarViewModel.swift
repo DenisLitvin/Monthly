@@ -14,7 +14,5 @@ class TabBarViewModel {
     private let disposeBag = DisposeBag()
     
     
-    init() {
-
-    }
+    
 }
