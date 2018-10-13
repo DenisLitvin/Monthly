@@ -17,10 +17,12 @@ class SearchTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.keyboardAppearance = .dark
-        self.returnKeyType = .done
-        self.delegate = self
-        self.textColor = .white
+        isHidden = true
+        keyboardAppearance = .dark
+        returnKeyType = .done
+        delegate = self
+        textColor = .white
+        
         let screenWidth = UIScreen.main.bounds.size.width
         let width = screenWidth * 0.61
         self.frame = CGRect(x: screenWidth * 0.24, y: 15, width: width, height: 32)

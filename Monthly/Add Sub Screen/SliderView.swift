@@ -269,6 +269,9 @@ class SliderView: UIScrollView {
                                                                         height: .greatestFiniteMagnitude)).height
         contentView.frame.size = CGSize(width: screenSize.width, height: contentHeight)
         var maxFrameHeight = screenSize.height
+        let inset: CGFloat = screenSize.height - 70 - maxFrameHeight < 0 ? 70 : 0
+        contentInset.top = inset
+        
         if #available(iOS 11.0, *) {
             maxFrameHeight -= safeAreaInsets.top
         }

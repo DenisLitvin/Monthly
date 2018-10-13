@@ -64,6 +64,7 @@ class TabBarView: UIView {
             .disposed(by: disposeBag)
         
         searchButton.isOn
+            .skip(1)
             .subscribe(onNext: { isOn in
                 if isOn {
                     self.searchField.becomeFirstResponder()

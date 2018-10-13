@@ -110,7 +110,7 @@ class MainVC: UIViewController {
 
         sliderView.rx.didEndDragging
             .subscribe(onNext: { _ in
-                if self.sliderView.contentOffset.y < -5 {
+                if self.sliderView.contentOffset.y < -self.sliderView.contentInset.top - 10 {
                     self.tabBarView.plusButton.isOn.onNext(false)
                 }
             })

@@ -34,6 +34,7 @@ class Animator {
     
     static func stopAllAnimations(view: UIView) {
         view.layer.pop_removeAllAnimations()
+        view.pop_removeAllAnimations()
     }
     
     static func decayY(view: UIView, velocity: CGFloat) {
@@ -91,13 +92,23 @@ class Animator {
     
     static func hideTabBar(view: TabBarView) {
         view.plusButton.isHidden = true
+        view.layer.pop_removeAllAnimations()
+
         let animation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = view.frame.height
         animation?.duration = 0.3
         view.layer.pop_add(animation, forKey: "slideDown")
+        animation?.completionBlock = { _,final in
+            if final {
+                view.isHidden = true
+            }
+        }
     }
     
     static func showTabBar(view: TabBarView) {
+        view.isHidden = false
+        view.layer.pop_removeAllAnimations()
+        
         let animation = POPBasicAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = 0.0
         animation?.duration = 0.3
@@ -183,6 +194,8 @@ class Animator {
     }
     
     static func showSearch(tabBar: TabBarView) {
+        tabBar.searchField.isHidden = false
+
         let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
         anim?.toValue = UIScreen.main.bounds.width
@@ -190,7 +203,6 @@ class Animator {
             view?.layer.pop_removeAnimation(forKey: "translation")
             view?.layer.pop_add(anim, forKey: "translation")
         }
-        tabBar.searchField.alpha = 1
         let searchFieldAnim = POPSpringAnimation(propertyNamed: kPOPShapeLayerStrokeEnd)
         searchFieldAnim?.toValue = 1
         let layer = tabBar.searchField.layer.sublayers!.filter { $0 is CAShapeLayer }.first!
@@ -214,7 +226,7 @@ class Animator {
         layer.pop_add(strokeAnim, forKey: "stroke")
         strokeAnim?.completionBlock = { _,finished in
             if finished {
-                tabBar.searchField.alpha = 0
+                tabBar.searchField.isHidden = true
             }
         }
     }
