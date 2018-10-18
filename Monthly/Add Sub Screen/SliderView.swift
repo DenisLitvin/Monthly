@@ -85,6 +85,7 @@ class SliderView: UIScrollView {
         
         saveButton.rx.tapGesture().when(.recognized)
             .map { _ -> Sub? in
+                //todo move in VM
                 let sub = Sub()
                 sub.id = UUID().uuidString
                 guard
@@ -268,15 +269,8 @@ class SliderView: UIScrollView {
         let contentHeight = contentView.clip.measureSize(within: CGSize(width: screenSize.width,
                                                                         height: .greatestFiniteMagnitude)).height
         contentView.frame.size = CGSize(width: screenSize.width, height: contentHeight)
-        var maxFrameHeight = screenSize.height
-        let inset: CGFloat = screenSize.height - 70 - maxFrameHeight < 0 ? 70 : 0
-        contentInset.top = inset
-        
-        if #available(iOS 11.0, *) {
-            maxFrameHeight -= safeAreaInsets.top
-        }
-        let height = min(maxFrameHeight, contentHeight)
-        frame = CGRect(x: 0, y: screenSize.height - height, width: screenSize.width, height: height)
+        contentInset.top = max(80, screenSize.height - contentHeight - 80)
+        frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
         contentSize = CGSize(width: UIScreen.main.bounds.width, height: contentHeight)
         transform = CGAffineTransform(translationX: 0, y: frame.height)
         

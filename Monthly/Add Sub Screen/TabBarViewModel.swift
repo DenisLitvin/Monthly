@@ -11,8 +11,8 @@ import RxSwift
 import RxCocoa
 
 class TabBarViewModel {
-    private let disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
     
-    
+    var performSearch = PublishSubject<String>()
     
 }

@@ -124,6 +124,7 @@ class Animator {
         let mask = button.layer.mask
         button.isHidden = false
         button.alpha = 1
+        button.transform = CGAffineTransform(scaleX: 1, y: 1)
         mask?.pop_removeAllAnimations()
         button.titleView.pop_removeAllAnimations()
         
@@ -131,14 +132,9 @@ class Animator {
         alphaAnim?.toValue = 1
         button.titleView.pop_add(alphaAnim, forKey: "alpha")
         
-        let animX = POPSpringAnimation(propertyNamed: kPOPLayerScaleX)
-        animX?.toValue = 4
-        
-        let animY = POPSpringAnimation(propertyNamed: kPOPLayerScaleY)
-        animY?.toValue = 4
-        
-        mask?.pop_add(animX, forKey: "scaleX")
-        mask?.pop_add(animY, forKey: "scaleY")
+        let anim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+        anim?.toValue = NSValue(cgSize: CGSize(width: 4, height: 4))
+        mask?.pop_add(anim, forKey: "scale")
     }
     
     static func hideSave(button: SaveButton) {
@@ -150,15 +146,10 @@ class Animator {
         alphaAnim?.toValue = 0
         button.titleView.pop_add(alphaAnim, forKey: "alpha")
         
-        let animX = POPSpringAnimation(propertyNamed: kPOPLayerScaleX)
-        animX?.toValue = 1
-        
-        let animY = POPSpringAnimation(propertyNamed: kPOPLayerScaleY)
-        animY?.toValue = 1
-        
-        mask?.pop_add(animX, forKey: "scaleX")
-        mask?.pop_add(animY, forKey: "scaleY")
-        animX?.completionBlock = { _, finished in
+        let scaleAnim = POPSpringAnimation(propertyNamed: kPOPLayerScaleXY)
+        scaleAnim?.toValue = NSValue(cgSize: CGSize(width: 1, height: 1))
+        mask?.pop_add(scaleAnim, forKey: "scale")
+        scaleAnim?.completionBlock = { _, finished in
             if finished {
                 let anim = POPBasicAnimation(propertyNamed: kPOPViewAlpha)
                 anim?.toValue = 0
@@ -178,8 +169,8 @@ class Animator {
             view.layer.pop_add(anim, forKey: "scale")
         }
         if let anim = view.layer.pop_animation(forKey: "scale") as? POPBasicAnimation {
-            anim.completionBlock = { _, _ in
-                makeAnimation()
+            anim.completionBlock = { _, finished in
+                if finished { makeAnimation() }
             }
         }
         else { makeAnimation() }

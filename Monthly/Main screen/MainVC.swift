@@ -44,23 +44,23 @@ class MainVC: UIViewController {
     private func setUpBindings() {
         
         //VIEW MODEL
-        viewModel.didSetCellViewModels
+        viewModel.cellViewModels
             .drive(onNext: { (subModel) in
                 self.collectionView.cellData = [subModel]
             })
             .disposed(by: disposeBag)
         
-//        viewModel.didUpdateCollectionViewItems
-//            .drive(onNext: { (change) in
-//                self.collectionView.performBatchUpdates({
-//                    self.collectionView.reloadItems(at: change.updated)
-//                    self.collectionView.deleteItems(at: change.deleted)
-//                    self.collectionView.insertItems(at: change.inserted)
-//                })
-//            })
-//            .disposed(by: disposeBag)
-//
-        viewModel.didReloadAllItems
+        viewModel.updateCollectionViewItems
+            .drive(onNext: { (change) in
+                self.collectionView.performBatchUpdates({
+                    self.collectionView.reloadItems(at: change.updated)
+                    self.collectionView.deleteItems(at: change.deleted)
+                    self.collectionView.insertItems(at: change.inserted)
+                })
+            })
+            .disposed(by: disposeBag)
+
+        viewModel.reloadAllItems
             .drive(onNext: {
                     self.collectionView.reloadData()
             })
@@ -74,6 +74,7 @@ class MainVC: UIViewController {
 //                self.present(picker, animated: true)
 //            })
 //            .disposed(by: disposeBag)
+        
         
         //VIEWS
         let present: () -> Void = {

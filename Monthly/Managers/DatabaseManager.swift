@@ -96,8 +96,14 @@ class DatabaseManager {
 //        }
 //    }
     
-    func getSubChanges(filter: String? = nil) -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
+    func getAllEntries() -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
         let objects = mainDatabaseRef.objects(Sub.self)
-        return Observable.changeset(from: objects, synchronousStart: false)
+        return Observable.changeset(from: objects)
+    }
+    
+    func getFilteredEntriesByName(_ name: String) -> Observable<Results<Sub>> {
+        let objects = mainDatabaseRef.objects(Sub.self).filter("name = %@", name)
+        return Observable.collection(from: objects)
     }
 }
+

@@ -25,7 +25,7 @@ class MainVCViewModel {
     private let disposeBag = DisposeBag()
     
     var databaseManager: DatabaseManager!
-
+    
     var sliderViewModel = SliderViewModel()
     var tabBarViewModel = TabBarViewModel()
     
@@ -34,17 +34,16 @@ class MainVCViewModel {
     
     //MARK: - OUTPUT
     //views
-    var didSetCellViewModels: Driver<[SubCellViewModel]>!
-    var didUpdateCollectionViewItems: Driver<MainVCViewModel.Changeset>!
-    var didReloadAllItems: Driver<Void>!
-//    var didRequestImagePicker: Driver<Void>!
-  
+    var cellViewModels: Driver<[SubCellViewModel]>!
+    var updateCollectionViewItems: Driver<MainVCViewModel.Changeset>!
+    var reloadAllItems: Driver<Void>!
+    
     
     //MARK: - PRIVATE
     private func setUpBindings() {
-        let subChanges = databaseManager.getSubChanges().share()
+        let subChanges = databaseManager.getAllEntries().share()
         
-        didUpdateCollectionViewItems = subChanges
+        updateCollectionViewItems = subChanges
             .map {(results, changeset) in changeset }
             .filter { $0 != nil } //has changes
             .map { (result: RealmChangeset?) -> Changeset in
@@ -59,7 +58,7 @@ class MainVCViewModel {
             .delay(0.01, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
         
-        didSetCellViewModels = subChanges
+        cellViewModels = subChanges
             .map { (results, changeset) in results }
             .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
@@ -70,7 +69,8 @@ class MainVCViewModel {
             }
             .asDriver(onErrorJustReturn: [])
         
-        didReloadAllItems = subChanges
+        reloadAllItems = subChanges
+            .filter { $0.1 == nil }
             .map { (results, changeset) in results }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
@@ -78,11 +78,15 @@ class MainVCViewModel {
         sliderViewModel.save.asObservable()
             .flatMap { self.databaseManager.add($0) }
             .subscribe(onNext: {
-                print("success")
+                print("save is successful")
             })
-        
             .disposed(by: disposeBag)
-
+        
+        tabBarViewModel.performSearch.asObservable()
+            .subscribe(onNext: { text in
+                print("search", text)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -94,12 +98,12 @@ extension MainVCViewModel: Routable {
     
     var input: [Input] {
         return [
-         Route.subManager.input({ self.databaseManager = $0 })
+            Route.subManager.input({ self.databaseManager = $0 })
         ]
     }
     var output: [Output] {
         return [
-        
+            
         ]
     }
 }

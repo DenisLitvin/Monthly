@@ -26,6 +26,7 @@ class CategoryPicker: UIPickerView {
         super.init(frame: frame)
         delegate = self
         dataSource = self
+        selectRow(2, inComponent: 0, animated: false)
         clip.enable().withWidth(90).withHeight(120)
     }
     

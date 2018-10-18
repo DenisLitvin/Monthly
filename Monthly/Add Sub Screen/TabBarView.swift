@@ -20,7 +20,6 @@ class TabBarView: UIView {
     var disposeBag = DisposeBag()
     
     private var viewModel: TabBarViewModel!
-    private let height: CGFloat = 60
     
     private var tintLayer: CALayer!
     private var blurView: VisualEffectView!
@@ -28,7 +27,7 @@ class TabBarView: UIView {
     
     var searchButton: TabBarButton!
     var statButton: TabBarButton!
-    var plusButton: TabBarButton!
+    var plusButton: PlusButton!
     var filterButton: TabBarButton!
     var menuButton: TabBarButton!
     var searchField: SearchTextField!
@@ -39,7 +38,6 @@ class TabBarView: UIView {
         setUpViews()
         setUpLayout()
         setUpSelf()
-        setUpBindings()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +55,13 @@ class TabBarView: UIView {
                 self.transform = CGAffineTransform(translationX: 0, y: -height)
             })
             .disposed(by: disposeBag)
+        
+        searchField.rx.text
+            .orEmpty
+            .filter { !$0.isEmpty }
+            .bind(to: viewModel.performSearch.asObserver())
+            .disposed(by: disposeBag)
+
         
         searchField.done
             .map { _ in false }
@@ -82,9 +87,10 @@ class TabBarView: UIView {
     }
     
     private func setUpLayout() {
+        clip.enable()
         addSubview(blurView)
         
-        rowContainer.clip.enable().withDistribution(.row)
+        rowContainer.clip.enable().withDistribution(.row).verticallyAligned(.head).withHeight(60)
         addSubview(rowContainer)
         addSubview(searchField)
         searchButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(20)
@@ -121,15 +127,7 @@ class TabBarView: UIView {
             view.selectedImage = #imageLiteral(resourceName: "stat_blue")
             return view
         }()
-        plusButton = {
-            let view = TabBarButton()
-            view.clip.enable()
-            view.animate = false
-            view.selectedImage = #imageLiteral(resourceName: "addButton")
-            view.deselectedImage = #imageLiteral(resourceName: "addButton")
-            view.setImage(#imageLiteral(resourceName: "addButton"), for: .normal)
-            return view
-        }()
+        plusButton = PlusButton()
         filterButton = {
             let view = TabBarButton()
             view.clip.enable()
@@ -162,18 +160,15 @@ class TabBarView: UIView {
             let radius: CGFloat = 35
             self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             self.layer.cornerRadius = radius
-            
-            rowContainer.clip.verticallyAligned(.head).insetTop(13)
+            rowContainer.clip.insetTop(9)
         }
         else {
-            rowContainer.clip.verticallyAligned(.mid).insetTop(0)
+            rowContainer.clip.insetTop(0)
         }
-        
-        let frame = CGRect(x: 0, y: screenSize.height - height, width: screenSize.width, height: height)
-        self.frame = frame
-        tintLayer.frame.size = frame.size
-        blurView.frame.size = frame.size
-        
+        let backgroundFrame = CGRect(x: 0, y: screenSize.height - height, width: screenSize.width, height: height)
+        frame = backgroundFrame
+        tintLayer.frame.size = backgroundFrame.size
+        blurView.frame.size = backgroundFrame.size
     }
 }
 

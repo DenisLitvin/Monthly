@@ -9,12 +9,18 @@
 import UIKit
 
 class PlusButton: TabBarButton {
-    //    override init() {
-    //        super.init()
-    //
-    //    }
+        override init() {
+            super.init()
+            
+            clip.enable()
+            animate = false
+            selectedImage = #imageLiteral(resourceName: "addButton")
+            deselectedImage = #imageLiteral(resourceName: "addButton")
+            setImage(#imageLiteral(resourceName: "addButton"), for: .normal)
+//            clip.wantsSize = CGSize(width: 50, height: 50)
+        }
     
-    //    required init?(coder aDecoder: NSCoder) {
-    //        fatalError("init(coder:) has not been implemented")
-    //    }
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
 }
