@@ -58,8 +58,7 @@ class TabBarView: UIView {
         
         searchField.rx.text
             .orEmpty
-            .filter { !$0.isEmpty }
-            .bind(to: viewModel.performSearch.asObserver())
+            .bind(to: viewModel.searchTextEntered.asObserver())
             .disposed(by: disposeBag)
 
         

@@ -25,12 +25,8 @@ class MainVCViewModel {
     private let disposeBag = DisposeBag()
     
     var databaseManager: DatabaseManager!
-    
     var sliderViewModel = SliderViewModel()
     var tabBarViewModel = TabBarViewModel()
-    
-    //MARK: - INPUT
-    //    var imageData: AnyObserver<Data>!
     
     //MARK: - OUTPUT
     //views
@@ -41,11 +37,22 @@ class MainVCViewModel {
     
     //MARK: - PRIVATE
     private func setUpBindings() {
-        let subChanges = databaseManager.getAllEntries().share()
+        
+        let searchTextObs = tabBarViewModel.searchTextEntered.asObservable().startWith("")
+        
+        let emptySearch = searchTextObs
+            .filter { $0.isEmpty }
+            .flatMapLatest { _ in self.databaseManager.getAllEntries().share() }
+        
+        let nonEmptySearch = searchTextObs
+            .filter { !$0.isEmpty }
+            .flatMapLatest { self.databaseManager.getFilteredEntriesByName($0).share() }
+        
+        let subChanges = emptySearch
         
         updateCollectionViewItems = subChanges
             .map {(results, changeset) in changeset }
-            .filter { $0 != nil } //has changes
+            .filter { $0 != nil }
             .map { (result: RealmChangeset?) -> Changeset in
                 let result = result!
                 let deleted = result.deleted.map { IndexPath(item: $0, section: 0) }
@@ -58,7 +65,7 @@ class MainVCViewModel {
             .delay(0.01, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
         
-        cellViewModels = subChanges
+        let unfilteredResults = subChanges
             .map { (results, changeset) in results }
             .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
@@ -67,13 +74,32 @@ class MainVCViewModel {
                     return vm
                 }
             }
+        
+        let filteredResults = nonEmptySearch
+            .map { (results: Results<Sub>) -> [SubCellViewModel] in
+                return results.map { (sub) in
+                    let vm = SubCellViewModel.init()
+                    vm.model.onNext(sub)
+                    return vm
+                }
+        }
+        
+        cellViewModels = Observable
+            .merge(filteredResults, unfilteredResults)
             .asDriver(onErrorJustReturn: [])
         
-        reloadAllItems = subChanges
+        let reloadAllUnfiltered = subChanges
             .filter { $0.1 == nil }
             .map { (results, changeset) in results }
             .map { _ in () }
             .asDriver(onErrorJustReturn: ())
+        
+        let reloadAllFiltered = filteredResults
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+        
+        reloadAllItems = Driver
+            .merge(reloadAllFiltered, reloadAllUnfiltered)
         
         sliderViewModel.save.asObservable()
             .flatMap { self.databaseManager.add($0) }
@@ -82,11 +108,11 @@ class MainVCViewModel {
             })
             .disposed(by: disposeBag)
         
-        tabBarViewModel.performSearch.asObservable()
-            .subscribe(onNext: { text in
-                print("search", text)
-            })
-            .disposed(by: disposeBag)
+ 
+//                .subscribe(onNext: { text in
+//                print("search", text)
+//            })
+//            .disposed(by: disposeBag)
     }
 }
 

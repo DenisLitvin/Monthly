@@ -69,32 +69,6 @@ class DatabaseManager {
                 return Disposables.create()
             })
     }
-
-    
-//    func add<Entry: Object>(_ entry: Entry, completion: @escaping (EmptyResult) -> Void) {
-//        self.backgroundQueue.async {
-//            do {
-//                let realm = try  Realm.init(configuration: self.config)
-//                try realm.write {
-//                    realm.add(entry)
-//                }
-//            }
-//            catch {
-//                DispatchQueue.main.async { completion(.error(Error.write)) }
-//            }
-//            DispatchQueue.main.async { completion(.success) }
-//        }
-//
-//    }
-    
-    
-//    func getAllSubs(filter: String? = nil) -> Single<Result<[Sub]>> {
-//        return Single<Result<[Sub]>>.create() { single in
-//            self.database.objects(Sub.self).filter("")
-//            Observable.coll
-//            return Disposables.create()
-//        }
-//    }
     
     func getAllEntries() -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
         let objects = mainDatabaseRef.objects(Sub.self)
@@ -102,7 +76,7 @@ class DatabaseManager {
     }
     
     func getFilteredEntriesByName(_ name: String) -> Observable<Results<Sub>> {
-        let objects = mainDatabaseRef.objects(Sub.self).filter("name = %@", name)
+        let objects = mainDatabaseRef.objects(Sub.self).filter("name CONTAINS[cd] %@", name)
         return Observable.collection(from: objects)
     }
 }

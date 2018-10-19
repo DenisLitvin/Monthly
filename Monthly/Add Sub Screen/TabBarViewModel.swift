@@ -13,6 +13,6 @@ import RxCocoa
 class TabBarViewModel {
     var disposeBag = DisposeBag()
     
-    var performSearch = PublishSubject<String>()
+    var searchTextEntered = PublishSubject<String>()
     
 }
