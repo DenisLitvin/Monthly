@@ -48,9 +48,7 @@ class MainVCViewModel {
             .filter { !$0.isEmpty }
             .flatMapLatest { self.databaseManager.getFilteredEntriesByName($0).share() }
         
-        let subChanges = emptySearch
-        
-        updateCollectionViewItems = subChanges
+        updateCollectionViewItems = emptySearch
             .map {(results, changeset) in changeset }
             .filter { $0 != nil }
             .map { (result: RealmChangeset?) -> Changeset in
@@ -65,7 +63,7 @@ class MainVCViewModel {
             .delay(0.01, scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
         
-        let unfilteredResults = subChanges
+        let unfilteredResults = emptySearch
             .map { (results, changeset) in results }
             .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
@@ -88,7 +86,7 @@ class MainVCViewModel {
             .merge(filteredResults, unfilteredResults)
             .asDriver(onErrorJustReturn: [])
         
-        let reloadAllUnfiltered = subChanges
+        let reloadAllUnfiltered = emptySearch
             .filter { $0.1 == nil }
             .map { (results, changeset) in results }
             .map { _ in () }
@@ -107,12 +105,6 @@ class MainVCViewModel {
                 print("save is successful")
             })
             .disposed(by: disposeBag)
-        
- 
-//                .subscribe(onNext: { text in
-//                print("search", text)
-//            })
-//            .disposed(by: disposeBag)
     }
 }
 

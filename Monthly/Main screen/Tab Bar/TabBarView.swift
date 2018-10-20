@@ -30,7 +30,10 @@ class TabBarView: UIView {
     var plusButton: PlusButton!
     var filterButton: TabBarButton!
     var menuButton: TabBarButton!
+    
     var searchField: SearchTextField!
+    
+    var filterSliderView: FilterSliderView!
     
     init() {
         super.init(frame: .zero)
@@ -83,13 +86,29 @@ class TabBarView: UIView {
             })
             .disposed(by: disposeBag)
 
+        filterButton.isOn
+            .subscribe(onNext: { isOn in
+                self.clip.invalidateCache()
+                var height: CGFloat = 0
+                if isOn { height = 30 }
+                else { height = 0.001 }
+                self.filterSliderView.clip.withHeight(height)
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.clip.invalidateLayout()
+                    self.setUpSelf()
+                })
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func setUpLayout() {
-        clip.enable()
+        clip.enable().withDistribution(.column)
         addSubview(blurView)
         
-        rowContainer.clip.enable().withDistribution(.row).verticallyAligned(.head).withHeight(60)
+        filterSliderView.clip.enable().withHeight(60).withWidth(60)
+        addSubview(filterSliderView)
+        rowContainer.clip.enable().withDistribution(.row).withHeight(60)
         addSubview(rowContainer)
         addSubview(searchField)
         searchButton.clip.aligned(v: .stretch, h: .stretch).insetLeft(20)
@@ -111,6 +130,7 @@ class TabBarView: UIView {
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
         }()
+        filterSliderView = FilterSliderView()
         searchField = SearchTextField()
         searchButton = {
             let view = TabBarButton()
@@ -148,26 +168,26 @@ class TabBarView: UIView {
     private func setUpSelf() {
         clip.enable()
         clipsToBounds = true
-        
-        let screenSize = UIScreen.main.bounds.size
-        var height: CGFloat = 60
-        
-        if #available(iOS 11.0, *),
-            self.safeAreaInsets.bottom > 0 {
-            
-            height += self.safeAreaInsets.bottom + 10
-            let radius: CGFloat = 35
-            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            self.layer.cornerRadius = radius
+        if #available(iOS 11.0, *) {
             rowContainer.clip.insetTop(9)
         }
         else {
             rowContainer.clip.insetTop(0)
         }
+        let screenSize = UIScreen.main.bounds.size
+        var height: CGFloat = clip.measureSize(within: screenSize).height
+        
+        if #available(iOS 11.0, *) {
+            height += self.safeAreaInsets.bottom + 10
+            let radius: CGFloat = 35
+            self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            self.layer.cornerRadius = radius
+        }
         let backgroundFrame = CGRect(x: 0, y: screenSize.height - height, width: screenSize.width, height: height)
         frame = backgroundFrame
-        tintLayer.frame.size = backgroundFrame.size
-        blurView.frame.size = backgroundFrame.size
+        let extendedSize = CGSize(width: backgroundFrame.width, height: backgroundFrame.height + 50)
+        tintLayer.frame.size = extendedSize
+        blurView.frame.size = extendedSize
     }
 }
 

@@ -35,6 +35,7 @@
 		3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C42132019500D74819 /* String+AttributedElements.swift */; };
 		3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */; };
 		3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */; };
+		3E820575217A84F400723677 /* FilterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820574217A84F400723677 /* FilterSliderView.swift */; };
 		3E96D86D2130EEC7004A7660 /* ProximaNovaCond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */; };
 		3E96D86E2130EECB004A7660 /* ProximaNovaCond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */; };
 		3E96D8702130EF10004A7660 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */; };
@@ -93,6 +94,7 @@
 		3E7F56C42132019500D74819 /* String+AttributedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedElements.swift"; sourceTree = "<group>"; };
 		3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+DynamicLocalized.swift"; sourceTree = "<group>"; };
 		3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPeriodCalculator.swift; sourceTree = "<group>"; };
+		3E820574217A84F400723677 /* FilterSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSliderView.swift; sourceTree = "<group>"; };
 		3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Regular.ttf"; sourceTree = "<group>"; };
 		3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Bold.ttf"; sourceTree = "<group>"; };
 		3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
@@ -161,7 +163,6 @@
 				3E96D8652130ED69004A7660 /* Extensions */,
 				3E96D8672130EDA0004A7660 /* Entities */,
 				3E96D8682130EDB8004A7660 /* Main screen */,
-				3EB9A8D721335CE2006CDE4D /* Add Sub Screen */,
 				3E96D8642130ED45004A7660 /* Support */,
 				3E96D8632130ED3D004A7660 /* Fonts */,
 			);
@@ -204,6 +205,16 @@
 				3E25208E2145B702000799CB /* MVVMBinder.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		3E820573217A849800723677 /* Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				3E99396F21727CC400BCB9CA /* Tab Bar Elements */,
+				3ED7E833213A35C1009D889F /* TabBarViewModel.swift */,
+				3E1138372137AA5C00028202 /* TabBarView.swift */,
+			);
+			path = "Tab Bar";
 			sourceTree = "<group>";
 		};
 		3E96D8632130ED3D004A7660 /* Fonts */ = {
@@ -267,6 +278,8 @@
 				3E01EB7F211DB8E000CF8A43 /* MainVCViewModel.swift */,
 				3E01EB81211DEF5800CF8A43 /* SubCell.swift */,
 				3E01EB83211DEF6300CF8A43 /* SubCellViewModel.swift */,
+				3EB9A8D721335CE2006CDE4D /* New Entry */,
+				3E820573217A849800723677 /* Tab Bar */,
 			);
 			path = "Main screen";
 			sourceTree = "<group>";
@@ -282,6 +295,7 @@
 		3E99396F21727CC400BCB9CA /* Tab Bar Elements */ = {
 			isa = PBXGroup;
 			children = (
+				3E820574217A84F400723677 /* FilterSliderView.swift */,
 				3E99397021727CE000BCB9CA /* SearchTextField.swift */,
 				3E99397421727D5F00BCB9CA /* TabBarButton.swift */,
 				3E99397221727D3500BCB9CA /* PlusButton.swift */,
@@ -289,18 +303,15 @@
 			path = "Tab Bar Elements";
 			sourceTree = "<group>";
 		};
-		3EB9A8D721335CE2006CDE4D /* Add Sub Screen */ = {
+		3EB9A8D721335CE2006CDE4D /* New Entry */ = {
 			isa = PBXGroup;
 			children = (
 				3E25208C2145B6AC000799CB /* Protocols */,
 				3E0A6AB1214495E70035826A /* Slider Elements */,
-				3E99396F21727CC400BCB9CA /* Tab Bar Elements */,
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
 				3E2520902145BE1A000799CB /* SliderViewModel.swift */,
-				3E1138372137AA5C00028202 /* TabBarView.swift */,
-				3ED7E833213A35C1009D889F /* TabBarViewModel.swift */,
 			);
-			path = "Add Sub Screen";
+			path = "New Entry";
 			sourceTree = "<group>";
 		};
 		A9B5FF47C3DADE5AD3CE6497 /* Frameworks */ = {
@@ -560,6 +571,7 @@
 				3E01EB7E211DB86100CF8A43 /* Router.swift in Sources */,
 				3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */,
 				3E01EB80211DB8E000CF8A43 /* MainVCViewModel.swift in Sources */,
+				3E820575217A84F400723677 /* FilterSliderView.swift in Sources */,
 				3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */,
 				3E0A6AB52144A16B0035826A /* SliderLabel.swift in Sources */,
 				3E0D2734211EE47000C39D11 /* DatabaseManager.swift in Sources */,

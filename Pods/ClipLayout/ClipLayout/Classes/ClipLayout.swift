@@ -176,10 +176,10 @@ public class ClipLayout: NSObject {
     //MARK: - LAYOUT
     @objc
     public func invalidateLayout() {
-        layoutSubviews()
         view.sublayoutables
             .filter { $0.clip.enabled }
             .forEach { $0.clip.invalidateLayout() }
+        layoutSubviews()
     }
     
     public func invalidateCache() {

@@ -128,7 +128,7 @@ class MainVC: UIViewController {
     
     private func setUpElements() {
         let window = UIApplication.shared.keyWindow
-
+        
         window?.addSubview(blurView)
         blurView.isHidden = true
         window?.addSubview(sliderView)

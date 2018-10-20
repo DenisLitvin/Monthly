@@ -108,7 +108,7 @@ class SliderView: UIScrollView {
             }
             .filter { $0 != nil }
             .map { $0! }
-            .subscribe(self.viewModel.save)
+            .bind(to: self.viewModel.save)
             .disposed(by: disposeBag)
     }
     
