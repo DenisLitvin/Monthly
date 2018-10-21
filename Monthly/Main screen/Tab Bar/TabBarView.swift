@@ -86,7 +86,7 @@ class TabBarView: UIView {
             })
             .disposed(by: disposeBag)
 
-        filterButton.isOn
+        filterButton.isOn.skip(1)
             .subscribe(onNext: { isOn in
                 self.clip.invalidateCache()
                 var height: CGFloat = 0
@@ -94,8 +94,8 @@ class TabBarView: UIView {
                 else { height = 0.001 }
                 self.filterSliderView.clip.withHeight(height)
                 UIView.animate(withDuration: 0.4, animations: {
-                    self.clip.invalidateLayout()
                     self.setUpSelf()
+                    self.clip.invalidateLayout()
                 })
             })
             .disposed(by: disposeBag)
@@ -106,7 +106,7 @@ class TabBarView: UIView {
         clip.enable().withDistribution(.column)
         addSubview(blurView)
         
-        filterSliderView.clip.enable().withHeight(60).withWidth(60)
+        filterSliderView.clip.enable().withHeight(30).withWidth(60)
         addSubview(filterSliderView)
         rowContainer.clip.enable().withDistribution(.row).withHeight(60)
         addSubview(rowContainer)
@@ -168,7 +168,8 @@ class TabBarView: UIView {
     private func setUpSelf() {
         clip.enable()
         clipsToBounds = true
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, *),
+            self.safeAreaInsets.bottom > 0 {
             rowContainer.clip.insetTop(9)
         }
         else {
@@ -177,7 +178,8 @@ class TabBarView: UIView {
         let screenSize = UIScreen.main.bounds.size
         var height: CGFloat = clip.measureSize(within: screenSize).height
         
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, *),
+            self.safeAreaInsets.bottom > 0 {
             height += self.safeAreaInsets.bottom + 10
             let radius: CGFloat = 35
             self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
