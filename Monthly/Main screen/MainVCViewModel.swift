@@ -37,11 +37,21 @@ class MainVCViewModel {
     
     //MARK: - PRIVATE
     private func setUpBindings() {
+        sliderViewModel.save.asObservable()
+            .flatMap { self.databaseManager.add($0) }
+            .subscribe(onNext: {
+                print("save is successful")
+            })
+            .disposed(by: disposeBag)
         
-        let searchTextObs = tabBarViewModel.searchTextEntered.asObservable().startWith("")
         
-        let emptySearch = searchTextObs
-            .filter { $0.isEmpty }
+        let queryObs = Observable.combineLatest(
+            tabBarViewModel.performSort.asObservable(),
+            tabBarViewModel.performSearch.asObservable().startWith("")
+        )
+        
+        let emptySearch = queryObs
+            .filter { $0.1.isEmpty }
             .flatMapLatest { _ in self.databaseManager.getAllEntries().share() }
         
         let nonEmptySearch = searchTextObs
@@ -90,21 +100,15 @@ class MainVCViewModel {
             .filter { $0.1 == nil }
             .map { (results, changeset) in results }
             .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
         
         let reloadAllFiltered = filteredResults
             .map { _ in () }
+        
+        reloadAllItems = Observable
+            .merge(reloadAllFiltered, reloadAllUnfiltered)
             .asDriver(onErrorJustReturn: ())
         
-        reloadAllItems = Driver
-            .merge(reloadAllFiltered, reloadAllUnfiltered)
-        
-        sliderViewModel.save.asObservable()
-            .flatMap { self.databaseManager.add($0) }
-            .subscribe(onNext: {
-                print("save is successful")
-            })
-            .disposed(by: disposeBag)
+       
     }
 }
 

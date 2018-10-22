@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var y = frame.origin.y + 2.5
         if #available(iOS 11.0, *),
             UIApplication.shared.isEdgelessDisplay() {
-            y += 9
+            y -= (UIApplication.shared.delegate!.window??.safeAreaInsets.top)! - 9 * 2
         }
         sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
         

@@ -32,8 +32,7 @@ class TabBarView: UIView {
     var menuButton: TabBarButton!
     
     var searchField: SearchTextField!
-    
-    var filterSliderView: FilterSliderView!
+    var filterSliderView: SortSliderView!
     
     init() {
         super.init(frame: .zero)
@@ -59,9 +58,28 @@ class TabBarView: UIView {
             })
             .disposed(by: disposeBag)
         
+        var old = 0
+        filterSliderView.sortButtonTapped.asObservable()
+            .map { idx -> SortType in
+                var result: SortType = .none
+                if idx != old {
+                    switch idx {
+                    case 1: result = .alphabetical(.ascending)
+                    case 2: result = .alphabetical(.descending)
+                    case 3: result = .value(.ascending)
+                    case 4: result = .value(.descending)
+                    default: result = .none
+                    }
+                }
+                old = idx
+                return result
+            }
+            .bind(to: viewModel.performSort.asObserver())
+            .disposed(by: disposeBag)
+        
         searchField.rx.text
             .orEmpty
-            .bind(to: viewModel.searchTextEntered.asObserver())
+            .bind(to: viewModel.performSearch.asObserver())
             .disposed(by: disposeBag)
 
         
@@ -90,7 +108,7 @@ class TabBarView: UIView {
             .subscribe(onNext: { isOn in
                 self.clip.invalidateCache()
                 var height: CGFloat = 0
-                if isOn { height = 30 }
+                if isOn { height = 50 }
                 else { height = 0.001 }
                 self.filterSliderView.clip.withHeight(height)
                 UIView.animate(withDuration: 0.2, animations: {
@@ -106,7 +124,7 @@ class TabBarView: UIView {
         clip.enable().withDistribution(.column)
         addSubview(blurView)
         
-        filterSliderView.clip.enable().withWidth(60)
+        filterSliderView.clip.enable().horizontallyAligned(.stretch).insetLeft(20).insetRight(20)
         addSubview(filterSliderView)
         rowContainer.clip.enable().withDistribution(.row).withHeight(60)
         addSubview(rowContainer)
@@ -130,7 +148,7 @@ class TabBarView: UIView {
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
         }()
-        filterSliderView = FilterSliderView()
+        filterSliderView = SortSliderView()
         searchField = SearchTextField()
         searchButton = {
             let view = TabBarButton()

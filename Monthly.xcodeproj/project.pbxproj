@@ -35,7 +35,7 @@
 		3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C42132019500D74819 /* String+AttributedElements.swift */; };
 		3E7F56C721320FDD00D74819 /* UIFont+DynamicLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */; };
 		3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */; };
-		3E820575217A84F400723677 /* FilterSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820574217A84F400723677 /* FilterSliderView.swift */; };
+		3E820575217A84F400723677 /* SortSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820574217A84F400723677 /* SortSliderView.swift */; };
 		3E82057A217D4C0100723677 /* CheckEdgeLessDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820579217D4C0100723677 /* CheckEdgeLessDisplay.swift */; };
 		3E96D86D2130EEC7004A7660 /* ProximaNovaCond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */; };
 		3E96D86E2130EECB004A7660 /* ProximaNovaCond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */; };
@@ -95,7 +95,7 @@
 		3E7F56C42132019500D74819 /* String+AttributedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedElements.swift"; sourceTree = "<group>"; };
 		3E7F56C621320FDD00D74819 /* UIFont+DynamicLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+DynamicLocalized.swift"; sourceTree = "<group>"; };
 		3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPeriodCalculator.swift; sourceTree = "<group>"; };
-		3E820574217A84F400723677 /* FilterSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSliderView.swift; sourceTree = "<group>"; };
+		3E820574217A84F400723677 /* SortSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSliderView.swift; sourceTree = "<group>"; };
 		3E820579217D4C0100723677 /* CheckEdgeLessDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEdgeLessDisplay.swift; sourceTree = "<group>"; };
 		3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Regular.ttf"; sourceTree = "<group>"; };
 		3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Bold.ttf"; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 		3E99396F21727CC400BCB9CA /* Tab Bar Elements */ = {
 			isa = PBXGroup;
 			children = (
-				3E820574217A84F400723677 /* FilterSliderView.swift */,
+				3E820574217A84F400723677 /* SortSliderView.swift */,
 				3E99397021727CE000BCB9CA /* SearchTextField.swift */,
 				3E99397421727D5F00BCB9CA /* TabBarButton.swift */,
 				3E99397221727D3500BCB9CA /* PlusButton.swift */,
@@ -575,7 +575,7 @@
 				3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */,
 				3E01EB80211DB8E000CF8A43 /* MainVCViewModel.swift in Sources */,
 				3E82057A217D4C0100723677 /* CheckEdgeLessDisplay.swift in Sources */,
-				3E820575217A84F400723677 /* FilterSliderView.swift in Sources */,
+				3E820575217A84F400723677 /* SortSliderView.swift in Sources */,
 				3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */,
 				3E0A6AB52144A16B0035826A /* SliderLabel.swift in Sources */,
 				3E0D2734211EE47000C39D11 /* DatabaseManager.swift in Sources */,

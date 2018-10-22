@@ -16,8 +16,8 @@ class TabBarButton: UIButton {
     
     var isOn = BehaviorSubject<Bool>.init(value: false)
     
-    var selectedImage: UIImage? { willSet { changeImage() } }
-    var deselectedImage: UIImage? { willSet { changeImage() } }
+    var selectedImage: UIImage? { didSet { changeImage() } }
+    var deselectedImage: UIImage? { didSet { changeImage() } }
     var animate = true
     var concurrentButtons: [TabBarButton] = []
     
@@ -28,9 +28,10 @@ class TabBarButton: UIButton {
         self.addTarget(self, action: #selector(didTouchUpInside), for: .touchUpInside)
         self.addTarget(self, action: #selector(didTouchDown), for: .touchDown)
         self.addTarget(self, action: #selector(didDragOutside), for: .touchDragOutside)
-        isOn
-            .subscribe(onNext: { _ in
-                self.changeImage()
+        
+        isOn.asObservable()
+            .subscribe(onNext: { isOn in
+                self.changeImage(isOn)
             })
             .disposed(by: disposeBag)
         
@@ -46,8 +47,8 @@ class TabBarButton: UIButton {
         isOn.onNext(!current)
     }
     
-    private func changeImage () {
-        let image = try! self.isOn.value() ? self.selectedImage : self.deselectedImage
+    private func changeImage(_ isOn: Bool = false) {
+        let image = isOn ? self.selectedImage : self.deselectedImage
         self.setImage(image, for: .normal)
     }
     
