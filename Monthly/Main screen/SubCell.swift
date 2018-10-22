@@ -64,11 +64,6 @@ class SubCell: UICollectionViewCell, MVVMBinder {
         setUpLayout()
     }
     
-    //    override func layoutSubviews() {
-    //        super.layoutSubviews()
-    //        contentView.clip.invalidateLayout()
-    //    }
-    
     func set(viewModel: SubCellViewModel) {
         disposeBag = DisposeBag()
         self.viewModel = viewModel
@@ -156,7 +151,7 @@ class SubCell: UICollectionViewCell, MVVMBinder {
             let view = UILabel()
             view.textAlignment = .right
             view.font = UIFont.dynamic(9, family: .proximaNova)
-            view.textColor = UIColor.Theme.grayedBlue
+            view.textColor = UIColor.Theme.slightlyGrayedBlue
             view.clip.enable()
             return view
         }()

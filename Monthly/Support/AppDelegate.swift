@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = AppDelegate.makeRootVC()
         window?.makeKeyAndVisible()
         
+        let vc = (window?.rootViewController?.childViewControllers.first as! MainVC)
+        vc.viewModel.databaseManager = DatabaseManager.init()
+        vc.setUpRootElements(for: window!)
+        vc.viewModel.didSetDependencies()
+        vc.didSetDependencies()
         
 //        print("CONFIG: ", Realm.Configuration.defaultConfiguration.fileURL?.path)
 //        Bundle(path: "/Applications/InjectionX.app/Contents/Resources/iOSInjection.bundle")!.load() //templocal
@@ -51,17 +56,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     static func makeRootVC() -> UIViewController {
         let vc = MainVC()
-        vc.view.backgroundColor = UIColor.Elements.background
-        vc.viewModel.databaseManager = DatabaseManager.init()
-        vc.viewModel.didSetDependencies()
-        vc.didSetDependencies()
-        //title
-        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        titleLabel.font = UIFont.fixed(13, family: .proximaNova).bolded
-        titleLabel.textColor = .white
-        let str = "MONTHLY".localized()
-        titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 3.15])
-        vc.navigationItem.titleView = titleLabel
+//        vc.viewModel.databaseManager = DatabaseManager.init()
+//        vc.viewModel.didSetDependencies()
+//        vc.didSetDependencies()
         
         //nav con
         let navController = UINavigationController(rootViewController: vc)

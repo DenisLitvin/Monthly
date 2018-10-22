@@ -21,7 +21,7 @@ extension String {
     
     func attributedForSliderPlaceholder() -> NSAttributedString {
         return NSAttributedString(string: self, attributes: [.foregroundColor: UIColor.Theme.grayedBlue,
-                                                             .font: UIFont.dynamic(11, family: .proximaNova)])
+                                                             .font: UIFont.dynamic(15, family: .proximaNova)])
     }
 
     func attributedForSliderText() -> NSAttributedString {

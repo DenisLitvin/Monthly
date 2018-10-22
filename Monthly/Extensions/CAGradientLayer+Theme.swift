@@ -29,15 +29,10 @@ extension CAGradientLayer {
             return layer
         }
         
-        static var slider: CAGradientLayer {
-            let layer = CAGradientLayer()
-            layer.opacity = 0.85
-            layer.colors = [
-                UIColor(red: 21/255, green: 47/255, blue: 129/255, alpha: 0.7).cgColor,
-                UIColor(red: 3/255, green: 78/255, blue: 146/255, alpha: 0.7).cgColor
-            ]
-            layer.startPoint = CGPoint(x: 0.0, y: 0.8)
-            layer.endPoint = CGPoint(x: 1.0, y: 0.2)
+        static var slider: CALayer {
+            let layer = CALayer()
+//            layer.opacity = 0.85
+            layer.backgroundColor = UIColor(red: 31/255, green: 47/255, blue: 82/255, alpha: 0.7).cgColor
             return layer
         }
         

@@ -8,14 +8,17 @@
 
 import UIKit
 import FlexLayout
+import ClipLayout
 
-class FilterSliderView: UIView {
+class FilterSliderView: UIScrollView {
     
+    private let contentView = UIView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .red
+        setUpSelf()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -23,8 +26,9 @@ class FilterSliderView: UIView {
     }
     
     //MARK: - PRIVATE
-
     private func setUpSelf() {
-        
+        backgroundColor = .red
+        contentSize = contentView.flex.sizeThatFits(size: CGSize(width: 9999, height: clip.wantsSize.height))
+
     }
 }

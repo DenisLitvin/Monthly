@@ -50,7 +50,7 @@ class SliderTextField: UIView {
         textField.previousFieldButton.isEnabled = true
     }
     
-    func toolBar() -> UIToolbar{
+    func toolBar() -> UIToolbar {
         let toolbar = UIToolbar()
         toolbar.barStyle = UIBarStyle.blackTranslucent
         
@@ -94,7 +94,7 @@ class SliderTextField: UIView {
         textField = {
             let view = UITextField()
             view.keyboardAppearance = UIKeyboardAppearance.dark
-            view.font = UIFont.dynamic(12, family: .proximaNova)
+            view.font = UIFont.dynamic(15, family: .proximaNova)
             view.textColor = UIColor.Theme.lightBlue
             view.clip.enable()
             view.delegate = self

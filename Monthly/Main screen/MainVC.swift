@@ -23,12 +23,11 @@ class MainVC: UIViewController {
     let viewModel = MainVCViewModel()
     
     var blurView = VisualEffectView(frame: UIScreen.main.bounds)
-    var tabBarView = TabBarView()
-    var sliderView = SliderView()
+    var tabBarView: TabBarView!
+    var sliderView: SliderView!
     var collectionView: CollectionView<SubCell, SubCell, SubCell>!
     
     override func viewDidAppear(_ animated: Bool) {
-        setUpElements()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             Animator.presentCells(self.collectionView.visibleCells)
         })
@@ -36,10 +35,31 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpSelf()
         setUpViews()
         setUpLayout()
     }
     
+    func setUpRootElements(for window: UIWindow) {
+        window.addSubview(blurView)
+        blurView.isHidden = true
+        sliderView = SliderView()
+        window.addSubview(sliderView)
+        tabBarView = TabBarView()
+        window.addSubview(tabBarView)
+        
+        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
+        let x = (UIScreen.main.bounds.width - sliderView.saveButton.frame.width) / 2
+        var y = frame.origin.y + 2.5
+        if #available(iOS 11.0, *),
+            self.view.safeAreaInsets.bottom > 0 {
+            y += 9
+        }
+        sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
+        window.addSubview(sliderView.saveButton)
+        
+    }
     //MARK: - PRIVATE
     private func setUpBindings() {
         
@@ -126,25 +146,6 @@ class MainVC: UIViewController {
         view.addSubview(collectionView)
     }
     
-    private func setUpElements() {
-        let window = UIApplication.shared.keyWindow
-        
-        window?.addSubview(blurView)
-        blurView.isHidden = true
-        window?.addSubview(sliderView)
-        window?.addSubview(tabBarView)
-        
-        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
-        let x = (UIScreen.main.bounds.width - sliderView.saveButton.frame.width) / 2
-        var y = frame.origin.y + 2.5
-        if #available(iOS 11.0, *),
-            self.view.safeAreaInsets.bottom > 0 {
-            y += 9
-        }
-        sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
-        window?.addSubview(sliderView.saveButton)
-
-    }
     private func setUpViews() {
         collectionView = {
             let layout = UICollectionViewFlowLayout()
@@ -157,6 +158,16 @@ class MainVC: UIViewController {
             cv.backgroundColor = UIColor.Elements.background
             return cv
         }()
+    }
+    private func setUpSelf() {
+        view.backgroundColor = UIColor.Elements.background
+        //title
+        let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        titleLabel.font = UIFont.fixed(13, family: .proximaNova).bolded
+        titleLabel.textColor = .white
+        let str = "MONTHLY".localized()
+        titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 3.15])
+        navigationItem.titleView = titleLabel
     }
 }
 

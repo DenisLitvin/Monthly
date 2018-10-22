@@ -218,7 +218,6 @@ class SliderView: UIScrollView {
                 .string(from: Date())
                 .attributedForSliderPlaceholder()
             view.textField.textAlignment = .center
-            view.clip.withWidth(105)
             return view
         }()
         nameLabel = {

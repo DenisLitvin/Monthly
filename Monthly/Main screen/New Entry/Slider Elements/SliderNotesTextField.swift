@@ -21,7 +21,7 @@ class SliderNotesTextField: SliderTextField {
             let view = UITextView()
             view.textContainerInset = .zero
             view.keyboardAppearance = UIKeyboardAppearance.dark
-            view.font = UIFont.dynamic(11, family: .proximaNova)
+            view.font = UIFont.dynamic(15, family: .proximaNova)
             view.textColor = UIColor.Theme.lightBlue
             view.backgroundColor = .clear
             view.inputAccessoryView = toolBar()

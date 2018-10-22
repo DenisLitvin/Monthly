@@ -93,7 +93,7 @@ class TabBarView: UIView {
                 if isOn { height = 30 }
                 else { height = 0.001 }
                 self.filterSliderView.clip.withHeight(height)
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 0.2, animations: {
                     self.setUpSelf()
                     self.clip.invalidateLayout()
                 })
@@ -106,7 +106,7 @@ class TabBarView: UIView {
         clip.enable().withDistribution(.column)
         addSubview(blurView)
         
-        filterSliderView.clip.enable().withHeight(30).withWidth(60)
+        filterSliderView.clip.enable().withWidth(60)
         addSubview(filterSliderView)
         rowContainer.clip.enable().withDistribution(.row).withHeight(60)
         addSubview(rowContainer)
@@ -169,7 +169,7 @@ class TabBarView: UIView {
         clip.enable()
         clipsToBounds = true
         if #available(iOS 11.0, *),
-            self.safeAreaInsets.bottom > 0 {
+            UIApplication.shared.isEdgelessDisplay() {
             rowContainer.clip.insetTop(9)
         }
         else {
@@ -179,7 +179,7 @@ class TabBarView: UIView {
         var height: CGFloat = clip.measureSize(within: screenSize).height
         
         if #available(iOS 11.0, *),
-            self.safeAreaInsets.bottom > 0 {
+            UIApplication.shared.isEdgelessDisplay() {
             height += self.safeAreaInsets.bottom + 10
             let radius: CGFloat = 35
             self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
