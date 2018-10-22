@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import VisualEffectView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,14 +19,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = AppDelegate.makeRootVC()
-        window?.makeKeyAndVisible()
         
-        let vc = (window?.rootViewController?.childViewControllers.first as! MainVC)
+        let blurView = VisualEffectView(frame: UIScreen.main.bounds)
+        blurView.isHidden = true
+        let sliderView = SliderView()
+        let tabBarView = TabBarView()
+        
+        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
+        let x = (UIScreen.main.bounds.width - sliderView.saveButton.frame.width) / 2
+        var y = frame.origin.y + 2.5
+        if #available(iOS 11.0, *),
+            UIApplication.shared.isEdgelessDisplay() {
+            y += 9
+        }
+        sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
+        
+        let vc = MainVC(with: tabBarView, sliderView: sliderView, blurView: blurView)
         vc.viewModel.databaseManager = DatabaseManager.init()
-        vc.setUpRootElements(for: window!)
         vc.viewModel.didSetDependencies()
         vc.didSetDependencies()
+        
+        //nav con
+        let navController = UINavigationController(rootViewController: vc)
+        navController.navigationBar.barStyle = .blackTranslucent
+        navController.navigationBar.backgroundColor = UIColor.Elements.background
+        navController.navigationBar.isTranslucent = false
+        navController.navigationBar.barTintColor = UIColor.Elements.background
+        navController.navigationBar.shadowImage = UIImage()
+        
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+        
+        window?.addSubview(blurView)
+        window?.addSubview(sliderView)
+        window?.addSubview(tabBarView)
+        window?.addSubview(sliderView.saveButton)
         
 //        print("CONFIG: ", Realm.Configuration.defaultConfiguration.fileURL?.path)
 //        Bundle(path: "/Applications/InjectionX.app/Contents/Resources/iOSInjection.bundle")!.load() //templocal
@@ -52,22 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
-    static func makeRootVC() -> UIViewController {
-        let vc = MainVC()
-//        vc.viewModel.databaseManager = DatabaseManager.init()
-//        vc.viewModel.didSetDependencies()
-//        vc.didSetDependencies()
-        
-        //nav con
-        let navController = UINavigationController(rootViewController: vc)
-        navController.navigationBar.barStyle = .blackTranslucent
-        navController.navigationBar.backgroundColor = UIColor.Elements.background
-        navController.navigationBar.isTranslucent = false
-        navController.navigationBar.barTintColor = UIColor.Elements.background
-        navController.navigationBar.shadowImage = UIImage()
-        return navController
     }
 }
 

@@ -22,7 +22,7 @@ class MainVC: UIViewController {
     
     let viewModel = MainVCViewModel()
     
-    var blurView = VisualEffectView(frame: UIScreen.main.bounds)
+    var blurView: VisualEffectView!
     var tabBarView: TabBarView!
     var sliderView: SliderView!
     var collectionView: CollectionView<SubCell, SubCell, SubCell>!
@@ -36,30 +36,28 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        setUpSelf()
+//        setUpViews()
+//        setUpLayout()
+    }
+    init(with tabBarView: TabBarView,
+         sliderView: SliderView,
+         blurView: VisualEffectView) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.tabBarView = tabBarView
+        self.sliderView = sliderView
+        self.blurView = blurView
+        
         setUpSelf()
         setUpViews()
         setUpLayout()
     }
     
-    func setUpRootElements(for window: UIWindow) {
-        window.addSubview(blurView)
-        blurView.isHidden = true
-        sliderView = SliderView()
-        window.addSubview(sliderView)
-        tabBarView = TabBarView()
-        window.addSubview(tabBarView)
-        
-        let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
-        let x = (UIScreen.main.bounds.width - sliderView.saveButton.frame.width) / 2
-        var y = frame.origin.y + 2.5
-        if #available(iOS 11.0, *),
-            self.view.safeAreaInsets.bottom > 0 {
-            y += 9
-        }
-        sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
-        window.addSubview(sliderView.saveButton)
-        
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+    
     //MARK: - PRIVATE
     private func setUpBindings() {
         
@@ -182,15 +180,6 @@ class MainVC: UIViewController {
 //    }
 //
 //}
-
-extension MainVC {
-    @objc func injected() {
-        print("INJECTED")
-        let vc = AppDelegate.makeRootVC()
-
-        UIApplication.shared.keyWindow?.rootViewController = vc
-    }
-}
 
 extension MainVC: MVVMView {
     func didSetDependencies() {

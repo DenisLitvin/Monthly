@@ -11,7 +11,7 @@ import UIKit
 extension UIApplication {
     func isEdgelessDisplay() -> Bool {
         if #available(iOS 11.0, *) {
-            return delegate!.window??.safeAreaInsets.top ?? 0 > 0
+            return delegate!.window??.safeAreaInsets.top ?? 0 > 20
         } else {
             return false
         }
