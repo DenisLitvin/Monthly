@@ -21,9 +21,7 @@ enum SortOrder {
     case descending
 }
 
-class TabBarViewModel {
-    var disposeBag = DisposeBag()
-    
+class TabBarViewModel {    
     var performSearch = PublishSubject<String>()
     var performSort = PublishSubject<SortType>()
 }

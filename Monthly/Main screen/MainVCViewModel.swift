@@ -46,17 +46,21 @@ class MainVCViewModel {
         
         
         let queryObs = Observable.combineLatest(
-            tabBarViewModel.performSort.asObservable(),
-            tabBarViewModel.performSearch.asObservable().startWith("")
-        )
+            tabBarViewModel.performSort.asObservable().startWith(.none),
+            tabBarViewModel.performSearch.asObservable().startWith("").distinctUntilChanged()
+            )
         
         let emptySearch = queryObs
+            .do(onNext: { value in
+                print("filter:", value.1, "sort:", value.0)
+            }) // test
             .filter { $0.1.isEmpty }
-            .flatMapLatest { _ in self.databaseManager.getAllEntries().share() }
+            .flatMapLatest { self.databaseManager.getAllEntries(sort: $0.0).share() }
         
-        let nonEmptySearch = searchTextObs
-            .filter { !$0.isEmpty }
-            .flatMapLatest { self.databaseManager.getFilteredEntriesByName($0).share() }
+        
+        let nonEmptySearch = queryObs
+            .filter { !$0.1.isEmpty }
+            .flatMapLatest { self.databaseManager.getFilteredEntriesByName($0.1, sort: $0.0).share() }
         
         updateCollectionViewItems = emptySearch
             .map {(results, changeset) in changeset }

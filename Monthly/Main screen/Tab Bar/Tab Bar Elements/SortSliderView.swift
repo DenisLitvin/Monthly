@@ -49,7 +49,7 @@ class SortSliderView: UIScrollView {
             button.selectedImage = selected!
             button.deselectedImage = deselected!
             button.isOn
-                .filter { $0 }
+                .distinctUntilChanged()
                 .map { _ in i }
                 .bind(to: sortButtonTapped.asObserver())
                 .disposed(by: disposeBag)

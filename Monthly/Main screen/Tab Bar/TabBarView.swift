@@ -63,15 +63,16 @@ class TabBarView: UIView {
             .map { idx -> SortType in
                 var result: SortType = .none
                 if idx != old {
+                    old = idx
                     switch idx {
                     case 1: result = .alphabetical(.ascending)
                     case 2: result = .alphabetical(.descending)
-                    case 3: result = .value(.ascending)
-                    case 4: result = .value(.descending)
+                    case 3: result = .value(.descending)
+                    case 4: result = .value(.ascending)
                     default: result = .none
                     }
                 }
-                old = idx
+                else { old = 0 }
                 return result
             }
             .bind(to: viewModel.performSort.asObserver())

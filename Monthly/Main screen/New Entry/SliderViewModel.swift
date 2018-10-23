@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 
 class SliderViewModel {
-    var disposeBag = DisposeBag()
     
     var save = PublishSubject<Sub>()
     
