@@ -70,21 +70,42 @@ class DatabaseManager {
         })
     }
     
-    func getAllEntries(sort: SortType = .none) -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
+//    func getAllEntries(sort: SortType = .none) -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
+//        switch sort {
+//        case .alphabetical(let order):
+//            return Observable.changeset(
+//                from: mainDatabaseRef
+//                    .objects(Sub.self)
+//                    .sorted(byKeyPath: "name", ascending: order == .ascending)
+//            )
+//        case .value(let order):
+//            return Observable.changeset(
+//                from: mainDatabaseRef
+//                    .objects(Sub.self)
+//                    .sorted(byKeyPath: "value", ascending: order == .ascending)
+//            )
+//        default: return Observable.changeset(from: mainDatabaseRef.objects(Sub.self))
+//        }
+//    }
+    
+    func getAllEntries(sort: SortType = .none) -> Observable<Results<Sub>> {
         switch sort {
         case .alphabetical(let order):
-            return Observable.changeset(
+            return Observable.collection(
                 from: mainDatabaseRef
                     .objects(Sub.self)
                     .sorted(byKeyPath: "name", ascending: order == .ascending)
             )
         case .value(let order):
-            return Observable.changeset(
-                from: mainDatabaseRef
+            return Observable.collection(from:
+                mainDatabaseRef
                     .objects(Sub.self)
                     .sorted(byKeyPath: "value", ascending: order == .ascending)
             )
-        default: return Observable.changeset(from: mainDatabaseRef.objects(Sub.self))
+        default: return Observable.collection(
+            from: mainDatabaseRef
+                .objects(Sub.self)
+            )
         }
     }
     
@@ -107,7 +128,8 @@ class DatabaseManager {
         default: return Observable.collection(
             from: mainDatabaseRef
                 .objects(Sub.self)
-                .filter("name CONTAINS[cd] %@", name))
+                .filter("name CONTAINS[cd] %@", name)
+            )
         }
     }
 }

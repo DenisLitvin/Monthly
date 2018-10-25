@@ -68,15 +68,15 @@ class MainVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        viewModel.updateCollectionViewItems
-            .drive(onNext: { (change) in
-                self.collectionView.performBatchUpdates({
-                    self.collectionView.reloadItems(at: change.updated)
-                    self.collectionView.deleteItems(at: change.deleted)
-                    self.collectionView.insertItems(at: change.inserted)
-                })
-            })
-            .disposed(by: disposeBag)
+//        viewModel.updateCollectionViewItems
+//            .drive(onNext: { (change) in
+//                self.collectionView.performBatchUpdates({
+//                    self.collectionView.reloadItems(at: change.updated)
+//                    self.collectionView.deleteItems(at: change.deleted)
+//                    self.collectionView.insertItems(at: change.inserted)
+//                })
+//            })
+//            .disposed(by: disposeBag)
 
         viewModel.reloadAllItems
             .drive(onNext: {

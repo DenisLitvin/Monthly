@@ -105,6 +105,10 @@ class TabBarView: UIView {
             })
             .disposed(by: disposeBag)
 
+        plusButton.rx.tap
+            .bind(to: viewModel.plusButtonTapped)
+            .disposed(by: disposeBag)
+
         filterButton.isOn.skip(1)
             .subscribe(onNext: { isOn in
                 self.clip.invalidateCache()

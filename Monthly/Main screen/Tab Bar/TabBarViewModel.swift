@@ -24,4 +24,5 @@ enum SortOrder {
 class TabBarViewModel {    
     var performSearch = PublishSubject<String>()
     var performSort = PublishSubject<SortType>()
+    var plusButtonTapped = PublishSubject<Void>()
 }

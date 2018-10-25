@@ -51,9 +51,6 @@ class MainVCViewModel {
             )
         
         let emptySearch = queryObs
-            .do(onNext: { value in
-                print("filter:", value.1, "sort:", value.0)
-            }) // test
             .filter { $0.1.isEmpty }
             .flatMapLatest { self.databaseManager.getAllEntries(sort: $0.0).share() }
         
@@ -62,32 +59,40 @@ class MainVCViewModel {
             .filter { !$0.1.isEmpty }
             .flatMapLatest { self.databaseManager.getFilteredEntriesByName($0.1, sort: $0.0).share() }
         
-        updateCollectionViewItems = emptySearch
-            .map {(results, changeset) in changeset }
-            .filter { $0 != nil }
-            .map { (result: RealmChangeset?) -> Changeset in
-                let result = result!
-                let deleted = result.deleted.map { IndexPath(item: $0, section: 0) }
-                let inserted =  result.inserted.map { IndexPath(item: $0, section: 0) }
-                let updated =  result.updated.map { IndexPath(item: $0, section: 0) }
-                return Changeset.init(deleted: deleted,
-                                      inserted: inserted,
-                                      updated: updated)
-            }
-            .delay(0.01, scheduler: MainScheduler.instance)
-            .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
+//        updateCollectionViewItems = emptySearch
+//            .map {(results, changeset) in changeset }
+//            .filter { $0 != nil }
+//            .map { (result: RealmChangeset?) -> Changeset in
+//                let result = result!
+//                let deleted = result.deleted.map { IndexPath(item: $0, section: 0) }
+//                let inserted =  result.inserted.map { IndexPath(item: $0, section: 0) }
+//                let updated =  result.updated.map { IndexPath(item: $0, section: 0) }
+//                return Changeset.init(deleted: deleted,
+//                                      inserted: inserted,
+//                                      updated: updated)
+//            }
+//            .delay(0.01, scheduler: MainScheduler.instance)
+//            .asDriver(onErrorJustReturn: Changeset.init(deleted: [], inserted: [], updated: []))
         
-        let unfilteredResults = emptySearch
-            .map { (results, changeset) in results }
-            .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
-                return results.map { (sub) in
-                    let vm = SubCellViewModel.init()
-                    vm.model.onNext(sub)
-                    return vm
-                }
-            }
+//        let unfilteredResults = emptySearch
+//            .map { (results, changeset) in results }
+//            .map { (results: AnyRealmCollection<Sub>) -> [SubCellViewModel] in
+//                return results.map { (sub) in
+//                    let vm = SubCellViewModel.init()
+//                    vm.model.onNext(sub)
+//                    return vm
+//                }
+        //            }
         
-        let filteredResults = nonEmptySearch
+        //        let reloadAllUnfiltered = emptySearch
+        //            .filter { $0.1 == nil }
+        //            .map { (results, changeset) in results }
+        //            .map { _ in () }
+        //
+        //        let reloadAllFiltered =
+        
+        let results = Observable
+            .merge(emptySearch, nonEmptySearch)
             .map { (results: Results<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
                     let vm = SubCellViewModel.init()
@@ -96,21 +101,12 @@ class MainVCViewModel {
                 }
         }
         
-        cellViewModels = Observable
-            .merge(filteredResults, unfilteredResults)
+        cellViewModels = results
             .asDriver(onErrorJustReturn: [])
-        
-        let reloadAllUnfiltered = emptySearch
-            .filter { $0.1 == nil }
-            .map { (results, changeset) in results }
-            .map { _ in () }
-        
-        let reloadAllFiltered = filteredResults
-            .map { _ in () }
-        
-        reloadAllItems = Observable
-            .merge(reloadAllFiltered, reloadAllUnfiltered)
-            .asDriver(onErrorJustReturn: ())
+
+            reloadAllItems = results
+                .map { _ in () }
+                .asDriver(onErrorJustReturn: ())
         
        
     }
