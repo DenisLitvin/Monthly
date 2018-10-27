@@ -280,7 +280,7 @@ class SliderView: UIScrollView {
     }
 }
 
-extension SliderView: MVVMBinder {
+extension SliderView: ViewModelBinder {
     func set(viewModel: SliderViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel

@@ -43,7 +43,7 @@ import RxSwift
 //    }
 //}
 
-class SubCell: UICollectionViewCell, MVVMBinder {
+class SubCell: UICollectionViewCell, ViewModelBinder {
     private var disposeBag = DisposeBag()
     
     private var backgroundRoundView: UIView!

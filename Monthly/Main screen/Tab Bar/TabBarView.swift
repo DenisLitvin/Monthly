@@ -216,7 +216,7 @@ class TabBarView: UIView {
     }
 }
 
-extension TabBarView: MVVMBinder {
+extension TabBarView: ViewModelBinder {
     func set(viewModel: TabBarViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel
