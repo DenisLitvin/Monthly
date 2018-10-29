@@ -103,12 +103,12 @@ class MainVCViewModel {
         
         cellViewModels = results
             .asDriver(onErrorJustReturn: [])
-
-            reloadAllItems = results
-                .map { _ in () }
-                .asDriver(onErrorJustReturn: ())
         
-       
+        reloadAllItems = results
+            .map { _ in () }
+            .asDriver(onErrorJustReturn: ())
+        
+        
     }
 }
 
