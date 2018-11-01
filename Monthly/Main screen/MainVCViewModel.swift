@@ -10,6 +10,7 @@ import Foundation
 
 import RxRealm
 import RealmSwift
+import Moya
 
 import RxCocoa
 import RxSwift
@@ -25,6 +26,8 @@ class MainVCViewModel {
     private let disposeBag = DisposeBag()
     
     var databaseManager: DatabaseManager!
+    var networkManager: MoyaProvider<General>!
+    
     var sliderViewModel = SliderViewModel()
     var tabBarViewModel = TabBarViewModel()
     
@@ -37,6 +40,13 @@ class MainVCViewModel {
     
     //MARK: - PRIVATE
     private func setUpBindings() {
+        sliderViewModel.iconImage =
+            sliderViewModel.iconRequest.asObservable()
+                .flatMapLatest { self.networkManager.rx.request(.image($0)).mapImage().catchErrorJustReturn(UIImage(named: "signature")) }
+                .filter { $0 != nil }
+                .map { $0! }
+                .asDriver(onErrorJustReturn: UIImage(named: "signature")!)
+        
         sliderViewModel.save.asObservable()
             .flatMap { self.databaseManager.add($0) }
             .subscribe(onNext: {
@@ -91,7 +101,9 @@ class MainVCViewModel {
         //
         //        let reloadAllFiltered =
         
-        let results = Observable
+        
+        
+        cellViewModels = Observable
             .merge(emptySearch, nonEmptySearch)
             .map { (results: Results<Sub>) -> [SubCellViewModel] in
                 return results.map { (sub) in
@@ -99,16 +111,12 @@ class MainVCViewModel {
                     vm.model.onNext(sub)
                     return vm
                 }
-        }
-        
-        cellViewModels = results
+            }
             .asDriver(onErrorJustReturn: [])
-        
-        reloadAllItems = results
+    
+        reloadAllItems = cellViewModels
             .map { _ in () }
-            .asDriver(onErrorJustReturn: ())
-        
-        
+
     }
 }
 
@@ -120,7 +128,8 @@ extension MainVCViewModel: Routable {
     
     var input: [Input] {
         return [
-            Route.subManager.input({ self.databaseManager = $0 })
+            Route.databaseManager.input({ self.databaseManager = $0 }),
+            Route.networkManager.input({ self.networkManager = $0 })
         ]
     }
     var output: [Output] {

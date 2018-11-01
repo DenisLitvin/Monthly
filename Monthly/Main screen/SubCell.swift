@@ -83,7 +83,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.categoryText.drive(categoryView.rx.attributedText).disposed(by: disposeBag)
         viewModel.dateText.drive(dateLabel.rx.attributedText).disposed(by: disposeBag)
-        //        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
+        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
         viewModel.bellViewIcon.drive(bellView.rx.image).disposed(by: disposeBag)
     }
     
@@ -157,7 +157,8 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         }()
         iconView = {
             let view = UIImageView()
-            //            view.clip.wantsSize = CGSize(width: 33, height: 33)//templocal
+            view.flex.size(CGSize(width: 33, height: 33))
+            view.contentMode = .scaleAspectFit
             view.image = #imageLiteral(resourceName: "signature")
             view.clip.enable()
             return view

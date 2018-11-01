@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+import Moya
 import RealmSwift
 import VisualEffectView
 
@@ -35,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
         
         let vc = MainVC(with: tabBarView, sliderView: sliderView, blurView: blurView)
-        vc.viewModel.databaseManager = DatabaseManager.init()
+        vc.viewModel.databaseManager = DatabaseManager()
+        vc.viewModel.networkManager = MoyaProvider<General>()
         vc.viewModel.didSetDependencies()
         vc.didSetDependencies()
         

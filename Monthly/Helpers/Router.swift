@@ -21,7 +21,8 @@ public struct Output {
 public enum Route<Item>: Int {
     
     //add new cases here
-    case subManager
+    case databaseManager
+    case networkManager
     
     public typealias ItemSetter = (Item) -> Void
     

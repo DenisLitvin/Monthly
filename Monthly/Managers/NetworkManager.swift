@@ -9,11 +9,11 @@
 import Foundation
 import Moya
 
-enum Basic {
+enum General {
     case image(String)
 }
 
-extension Basic: TargetType {
+extension General: TargetType {
     var baseURL: URL { return URL(string: "https://logo.clearbit.com")! }
     
     var path: String {
@@ -35,12 +35,10 @@ extension Basic: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestPlain
+        return .requestParameters(parameters: ["size": Int(33 * UIScreen.main.scale)], encoding: URLEncoding.default)
     }
     
     var headers: [String : String]? {
         return nil
     }
-    
-    
 }

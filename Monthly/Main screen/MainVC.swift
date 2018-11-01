@@ -33,13 +33,6 @@ class MainVC: UIViewController {
         })
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        setUpSelf()
-//        setUpViews()
-//        setUpLayout()
-    }
     init(with tabBarView: TabBarView,
          sliderView: SliderView,
          blurView: VisualEffectView) {
@@ -68,27 +61,27 @@ class MainVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-//        viewModel.updateCollectionViewItems
-//            .drive(onNext: { (change) in
-//                self.collectionView.performBatchUpdates({
-//                    self.collectionView.reloadItems(at: change.updated)
-//                    self.collectionView.deleteItems(at: change.deleted)
-//                    self.collectionView.insertItems(at: change.inserted)
-//                })
-//            })
-//            .disposed(by: disposeBag)
-
+        //        viewModel.updateCollectionViewItems
+        //            .drive(onNext: { (change) in
+        //                self.collectionView.performBatchUpdates({
+        //                    self.collectionView.reloadItems(at: change.updated)
+        //                    self.collectionView.deleteItems(at: change.deleted)
+        //                    self.collectionView.insertItems(at: change.inserted)
+        //                })
+        //            })
+        //            .disposed(by: disposeBag)
+        
         viewModel.reloadAllItems
             .drive(onNext: {
-                    self.collectionView.reloadData()
+                self.collectionView.reloadData()
             })
             .disposed(by: disposeBag)
         
-//        viewModel.didRequestImagePicker
-//            .drive(onNext: { _ in
-//                let picker = UIImagePickerController()
-//                picker.delegate = self
-//                picker.mediaTypes = [kUTTypeImage as String]
+        //        viewModel.didRequestImagePicker
+        //            .drive(onNext: { _ in
+        //                let picker = UIImagePickerController()
+        //                picker.delegate = self
+        //                picker.mediaTypes = [kUTTypeImage as String]
 //                self.present(picker, animated: true)
 //            })
 //            .disposed(by: disposeBag)

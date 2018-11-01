@@ -7,11 +7,13 @@
 //
 
 import Foundation
+
 import RxSwift
 import RxCocoa
 
 class SliderViewModel {
     
-    var save = PublishSubject<Sub>()
-    
+    var save = PublishRelay<Sub>()
+    var iconRequest = PublishRelay<String>()
+    var iconImage: Driver<UIImage>!
 }

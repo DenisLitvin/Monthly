@@ -63,23 +63,27 @@ class SliderView: UIScrollView {
             })
             .disposed(by: disposeBag)
         
+        nameTextField.textField.rx.text.orEmpty
+            .filter { !$0.isEmpty }
+            .bind(to: viewModel.iconRequest)
+            .disposed(by: disposeBag)
+        
         var old = ""
         youSpendTextField.textField.rx.text.orEmpty
+            .filter { !$0.isEmpty }
             .subscribe(onNext: { new in
-                if !new.isEmpty {
-                    var string = new.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if string.starts(with: "0") {
-                        string.remove(at: string.startIndex)
-                    }
-                    let number = NumberFormatter.price.number(from: string)
-                    if number == nil {
-                        string = old
-                    }
-                    else {
-                        old = string
-                    }
-                    self.youSpendTextField.textField.text = string
+                var string = new.trimmingCharacters(in: .whitespacesAndNewlines)
+                if string.starts(with: "0") {
+                    string.remove(at: string.startIndex)
                 }
+                let number = NumberFormatter.price.number(from: string)
+                if number == nil {
+                    string = old
+                }
+                else {
+                    old = string
+                }
+                self.youSpendTextField.textField.text = string
             })
             .disposed(by: disposeBag)
         
@@ -110,6 +114,9 @@ class SliderView: UIScrollView {
             .map { $0! }
             .bind(to: self.viewModel.save)
             .disposed(by: disposeBag)
+        
+        viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
+
     }
     
     private func setUplayout() {
@@ -175,6 +182,7 @@ class SliderView: UIScrollView {
         lineView.clip.enable()
         
         iconView = UIImageView(image: #imageLiteral(resourceName: "icon_holder"))
+        iconView.contentMode = .scaleAspectFit
         iconView.clip.enable()
         
         youSpendLabel = {
