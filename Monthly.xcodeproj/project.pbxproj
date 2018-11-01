@@ -46,6 +46,7 @@
 		3E9FFDF9214742CC00F0511A /* VisualEffectView+PopProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */; };
 		3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8D821335D1F006CDE4D /* SliderView.swift */; };
 		3EB9A8DB21336709006CDE4D /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A8DA21336709006CDE4D /* Animator.swift */; };
+		3ECEB1A021893A3A001CA677 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECEB19F21893A3A001CA677 /* NetworkManager.swift */; };
 		3ED7E834213A35C1009D889F /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7E833213A35C1009D889F /* TabBarViewModel.swift */; };
 		3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED7E835213A4177009D889F /* UIView+roundedCorners.swift */; };
 		3ED94981214B0F7F0055C96F /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED94980214B0F7F0055C96F /* SaveButton.swift */; };
@@ -106,6 +107,7 @@
 		3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisualEffectView+PopProperty.swift"; sourceTree = "<group>"; };
 		3EB9A8D821335D1F006CDE4D /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		3EB9A8DA21336709006CDE4D /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		3ECEB19F21893A3A001CA677 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3ED7E833213A35C1009D889F /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		3ED7E835213A4177009D889F /* UIView+roundedCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+roundedCorners.swift"; sourceTree = "<group>"; };
 		3ED94980214B0F7F0055C96F /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				3E0D2733211EE47000C39D11 /* DatabaseManager.swift */,
+				3ECEB19F21893A3A001CA677 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -447,11 +450,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Monthly/Pods-Monthly-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ClipLayout/ClipLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Pinner/Pinner.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxKeyboard/RxKeyboard.framework",
@@ -462,11 +468,14 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ClipLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pinner.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxKeyboard.framework",
@@ -551,6 +560,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ECEB1A021893A3A001CA677 /* NetworkManager.swift in Sources */,
 				3ED7E834213A35C1009D889F /* TabBarViewModel.swift in Sources */,
 				3E252085214599B2000799CB /* Formatters.swift in Sources */,
 				3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */,
