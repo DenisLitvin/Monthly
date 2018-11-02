@@ -42,7 +42,11 @@ class MainVCViewModel {
     private func setUpBindings() {
         sliderViewModel.iconImage =
             sliderViewModel.iconRequest.asObservable()
-                .flatMapLatest { self.networkManager.rx.request(.image($0)).mapImage().catchErrorJustReturn(UIImage(named: "signature")) }
+                .flatMapLatest {
+                    self.networkManager.rx
+                        .request(.image($0)).mapImage()
+                        .catchErrorJustReturn(UIImage(named: "signature"))
+                }
                 .filter { $0 != nil }
                 .map { $0! }
                 .asDriver(onErrorJustReturn: UIImage(named: "signature")!)

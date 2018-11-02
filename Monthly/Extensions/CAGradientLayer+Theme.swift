@@ -17,6 +17,18 @@ extension CAGradientLayer {
             return layer
         }
         
+        static var cellStat: CAGradientLayer {
+            let layer = CAGradientLayer()
+            layer.colors = [
+                UIColor(red: 0/255, green: 122/255, blue: 203/255, alpha: 1).cgColor,
+                UIColor(red: 23/255, green: 27/255, blue: 99/255, alpha: 1).cgColor
+            ]
+            layer.startPoint = CGPoint(x: 0, y: 0)
+            layer.endPoint = CGPoint(x: 1, y: 1)
+//            layer.locations = [0.3, 1]
+            return layer
+        }
+        
         static var cellBackground: CAGradientLayer {
             let layer = CAGradientLayer()
             layer.colors = [
@@ -31,7 +43,6 @@ extension CAGradientLayer {
         
         static var slider: CALayer {
             let layer = CALayer()
-//            layer.opacity = 0.85
             layer.backgroundColor = UIColor(red: 31/255, green: 47/255, blue: 82/255, alpha: 0.7).cgColor
             return layer
         }

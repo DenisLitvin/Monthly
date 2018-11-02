@@ -8,6 +8,8 @@
 
 import UIKit
 import FlexLayout
+import Pinner
+
 import RxCocoa
 import RxSwift
 
@@ -90,7 +92,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
     private func setUpLayout() {
         contentView.flex.define { (flex) in
             flex.addItem(backgroundRoundView)
-                .marginTop(5).marginBottom(5).marginLeft(13).marginRight(13)
+                .marginTop(1).marginBottom(1).marginLeft(13).marginRight(13)
                 .define { (flex) in
                     //row container
                     flex.addItem().direction(.row).alignItems(.center)
@@ -110,6 +112,11 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
             }
         }
         flex.layout()
+        let back = UIView()
+        back.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
+        back.backgroundColor = .red
+        backgroundRoundView.addSubview(back)
+
     }
     
     private func setUpViews() {
@@ -121,7 +128,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
             layer.clip.enable().aligned(v: .stretch, h: .stretch)
             view.layer.addSublayer(layer)
             view.clipsToBounds = true
-            view.layer.cornerRadius = 8
+            view.layer.cornerRadius = 6
             return view
         }()
         titleLabel = {

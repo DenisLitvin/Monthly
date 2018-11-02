@@ -12,7 +12,7 @@ extension String {
     
     func attributedForAmount() -> NSAttributedString {
         let attrStr = NSMutableAttributedString(string: self,
-                                                attributes: [.kern: -0.6])
+                                                attributes: [.kern: 0.2])
 //        attrStr.addAttribute(.font,
 //                             value: UIFont.dynamic(14, family: .proximaNovaCond),
 //                             range: NSRange.init(location: 0, length: 1))

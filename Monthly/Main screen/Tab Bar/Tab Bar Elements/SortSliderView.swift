@@ -60,7 +60,7 @@ class SortSliderView: UIScrollView {
     }
     
     private func setUpSelf() {
-        showsHorizontalScrollIndicator = true
+        showsHorizontalScrollIndicator = false
         let size = contentView.flex.intrinsicSize
         contentView.frame.size = size
         contentSize = size

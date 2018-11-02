@@ -138,6 +138,7 @@ class SliderView: UIScrollView {
         paddingsContainer.addSubview(firstRow)
         
         firstRow.addSubview(iconView)
+        iconView.clip.withHeight(45).withWidth(45)
         youSpendLabel.clip.insetRight(10).insetLeft(10).horizontallyAligned(.stretch)
         firstRow.addSubview(youSpendLabel)
         firstRow.addSubview(youSpendTextField)
@@ -181,7 +182,7 @@ class SliderView: UIScrollView {
         lineView = UIImageView(image: #imageLiteral(resourceName: "line"))
         lineView.clip.enable()
         
-        iconView = UIImageView(image: #imageLiteral(resourceName: "icon_holder"))
+        iconView = UIImageView(image: #imageLiteral(resourceName: "signature"))
         iconView.contentMode = .scaleAspectFit
         iconView.clip.enable()
         
@@ -268,6 +269,7 @@ class SliderView: UIScrollView {
     
     private func setUpSelf() {
         clipsToBounds = false
+        showsVerticalScrollIndicator = false
         alwaysBounceVertical = true
         backgroundColor = .clear
         isHidden = true

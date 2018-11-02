@@ -17,6 +17,8 @@ class SliderDateTextField: SliderTextField, DatePickerField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        textField.adjustsFontSizeToFitWidth = true
         setUpBindings()
         setUpDatePicker()
     }
