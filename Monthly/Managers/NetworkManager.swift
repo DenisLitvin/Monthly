@@ -35,7 +35,8 @@ extension General: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestParameters(parameters: ["size": Int(33 * UIScreen.main.scale)], encoding: URLEncoding.default)
+        return .requestParameters(parameters: ["size": Int(33 * UIScreen.main.scale)],
+                                  encoding: URLEncoding.default)
     }
     
     var headers: [String : String]? {
