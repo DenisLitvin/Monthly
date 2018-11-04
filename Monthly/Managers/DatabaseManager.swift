@@ -70,6 +70,7 @@ class DatabaseManager {
         })
     }
     
+    
 //    func getAllEntries(sort: SortType = .none) -> Observable<(AnyRealmCollection<Sub>, RealmChangeset?)> {
 //        switch sort {
 //        case .alphabetical(let order):
