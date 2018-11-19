@@ -37,7 +37,7 @@ class SaveButton: TabBarButton {
             view.textAlignment = .center
             view.textColor = .white
             view.attributedText = NSAttributedString(string: "SAVE".localized(), attributes: [.kern: 4])
-            view.font = UIFont.dynamic(14, family: .proximaNova).bolded
+            view.font = UIFont.dynamic(14, family: .avenirNext).bolded
             return view
         }()
         

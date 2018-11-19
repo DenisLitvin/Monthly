@@ -144,10 +144,11 @@ class SliderView: UIScrollView {
         firstRow.addSubview(youSpendTextField)
         
         let secondRow = UIView()
-        secondRow.clip.enable().withDistribution(.row).insetTop(10)
+        secondRow.clip.enable().withDistribution(.row).insetTop(20)
         paddingsContainer.addSubview(secondRow)
         
         everyLabel.clip.horizontallyAligned(.stretch)
+        everyLabel.clip.insetRight(20)
         secondRow.addSubview(everyLabel)
         secondRow.addSubview(categoryPicker)
         
@@ -159,12 +160,12 @@ class SliderView: UIScrollView {
         thirdRow.addSubview(firstBillLabel)
         thirdRow.addSubview(firstBillTextField)
         
-        nameLabel.clip.horizontallyAligned(.stretch).insetTop(25).insetBottom(10)
+        nameLabel.clip.horizontallyAligned(.stretch).insetTop(30).insetBottom(10)
         paddingsContainer.addSubview(nameLabel)
         nameTextField.clip.insetLeft(-3)
         paddingsContainer.addSubview(nameTextField)
         
-        notesLabel.clip.horizontallyAligned(.stretch).insetTop(19).insetBottom(10)
+        notesLabel.clip.horizontallyAligned(.stretch).insetTop(30).insetBottom(10)
         paddingsContainer.addSubview(notesLabel)
         notesTextField.clip.insetLeft(-3)
         paddingsContainer.addSubview(notesTextField)
@@ -189,7 +190,7 @@ class SliderView: UIScrollView {
         youSpendLabel = {
             let view = SliderLabel()
             view.textAlignment = .right
-            view.attributedText = "YOU SPEND"
+            view.attributedText = "I spend"
                 .localized()
                 .attributedForSliderText()
             return view
@@ -208,7 +209,7 @@ class SliderView: UIScrollView {
         everyLabel = {
             let view = SliderLabel()
             view.textAlignment = .right
-            view.attributedText = "EVERY"
+            view.attributedText = "every"
                 .localized()
                 .attributedForSliderText()
             return view
@@ -216,7 +217,7 @@ class SliderView: UIScrollView {
         categoryPicker = CategoryPicker()
         firstBillLabel = {
             let view = SliderLabel()
-            view.attributedText = "FIRST BILL WAS"
+            view.attributedText = "First bill"
                 .localized()
                 .attributedForSliderText()
             return view
@@ -231,21 +232,21 @@ class SliderView: UIScrollView {
         }()
         nameLabel = {
             let view = SliderLabel()
-            view.attributedText = "NAME"
+            view.attributedText = "Name"
                 .localized()
                 .attributedForSliderText()
             return view
         }()
         nameTextField = {
             let view = SliderTextField()
-            view.textField.attributedPlaceholder = "Enter company name …"
+            view.textField.attributedPlaceholder = "Type company's name"
                 .localized()
                 .attributedForSliderPlaceholder()
             return view
         }()
         notesLabel = {
             let view = SliderLabel()
-            view.attributedText = "NOTES"
+            view.attributedText = "Notes"
                 .localized()
                 .attributedForSliderText()
             return view
@@ -253,7 +254,7 @@ class SliderView: UIScrollView {
         notesTextField = SliderNotesTextField()
         remindLabel = {
             let view = SliderLabel()
-            view.attributedText = "REMIND ME"
+            view.attributedText = "Reminder"
                 .localized()
                 .attributedForSliderText()
             return view

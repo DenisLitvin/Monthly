@@ -20,9 +20,9 @@ class SliderNotesTextField: SliderTextField {
         textView = {
             let view = UITextView()
             view.textContainerInset = .zero
-            view.keyboardAppearance = UIKeyboardAppearance.dark
-            view.font = UIFont.dynamic(15, family: .proximaNova)
-            view.textColor = UIColor.Theme.lightBlue
+            view.keyboardAppearance = UIKeyboardAppearance.light
+            view.font = UIFont.dynamic(15, family: .avenirNext)
+            view.textColor = UIColor.Elements.labelText
             view.backgroundColor = .clear
             view.inputAccessoryView = toolBar()
             view.delegate = self
@@ -32,7 +32,7 @@ class SliderNotesTextField: SliderTextField {
         addSubview(textView)
         
         textField.isUserInteractionEnabled = false
-        textField.attributedPlaceholder = "Enter some notes …"
+        textField.attributedPlaceholder = "Type some extra information"
             .localized()
             .attributedForSliderPlaceholder()
         

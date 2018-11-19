@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "noun_signature_650988.png",
+      "filename" : "sign.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "noun_signature_650988@2x.png",
+      "filename" : "sign@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "noun_signature_650988@3x.png",
+      "filename" : "sign@3x.png",
       "scale" : "3x"
     }
   ],

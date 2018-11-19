@@ -48,7 +48,7 @@ class MainVCViewModel {
                         .catchErrorJustReturn(UIImage(named: "signature"))
                 }
                 .filter { $0 != nil }
-                .map { $0! }
+                .map { $0!.rounded() }
                 .asDriver(onErrorJustReturn: UIImage(named: "signature")!)
         
         sliderViewModel.save.asObservable()

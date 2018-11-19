@@ -52,7 +52,7 @@ class SliderTextField: UIView {
     
     func toolBar() -> UIToolbar {
         let toolbar = UIToolbar()
-        toolbar.barStyle = UIBarStyle.blackTranslucent
+        toolbar.barStyle = UIBarStyle.default
         
         let flexibleSeparator = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backTapped))
@@ -86,16 +86,16 @@ class SliderTextField: UIView {
     private func setUpSelf() {
         clipsToBounds = true
         layer.cornerRadius = 19
-        backgroundColor = UIColor.init(white: 0, alpha: 0.2)
+        backgroundColor = UIColor.Elements.textFieldBackground
         self.textField.inputAccessoryView = toolBar()
     }
     
     private func setUpViews() {
         textField = {
             let view = UITextField()
-            view.keyboardAppearance = UIKeyboardAppearance.dark
-            view.font = UIFont.dynamic(15, family: .proximaNova)
-            view.textColor = UIColor.Theme.lightBlue
+            view.keyboardAppearance = UIKeyboardAppearance.light
+            view.font = UIFont.dynamic(15, family: .avenir).bolded
+            view.textColor = UIColor.Elements.textFieldText
             view.clip.enable()
             view.delegate = self
             return view

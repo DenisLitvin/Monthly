@@ -18,7 +18,6 @@ class SearchTextField: UITextField {
         super.init(frame: frame)
         
         isHidden = true
-        keyboardAppearance = .dark
         returnKeyType = .done
         delegate = self
         textColor = .white
@@ -26,6 +25,7 @@ class SearchTextField: UITextField {
         let screenWidth = UIScreen.main.bounds.size.width
         let width = screenWidth * 0.61
         self.frame = CGRect(x: screenWidth * 0.24, y: 15, width: width, height: 32)
+        
         let separator: CAShapeLayer = {
             let layer = CAShapeLayer()
             layer.frame = CGRect(x: 0, y: 32, width: width, height: 2)
@@ -34,7 +34,7 @@ class SearchTextField: UITextField {
             path.addLine(to: CGPoint(x: self.bounds.width, y: 0))
             layer.path = path.cgPath
             layer.lineWidth = 2
-            layer.strokeColor = UIColor.white.cgColor
+            layer.strokeColor = UIColor.Elements.accessory.cgColor
             return layer
         }()
         self.layer.addSublayer(separator)

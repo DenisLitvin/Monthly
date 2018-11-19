@@ -45,6 +45,7 @@ extension CategoryPicker: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let label = (view as? SliderLabel) ?? SliderLabel()
+        label.textColor = UIColor.Elements.textFieldText
         label.clip.enabled = false
         label.textAlignment = .center
         label.attributedText = data[row].localized().attributedForSliderText()

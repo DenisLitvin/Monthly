@@ -138,6 +138,7 @@ class TabBarView: UIView {
         rowContainer.addSubview(searchButton)
         statButton.clip.aligned(v: .stretch, h: .stretch)
         rowContainer.addSubview(statButton)
+        plusButton.clip.insetLeft(10).insetRight(10)
         rowContainer.addSubview(plusButton)
         filterButton.clip.aligned(v: .stretch, h: .stretch)
         rowContainer.addSubview(filterButton)

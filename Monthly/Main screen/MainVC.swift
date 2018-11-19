@@ -154,8 +154,8 @@ class MainVC: UIViewController {
         view.backgroundColor = UIColor.Elements.background
         //title
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        titleLabel.font = UIFont.fixed(13, family: .proximaNova).bolded
-        titleLabel.textColor = .white
+        titleLabel.font = UIFont.fixed(13, family: .avenirNext).bolded
+        titleLabel.textColor = .black
         let str = "MONTHLY".localized()
         titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 3.15])
         navigationItem.titleView = titleLabel

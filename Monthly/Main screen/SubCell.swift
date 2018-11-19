@@ -33,7 +33,7 @@ import RxSwift
 //           let view = UILabel()
 //            view.clip.enable()
 //            view.textColor = UIColor.Theme.blue
-//            view.font = UIFont.dynamic(8, family: .proximaNova)
+//            view.font = UIFont.dynamic(8, family: .avenirNext)
 //            return view
 //        }()
 //        titleLabel.clip.insetLeft(11).insetTop(6).insetBottom(6).insetRight(9)
@@ -92,14 +92,14 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
     private func setUpLayout() {
         contentView.flex.define { (flex) in
             flex.addItem(backgroundRoundView)
-                .marginTop(1).marginBottom(1).marginLeft(13).marginRight(13)
+                .marginTop(5).marginBottom(5).marginLeft(13).marginRight(13)
                 .define { (flex) in
                     //row container
                     flex.addItem().direction(.row).alignItems(.center)
                         .marginTop(20).marginLeft(20).marginBottom(20).marginRight(13)
                         .define { (flex) in
                             flex.addItem(iconView)
-                            flex.addItem().marginLeft(15).marginRight(5).grow(1).shrink(1).define { (flex) in
+                            flex.addItem().marginLeft(18).marginRight(10).grow(1).shrink(1).define { (flex) in
                                     flex.addItem(titleLabel).marginBottom(10)
                                     flex.addItem(categoryView)
                             }
@@ -112,11 +112,6 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
             }
         }
         flex.layout()
-        let back = UIView()
-        back.frame = CGRect(x: 0, y: 0, width: 300, height: 40)
-        back.backgroundColor = .red
-        backgroundRoundView.addSubview(back)
-
     }
     
     private func setUpViews() {
@@ -128,13 +123,13 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
             layer.clip.enable().aligned(v: .stretch, h: .stretch)
             view.layer.addSublayer(layer)
             view.clipsToBounds = true
-            view.layer.cornerRadius = 6
+            view.layer.cornerRadius = 8
             return view
         }()
         titleLabel = {
             let view = UILabel()
-            view.font = UIFont.dynamic(18, family: .proximaNova).bolded
-            view.textColor = UIColor.Theme.lightBlue
+            view.font = UIFont.dynamic(18, family: .avenirNext).bolded
+            view.textColor = UIColor.Elements.labelText
             view.numberOfLines = 0
             view.clip.enable()
             return view
@@ -142,23 +137,23 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         valueLabel = {
             let view = UILabel()
             view.textAlignment = .right
-            view.font = UIFont.dynamic(18, family: .proximaNovaCond)
-            view.textColor = UIColor.Theme.lightBlue
+            view.font = UIFont.dynamic(18, family: .avenirNextCondensed)
+            view.textColor = UIColor.Elements.labelText
             view.clip.enable()
             return view
         }()
         categoryView = {
             let view = UILabel()
-            view.font = UIFont.dynamic(11, family: .proximaNova).bolded
-            view.textColor = UIColor.Theme.slightlyGrayedBlue
+            view.font = UIFont.dynamic(11, family: .avenirNext).bolded
+            view.textColor = UIColor.Elements.slightlyGrayedBlue
             view.clip.enable()
             return view
         }()
         dateLabel = {
             let view = UILabel()
             view.textAlignment = .right
-            view.font = UIFont.dynamic(9, family: .proximaNova)
-            view.textColor = UIColor.Theme.slightlyGrayedBlue
+            view.font = UIFont.dynamic(9, family: .avenirNext)
+            view.textColor = UIColor.Elements.slightlyGrayedBlue
             view.clip.enable()
             return view
         }()
