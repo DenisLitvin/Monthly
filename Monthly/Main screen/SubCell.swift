@@ -13,37 +13,43 @@ import Pinner
 import RxCocoa
 import RxSwift
 
-//class CategoryView: UIView {
-//
-//    var titleLabel: UILabel!
-//    var backgroundLayer: CALayer!
-//
-//    init() {
-//        super.init(frame: .zero)
-//        clipsToBounds = true
-//        layer.cornerRadius = 5
-//        layer.clip.enable()
-//        clip.enable().withDistribution(.row)
-//
-//        backgroundLayer = CAGradientLayer.Elements.cellCategory
-//        backgroundLayer.clip.enable().aligned(v: .stretch, h: .stretch)
-//        layer.addSublayer(backgroundLayer)
-//
-//        titleLabel = {
-//           let view = UILabel()
-//            view.clip.enable()
-//            view.textColor = UIColor.Theme.blue
-//            view.font = UIFont.dynamic(8, family: .avenirNext)
-//            return view
-//        }()
-//        titleLabel.clip.insetLeft(11).insetTop(6).insetBottom(6).insetRight(9)
-//        addSubview(titleLabel)
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
+class CategoryView: UIView {
+
+    var titleLabel: UILabel!
+    var backgroundLayer: CALayer!
+
+    init() {
+        super.init(frame: .zero)
+        clipsToBounds = true
+        layer.cornerRadius = 8
+        layer.clip.enable()
+
+        backgroundLayer = CALayer()
+        backgroundLayer.backgroundColor = UIColor.Elements.categoryLabelbackground.cgColor
+        backgroundLayer.clip.enable()
+            .aligned(v: .stretch, h: .stretch)
+        layer.addSublayer(backgroundLayer)
+
+        titleLabel = {
+           let view = UILabel()
+            view.textColor = .white
+            view.font = UIFont.dynamic(8, family: .avenir).bolded
+            return view
+        }()
+        
+        flex.alignSelf(.start).addItem(titleLabel)
+            .marginLeft(9)
+            .marginTop(3)
+            .marginBottom(3)
+            .marginRight(7)
+        
+        flex.layout()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class SubCell: UICollectionViewCell, ViewModelBinder {
     private var disposeBag = DisposeBag()
@@ -53,7 +59,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
     private var viewModel: SubCellViewModel!
     
     var titleLabel: UILabel!
-    var categoryView: UILabel!
+    var categoryView: CategoryView!
     var iconView: UIImageView!
     var valueLabel: UILabel!
     var dateLabel: UILabel!
@@ -72,9 +78,10 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         setUpBindings()
         
         titleLabel.flex.markDirty()
-        categoryView.flex.markDirty()
+        categoryView.titleLabel.flex.markDirty()
         valueLabel.flex.markDirty()
         dateLabel.flex.markDirty()
+        
         flex.layout()
     }
     
@@ -83,7 +90,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         
         viewModel.titleText.drive(titleLabel.rx.text).disposed(by: disposeBag)
         viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)
-        viewModel.categoryText.drive(categoryView.rx.attributedText).disposed(by: disposeBag)
+        viewModel.categoryText.drive(categoryView.titleLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.dateText.drive(dateLabel.rx.attributedText).disposed(by: disposeBag)
         viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
         viewModel.bellViewIcon.drive(bellView.rx.image).disposed(by: disposeBag)
@@ -128,7 +135,7 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         }()
         titleLabel = {
             let view = UILabel()
-            view.font = UIFont.dynamic(18, family: .avenirNext).bolded
+            view.font = UIFont.dynamic(21, family: .avenirNext).bolded
             view.textColor = UIColor.Elements.labelText
             view.numberOfLines = 0
             view.clip.enable()
@@ -142,18 +149,12 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
             view.clip.enable()
             return view
         }()
-        categoryView = {
-            let view = UILabel()
-            view.font = UIFont.dynamic(11, family: .avenirNext).bolded
-            view.textColor = UIColor.Elements.slightlyGrayedBlue
-            view.clip.enable()
-            return view
-        }()
+        categoryView = CategoryView()
         dateLabel = {
             let view = UILabel()
             view.textAlignment = .right
-            view.font = UIFont.dynamic(9, family: .avenirNext)
-            view.textColor = UIColor.Elements.slightlyGrayedBlue
+            view.font = UIFont.dynamic(11, family: .avenirNext)
+            view.textColor = UIColor.Elements.dateLabelText
             view.clip.enable()
             return view
         }()

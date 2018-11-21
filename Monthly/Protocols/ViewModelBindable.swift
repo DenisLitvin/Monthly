@@ -9,7 +9,7 @@
 import Foundation
 import ClipLayout
 
-public protocol ViewModelBinder {
+public protocol ViewModelBindable {
     associatedtype ViewModel
     func set(viewModel: ViewModel)
 }

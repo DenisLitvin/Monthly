@@ -56,17 +56,17 @@ class SliderTextField: UIView {
         
         let flexibleSeparator = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let backButton = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(backTapped))
-        backButton.tintColor = .white
+        backButton.tintColor = .black
         backButton.isEnabled = false
         self.previousFieldButton = backButton
         
         let forwardButton = UIBarButtonItem(image: #imageLiteral(resourceName: "forward"), style: .plain, target: self, action: #selector(forwardTapped))
-        forwardButton.tintColor = .white
+        forwardButton.tintColor = .black
         forwardButton.isEnabled = false
         self.nextFieldButton = forwardButton
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-        doneButton.tintColor = .white
+        doneButton.tintColor = .black
         
         toolbar.items = [backButton, forwardButton, flexibleSeparator, doneButton]
         toolbar.sizeToFit()

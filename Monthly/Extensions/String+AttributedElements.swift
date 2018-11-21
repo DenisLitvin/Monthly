@@ -33,6 +33,6 @@ extension String {
     }
     
     func attributedForDate() -> NSAttributedString {
-        return NSAttributedString(string: self.uppercased(), attributes: [.kern: 0.9])
+        return NSAttributedString(string: self, attributes: [.kern: 0.9])
     }
 }

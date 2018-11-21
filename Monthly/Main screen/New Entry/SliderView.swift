@@ -139,7 +139,7 @@ class SliderView: UIScrollView {
         
         firstRow.addSubview(iconView)
         iconView.clip.withHeight(45).withWidth(45)
-        youSpendLabel.clip.insetRight(10).insetLeft(10).horizontallyAligned(.stretch)
+        youSpendLabel.clip.insetRight(20).insetLeft(10).horizontallyAligned(.stretch)
         firstRow.addSubview(youSpendLabel)
         firstRow.addSubview(youSpendTextField)
         
