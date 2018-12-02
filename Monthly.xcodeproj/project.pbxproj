@@ -27,7 +27,7 @@
 		3E252085214599B2000799CB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E252084214599B2000799CB /* Formatters.swift */; };
 		3E25208721459B16000799CB /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208621459B16000799CB /* DatePicker.swift */; };
 		3E25208921459C22000799CB /* SliderDateTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208821459C22000799CB /* SliderDateTextField.swift */; };
-		3E25208F2145B702000799CB /* ViewModelBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208E2145B702000799CB /* ViewModelBinder.swift */; };
+		3E25208F2145B702000799CB /* ViewModelBindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E25208E2145B702000799CB /* ViewModelBindable.swift */; };
 		3E2520912145BE1A000799CB /* SliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2520902145BE1A000799CB /* SliderViewModel.swift */; };
 		3E58670921A22AE800B919EC /* UIImage+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E58670821A22AE800B919EC /* UIImage+Rounded.swift */; };
 		3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E60882A216AAEF600D8D916 /* CollectionView.swift */; };
@@ -38,6 +38,7 @@
 		3E7F56C92133032600D74819 /* PaymentPeriodCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */; };
 		3E820575217A84F400723677 /* SortSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820574217A84F400723677 /* SortSliderView.swift */; };
 		3E82057A217D4C0100723677 /* CheckEdgeLessDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E820579217D4C0100723677 /* CheckEdgeLessDisplay.swift */; };
+		3E9226C221B484BA0074CAF6 /* FlexLayout+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9226C121B484BA0074CAF6 /* FlexLayout+Rx.swift */; };
 		3E96D86D2130EEC7004A7660 /* ProximaNovaCond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */; };
 		3E96D86E2130EECB004A7660 /* ProximaNovaCond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */; };
 		3E96D8702130EF10004A7660 /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */; };
@@ -89,7 +90,7 @@
 		3E252084214599B2000799CB /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		3E25208621459B16000799CB /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
 		3E25208821459C22000799CB /* SliderDateTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderDateTextField.swift; sourceTree = "<group>"; };
-		3E25208E2145B702000799CB /* ViewModelBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBinder.swift; sourceTree = "<group>"; };
+		3E25208E2145B702000799CB /* ViewModelBindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBindable.swift; sourceTree = "<group>"; };
 		3E2520902145BE1A000799CB /* SliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewModel.swift; sourceTree = "<group>"; };
 		3E58670821A22AE800B919EC /* UIImage+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Rounded.swift"; sourceTree = "<group>"; };
 		3E60882A216AAEF600D8D916 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 		3E7F56C82133032600D74819 /* PaymentPeriodCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPeriodCalculator.swift; sourceTree = "<group>"; };
 		3E820574217A84F400723677 /* SortSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSliderView.swift; sourceTree = "<group>"; };
 		3E820579217D4C0100723677 /* CheckEdgeLessDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEdgeLessDisplay.swift; sourceTree = "<group>"; };
+		3E9226C121B484BA0074CAF6 /* FlexLayout+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlexLayout+Rx.swift"; sourceTree = "<group>"; };
 		3E96D86A2130EE7B004A7660 /* ProximaNovaCond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Regular.ttf"; sourceTree = "<group>"; };
 		3E96D86B2130EEAD004A7660 /* ProximaNovaCond-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNovaCond-Bold.ttf"; sourceTree = "<group>"; };
 		3E96D86F2130EF10004A7660 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
@@ -208,7 +210,7 @@
 		3E25208D2145B6F0000799CB /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				3E25208E2145B702000799CB /* ViewModelBinder.swift */,
+				3E25208E2145B702000799CB /* ViewModelBindable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -255,6 +257,7 @@
 				3E9FFDF8214742CC00F0511A /* VisualEffectView+PopProperty.swift */,
 				3E820579217D4C0100723677 /* CheckEdgeLessDisplay.swift */,
 				3E58670821A22AE800B919EC /* UIImage+Rounded.swift */,
+				3E9226C121B484BA0074CAF6 /* FlexLayout+Rx.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				3ED7E834213A35C1009D889F /* TabBarViewModel.swift in Sources */,
 				3E252085214599B2000799CB /* Formatters.swift in Sources */,
 				3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */,
+				3E9226C221B484BA0074CAF6 /* FlexLayout+Rx.swift in Sources */,
 				3E01EB6C211D9D3400CF8A43 /* MainVC.swift in Sources */,
 				3E99397521727D5F00BCB9CA /* TabBarButton.swift in Sources */,
 				3E25208721459B16000799CB /* DatePicker.swift in Sources */,
@@ -580,7 +584,7 @@
 				3E0A6AB3214496010035826A /* SliderTextField.swift in Sources */,
 				3E01EB84211DEF6300CF8A43 /* SubCellViewModel.swift in Sources */,
 				3E23A605212FBD470034732B /* UIColor+Theme.swift in Sources */,
-				3E25208F2145B702000799CB /* ViewModelBinder.swift in Sources */,
+				3E25208F2145B702000799CB /* ViewModelBindable.swift in Sources */,
 				3ED94981214B0F7F0055C96F /* SaveButton.swift in Sources */,
 				3E7F56C721320FDD00D74819 /* UIFont+Extensions.swift in Sources */,
 				3E01EB82211DEF5800CF8A43 /* SubCell.swift in Sources */,

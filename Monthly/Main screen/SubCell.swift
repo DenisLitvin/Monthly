@@ -42,8 +42,6 @@ class CategoryView: UIView {
             .marginTop(3)
             .marginBottom(3)
             .marginRight(7)
-        
-        flex.layout()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -51,7 +49,7 @@ class CategoryView: UIView {
     }
 }
 
-class SubCell: UICollectionViewCell, ViewModelBinder {
+class SubCell: UICollectionViewCell, ViewModelBindable {
     private var disposeBag = DisposeBag()
     
     private var backgroundRoundView: UIView!
@@ -76,22 +74,22 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
         disposeBag = DisposeBag()
         self.viewModel = viewModel
         setUpBindings()
-        
-        titleLabel.flex.markDirty()
-        categoryView.titleLabel.flex.markDirty()
-        valueLabel.flex.markDirty()
-        dateLabel.flex.markDirty()
-        
-        flex.layout()
     }
     
     //MARK: - PRIVATE
     private func setUpBindings() {
-        
-        viewModel.titleText.drive(titleLabel.rx.text).disposed(by: disposeBag)
-        viewModel.valueText.drive(valueLabel.rx.attributedText).disposed(by: disposeBag)
-        viewModel.categoryText.drive(categoryView.titleLabel.rx.attributedText).disposed(by: disposeBag)
-        viewModel.dateText.drive(dateLabel.rx.attributedText).disposed(by: disposeBag)
+        viewModel.titleText
+            .driveAndLayout(titleLabel.rx.text, view: titleLabel, superview: self)
+            .disposed(by: disposeBag)
+        viewModel.valueText
+            .driveAndLayout(valueLabel.rx.attributedText, view: valueLabel, superview: self)
+            .disposed(by: disposeBag)
+        viewModel.categoryText
+            .driveAndLayout(categoryView.titleLabel.rx.attributedText, view: categoryView.titleLabel, superview: self)
+            .disposed(by: disposeBag)
+        viewModel.dateText
+            .driveAndLayout(dateLabel.rx.attributedText, view: dateLabel, superview: self)
+            .disposed(by: disposeBag)
         viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)
         viewModel.bellViewIcon.drive(bellView.rx.image).disposed(by: disposeBag)
     }
@@ -118,7 +116,6 @@ class SubCell: UICollectionViewCell, ViewModelBinder {
                     }
             }
         }
-        flex.layout()
     }
     
     private func setUpViews() {

@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //nav con
         let navController = UINavigationController(rootViewController: vc)
-        navController.navigationBar.barStyle = .blackTranslucent
+        navController.navigationBar.barStyle = .default
         navController.navigationBar.backgroundColor = UIColor.Elements.background
         navController.navigationBar.isTranslucent = false
         navController.navigationBar.barTintColor = UIColor.Elements.background

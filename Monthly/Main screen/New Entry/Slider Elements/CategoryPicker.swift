@@ -34,7 +34,7 @@ class CategoryPicker: UIPickerView {
         fatalError("init(coder:) has not been implemented")
     }
 }
-extension CategoryPicker: ViewModelBinder {
+extension CategoryPicker: ViewModelBindable {
     func set(viewModel: SliderViewModel) {
         disposeBag = DisposeBag()
         self.viewModel = viewModel

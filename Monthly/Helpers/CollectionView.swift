@@ -8,7 +8,7 @@
 import UIKit
 import FlexLayout
 
-public class CollectionView<Cell: ViewModelBinder, Header: ViewModelBinder, Footer: ViewModelBinder>:
+public class CollectionView<Cell: ViewModelBindable, Header: ViewModelBindable, Footer: ViewModelBindable>:
     UICollectionView,
     UICollectionViewDataSource,
     UICollectionViewDelegateFlowLayout

@@ -52,6 +52,7 @@ class TabBarView: UIView {
     
     //MARK: - PRIVATE
     private func setUpBindings() {
+        
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { height in
                 self.transform = CGAffineTransform(translationX: 0, y: -height)
@@ -217,7 +218,7 @@ class TabBarView: UIView {
     }
 }
 
-extension TabBarView: ViewModelBinder {
+extension TabBarView: ViewModelBindable {
     func set(viewModel: TabBarViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel

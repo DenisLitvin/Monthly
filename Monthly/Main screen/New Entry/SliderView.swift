@@ -291,7 +291,7 @@ class SliderView: UIScrollView {
     }
 }
 
-extension SliderView: ViewModelBinder {
+extension SliderView: ViewModelBindable {
     func set(viewModel: SliderViewModel) {
         self.disposeBag = DisposeBag()
         self.viewModel = viewModel
