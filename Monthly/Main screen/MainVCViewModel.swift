@@ -41,7 +41,7 @@ class MainVCViewModel {
     //MARK: - PRIVATE
     private func setUpBindings() {
         sliderViewModel.iconImage =
-            sliderViewModel.iconRequest.asObservable()
+            sliderViewModel.iconRequestSubject.asObservable()
                 .flatMapLatest {
                     self.networkManager.rx
                         .request(.image($0)).mapImage()
@@ -51,7 +51,7 @@ class MainVCViewModel {
                 .map { $0!.rounded() }
                 .asDriver(onErrorJustReturn: UIImage(named: "signature")!)
         
-        sliderViewModel.save.asObservable()
+        sliderViewModel.saveSubject.asObservable()
             .flatMap { self.databaseManager.add($0) }
             .subscribe(onNext: {
                 print("save is successful")

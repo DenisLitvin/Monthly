@@ -11,9 +11,23 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class SliderViewModel {
+class SliderViewModel: SliderViewModelProtocol {
     
-    var save = PublishRelay<Sub>()
-    var iconRequest = PublishRelay<String>()
-    var iconImage: Driver<UIImage>!
+    var saveSubject = PublishSubject<Sub>()
+    var iconRequestSubject = PublishSubject<String>()
+    var iconImageSubject = PublishSubject<UIImage>()
+
+    //SliderViewModelProtocol
+    lazy var save: AnyObserver<Sub> = {
+        return saveSubject.asObserver()
+    }()
+    
+    lazy var iconImage: Driver<UIImage> = {
+        return iconImageSubject.asDriver(onErrorJustReturn: .signature)
+    }()
+    lazy var iconRequest: AnyObserver<String> = {
+        return iconRequestSubject.asObserver()
+    }()
+    
+    
 }

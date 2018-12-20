@@ -15,6 +15,7 @@ target 'Monthly' do
     pod 'Moya/RxSwift', '~> 11.0'
     pod 'pop', '~> 1.0'
     pod 'VisualEffectView'
+    pod 'RxOptional'
 end
 
 # RxTest and RxBlocking make the most sense in the context of unit/integration tests

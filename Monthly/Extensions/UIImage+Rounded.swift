@@ -18,6 +18,7 @@ extension UIImage {
                                 cornerRadii: CGSize(width: 9, height: 9))
         context?.addPath(path.cgPath)
         context?.clip()
+        
         self.draw(at: .zero)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         

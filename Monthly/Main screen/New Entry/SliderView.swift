@@ -12,13 +12,20 @@ import RxSwift
 import RxCocoa
 import RxGesture
 import RxKeyboard
+import RxOptional
 
 import VisualEffectView
 
-class SliderView: UIScrollView {
+protocol SliderViewModelProtocol {
+    var save: AnyObserver<Sub> { get }
+    var iconRequest: AnyObserver<String> { get }
+    var iconImage: Driver<UIImage> { get }
+}
+
+final class SliderView: UIScrollView {
     private var disposeBag = DisposeBag()
     
-    private var viewModel: SliderViewModel!
+    private var viewModel: SliderViewModelProtocol!
     
     private let contentView = UIView()
     
@@ -67,7 +74,7 @@ class SliderView: UIScrollView {
             .filter { !$0.isEmpty }
             .bind(to: viewModel.iconRequest)
             .disposed(by: disposeBag)
-        
+
         var old = ""
         youSpendTextField.textField.rx.text.orEmpty
             .filter { !$0.isEmpty }
@@ -110,9 +117,8 @@ class SliderView: UIScrollView {
                 }
                 return sub
             }
-            .filter { $0 != nil }
-            .map { $0! }
-            .bind(to: self.viewModel.save)
+            .filterNil()
+            .bind(to: viewModel.save)
             .disposed(by: disposeBag)
         
         viewModel.iconImage.drive(iconView.rx.image).disposed(by: disposeBag)

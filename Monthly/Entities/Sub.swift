@@ -9,8 +9,6 @@
 import Foundation
 import RealmSwift
 
-
-
 @objcMembers
 class Sub: Object {
     

@@ -17,7 +17,7 @@ import Pinner
 
 import VisualEffectView
 
-class MainVC: UIViewController {
+final class MainVC: UIViewController {
     var disposeBag = DisposeBag()
     
     let viewModel = MainVCViewModel()
