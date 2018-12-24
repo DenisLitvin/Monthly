@@ -12,21 +12,22 @@ import pop
 
 class Animator {
     
-    static func slideDown(view: SliderView) {
-        view.pop_removeAllAnimations()
+    static func slideDown(view: UIScrollView) {
+        view.layer.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = max(0, view.contentOffset.y) + view.frame.height
         view.layer.pop_add(animation, forKey: "slideDown")
         animation?.completionBlock = { _, finished  in
             if finished {
-                view.isHidden = true
+//                view.isHidden = true
+                //todo - fix 
             }
         }
     }
     
-    static func slideUp(view: SliderView, initial: Bool = false) {
+    static func slideUp(view: UIScrollView) {
         view.isHidden = false
-        view.pop_removeAllAnimations()
+        view.layer.pop_removeAllAnimations()
         let animation = POPSpringAnimation(propertyNamed: kPOPLayerTranslationY)
         animation?.toValue = 0.0
         view.layer.pop_add(animation, forKey: "slideUp")
@@ -187,7 +188,7 @@ class Animator {
     static func showSearch(tabBar: TabBarView) {
         tabBar.searchField.isHidden = false
 
-        let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
+        let views = [tabBar.menuButton, tabBar.sortButton, tabBar.plusButton, tabBar.statButton]
         let anim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
         anim?.toValue = UIScreen.main.bounds.width
         views.forEach { view in
@@ -202,7 +203,7 @@ class Animator {
         }
     
     static func hideSearch(tabBar: TabBarView) {
-        let views = [tabBar.menuButton, tabBar.filterButton, tabBar.plusButton, tabBar.statButton]
+        let views = [tabBar.menuButton, tabBar.sortButton, tabBar.plusButton, tabBar.statButton]
         let subviewsAnim = POPSpringAnimation(propertyNamed: kPOPLayerSubtranslationX)
         subviewsAnim?.toValue = 0
         views.forEach { view in

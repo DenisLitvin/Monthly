@@ -62,7 +62,7 @@ final class SliderView: UIScrollView {
         super.touchesBegan(touches, with: event)
     }
     
-    //MARK: - PRIVATE
+    //MARK: PRIVATE
     private func setUpBindings() {
         RxKeyboard.instance.visibleHeight
             .drive(onNext: { keyboardVisibleHeight in

@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let blurView = VisualEffectView(frame: UIScreen.main.bounds)
         blurView.isHidden = true
         let sliderView = SliderView()
+        let statSliderView = StatSliderView()
         let tabBarView = TabBarView()
         
         let frame = tabBarView.convert(tabBarView.plusButton.frame, to: window)
@@ -36,7 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         sliderView.saveButton.frame.origin = CGPoint(x: x, y: y)
         
-        let vc = MainVC(with: tabBarView, sliderView: sliderView, blurView: blurView)
+        let vc = MainVC(with: tabBarView,
+                        sliderView: sliderView,
+                        blurView: blurView,
+                        statSliderView: statSliderView)
         vc.viewModel.databaseManager = DatabaseManager()
         vc.viewModel.networkManager = MoyaProvider<General>()
         vc.viewModel.didSetDependencies()
@@ -55,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.addSubview(blurView)
         window?.addSubview(sliderView)
+        window?.addSubview(statSliderView)
         window?.addSubview(tabBarView)
         window?.addSubview(sliderView.saveButton)
         

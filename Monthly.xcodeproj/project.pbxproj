@@ -32,6 +32,7 @@
 		3E58670921A22AE800B919EC /* UIImage+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E58670821A22AE800B919EC /* UIImage+Rounded.swift */; };
 		3E60882B216AAEF600D8D916 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E60882A216AAEF600D8D916 /* CollectionView.swift */; };
 		3E7CF7EA21CB2C130032EFEF /* UIImage+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CF7E921CB2C130032EFEF /* UIImage+Theme.swift */; };
+		3E7CF7F021D15FDB0032EFEF /* StatSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7CF7EF21D15FDB0032EFEF /* StatSliderView.swift */; };
 		3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */; };
 		3E7F2F48214875510032831B /* CategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F2F47214875510032831B /* CategoryPicker.swift */; };
 		3E7F56C52132019500D74819 /* String+AttributedElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7F56C42132019500D74819 /* String+AttributedElements.swift */; };
@@ -96,6 +97,7 @@
 		3E58670821A22AE800B919EC /* UIImage+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Rounded.swift"; sourceTree = "<group>"; };
 		3E60882A216AAEF600D8D916 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		3E7CF7E921CB2C130032EFEF /* UIImage+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Theme.swift"; sourceTree = "<group>"; };
+		3E7CF7EF21D15FDB0032EFEF /* StatSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatSliderView.swift; sourceTree = "<group>"; };
 		3E7F2F4521485CF50032831B /* SliderNotesTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderNotesTextField.swift; sourceTree = "<group>"; };
 		3E7F2F47214875510032831B /* CategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPicker.swift; sourceTree = "<group>"; };
 		3E7F56C42132019500D74819 /* String+AttributedElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+AttributedElements.swift"; sourceTree = "<group>"; };
@@ -292,7 +294,7 @@
 				3E01EB7F211DB8E000CF8A43 /* MainVCViewModel.swift */,
 				3E01EB81211DEF5800CF8A43 /* SubCell.swift */,
 				3E01EB83211DEF6300CF8A43 /* SubCellViewModel.swift */,
-				3EB9A8D721335CE2006CDE4D /* New Entry */,
+				3EB9A8D721335CE2006CDE4D /* New Entry feature */,
 				3E820573217A849800723677 /* Tab Bar */,
 			);
 			path = "Main screen";
@@ -311,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				3E820574217A84F400723677 /* SortSliderView.swift */,
+				3E7CF7EF21D15FDB0032EFEF /* StatSliderView.swift */,
 				3E99397021727CE000BCB9CA /* SearchTextField.swift */,
 				3E99397421727D5F00BCB9CA /* TabBarButton.swift */,
 				3E99397221727D3500BCB9CA /* PlusButton.swift */,
@@ -318,7 +321,7 @@
 			path = "Tab Bar Elements";
 			sourceTree = "<group>";
 		};
-		3EB9A8D721335CE2006CDE4D /* New Entry */ = {
+		3EB9A8D721335CE2006CDE4D /* New Entry feature */ = {
 			isa = PBXGroup;
 			children = (
 				3E25208C2145B6AC000799CB /* Protocols */,
@@ -326,7 +329,7 @@
 				3EB9A8D821335D1F006CDE4D /* SliderView.swift */,
 				3E2520902145BE1A000799CB /* SliderViewModel.swift */,
 			);
-			path = "New Entry";
+			path = "New Entry feature";
 			sourceTree = "<group>";
 		};
 		A9B5FF47C3DADE5AD3CE6497 /* Frameworks */ = {
@@ -460,6 +463,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Monthly/Pods-Monthly-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/ClipLayout/ClipLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
@@ -480,6 +484,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ClipLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
@@ -584,6 +589,7 @@
 				3E99397521727D5F00BCB9CA /* TabBarButton.swift in Sources */,
 				3E25208721459B16000799CB /* DatePicker.swift in Sources */,
 				3E7F2F4621485CF50032831B /* SliderNotesTextField.swift in Sources */,
+				3E7CF7F021D15FDB0032EFEF /* StatSliderView.swift in Sources */,
 				3E1138362137934C00028202 /* CAtLayer+Theme.swift in Sources */,
 				3ED7E836213A4177009D889F /* UIView+roundedCorners.swift in Sources */,
 				3EB9A8D921335D1F006CDE4D /* SliderView.swift in Sources */,

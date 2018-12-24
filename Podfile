@@ -1,4 +1,3 @@
-# Uncomment the next line to define a global platform for your project
  platform :ios, '10'
 
   use_frameworks!
@@ -16,9 +15,9 @@ target 'Monthly' do
     pod 'pop', '~> 1.0'
     pod 'VisualEffectView'
     pod 'RxOptional'
+    pod 'Charts'
 end
 
-# RxTest and RxBlocking make the most sense in the context of unit/integration tests
 target 'MonthlyTests' do
     pod 'RxBlocking', '~> 4.0'
     pod 'RxTest',     '~> 4.0'

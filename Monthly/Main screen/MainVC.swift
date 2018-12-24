@@ -25,6 +25,7 @@ final class MainVC: UIViewController {
     var blurView: VisualEffectView!
     var tabBarView: TabBarView!
     var sliderView: SliderView!
+    var statSliderView: StatSliderView!
     var collectionView: CollectionView<SubCell, SubCell, SubCell>!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -35,13 +36,14 @@ final class MainVC: UIViewController {
     
     init(with tabBarView: TabBarView,
          sliderView: SliderView,
-         blurView: VisualEffectView) {
+         blurView: VisualEffectView,
+         statSliderView: StatSliderView) {
         super.init(nibName: nil, bundle: nil)
         
         self.tabBarView = tabBarView
         self.sliderView = sliderView
         self.blurView = blurView
-        
+        self.statSliderView = statSliderView
         setUpSelf()
         setUpViews()
         setUpLayout()
@@ -77,18 +79,12 @@ final class MainVC: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        //        viewModel.didRequestImagePicker
-        //            .drive(onNext: { _ in
-        //                let picker = UIImagePickerController()
-        //                picker.delegate = self
-        //                picker.mediaTypes = [kUTTypeImage as String]
-//                self.present(picker, animated: true)
-//            })
-//            .disposed(by: disposeBag)
-        
-        
         //VIEWS
         let present: () -> Void = {
+            self.tabBarView.searchButton.isOn.onNext(false)
+            self.tabBarView.statButton.isOn.onNext(false)
+            self.tabBarView.sortButton.isOn.onNext(false)
+            self.tabBarView.menuButton.isOn.onNext(false)
             Animator.showSave(button: self.sliderView.saveButton)
             Animator.hideTabBar(view: self.tabBarView)
             Animator.showBlur(view: self.blurView)
@@ -101,6 +97,29 @@ final class MainVC: UIViewController {
             Animator.hideBlur(view: self.blurView)
             Animator.slideDown(view: self.sliderView)
         }
+        
+        tabBarView.statButton.isOn
+            .skip(1)
+            .subscribe(onNext: { isOn in
+                if isOn {
+                    Animator.slideUp(view: self.statSliderView)
+                    Animator.showBlur(view: self.blurView)
+                }
+                else {
+                    Animator.slideDown(view: self.statSliderView)
+                    Animator.hideBlur(view: self.blurView)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        statSliderView.rx.didEndDragging
+            .subscribe(onNext: { _ in
+                if self.statSliderView.contentOffset.y < -self.statSliderView.contentInset.top - 10 {
+                    self.tabBarView.statButton.isOn.asObserver().onNext(false)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         tabBarView.plusButton.isOn.asObservable()
             .subscribe(onNext: { isOn in

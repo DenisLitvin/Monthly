@@ -28,11 +28,11 @@ class TabBarView: UIView {
     var searchButton: TabBarButton!
     var statButton: TabBarButton!
     var plusButton: PlusButton!
-    var filterButton: TabBarButton!
+    var sortButton: TabBarButton!
     var menuButton: TabBarButton!
     
     var searchField: SearchTextField!
-    var filterSliderView: SortSliderView!
+    var sortSliderView: SortSliderView!
     
     init() {
         super.init(frame: .zero)
@@ -60,7 +60,7 @@ class TabBarView: UIView {
             .disposed(by: disposeBag)
         
         var old = 0
-        filterSliderView.sortButtonTapped.asObservable()
+        sortSliderView.sortButtonTapped.asObservable()
             .map { idx -> SortType in
                 var result: SortType = .none
                 if idx != old {
@@ -110,28 +110,28 @@ class TabBarView: UIView {
             .bind(to: viewModel.plusButtonTapped)
             .disposed(by: disposeBag)
 
-        filterButton.isOn.skip(1)
+        sortButton.isOn.skip(1)
             .subscribe(onNext: { isOn in
                 self.clip.invalidateCache()
                 var height: CGFloat = 0
                 if isOn { height = 50 }
                 else { height = 0.001 }
-                self.filterSliderView.clip.withHeight(height)
+                self.sortSliderView.clip.withHeight(height)
                 UIView.animate(withDuration: 0.2, animations: {
                     self.setUpSelf()
                     self.clip.invalidateLayout()
                 })
             })
             .disposed(by: disposeBag)
-        
     }
     
     private func setUpLayout() {
         clip.enable().withDistribution(.column)
         addSubview(blurView)
         
-        filterSliderView.clip.enable().horizontallyAligned(.stretch).insetLeft(20).insetRight(20)
-        addSubview(filterSliderView)
+        sortSliderView.clip.enable().horizontallyAligned(.stretch).insetLeft(20).insetRight(20)
+        addSubview(sortSliderView)
+                
         rowContainer.clip.enable().withDistribution(.row).withHeight(60)
         addSubview(rowContainer)
         addSubview(searchField)
@@ -141,8 +141,8 @@ class TabBarView: UIView {
         rowContainer.addSubview(statButton)
         plusButton.clip.insetLeft(10).insetRight(10)
         rowContainer.addSubview(plusButton)
-        filterButton.clip.aligned(v: .stretch, h: .stretch)
-        rowContainer.addSubview(filterButton)
+        sortButton.clip.aligned(v: .stretch, h: .stretch)
+        rowContainer.addSubview(sortButton)
         menuButton.clip.aligned(v: .stretch, h: .stretch).insetRight(20)
         rowContainer.addSubview(menuButton)
     }
@@ -155,7 +155,7 @@ class TabBarView: UIView {
             blurView.contentView.layer.addSublayer(tintLayer)
             return blurView
         }()
-        filterSliderView = SortSliderView()
+        sortSliderView = SortSliderView()
         searchField = SearchTextField()
         searchButton = {
             let view = TabBarButton()
@@ -172,7 +172,7 @@ class TabBarView: UIView {
             return view
         }()
         plusButton = PlusButton()
-        filterButton = {
+        sortButton = {
             let view = TabBarButton()
             view.clip.enable()
             view.deselectedImage = #imageLiteral(resourceName: "filter")
@@ -186,7 +186,7 @@ class TabBarView: UIView {
             view.selectedImage = #imageLiteral(resourceName: "menu_blue")
             return view
         }()
-        let concurrentButtons = [menuButton!, searchButton!, filterButton!, statButton!]
+        let concurrentButtons = [menuButton!, searchButton!, sortButton!, statButton!]
         concurrentButtons.forEach { $0.concurrentButtons = concurrentButtons }
     }
     

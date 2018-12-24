@@ -10,6 +10,8 @@ import UIKit
 
 extension UIColor {
     struct Elements {
+        static let chartGraph = UIColor(red: 124/255, green: 178/255, blue: 250/255, alpha: 1)
+        static let chartBackground = UIColor(red: 246/255, green: 247/255, blue: 246/255, alpha: 0.1)
         static let background = UIColor(red: 245/255, green: 246/255, blue: 248/255, alpha: 1)
         static let dateLabelText = UIColor(red: 101/255, green: 106/255, blue: 118/255, alpha: 1)
         static let valueLabelText = UIColor(red: 192/255, green: 197/255, blue: 212/255, alpha: 1)
