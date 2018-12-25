@@ -50,7 +50,7 @@ class SubCellViewModel {
         iconImage = modelObs
             .filter { $0.icon != nil }
             .map { UIImage(data: $0.icon! ) ?? UIImage() } //todo default
-            .asDriver(onErrorJustReturn: UIImage())//too  default
+            .asDriver(onErrorJustReturn: UIImage())//todo  default
         
         dateText = modelObs
             .map { (sub: Sub) -> NSAttributedString in

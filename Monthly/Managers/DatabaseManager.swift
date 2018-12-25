@@ -39,12 +39,12 @@ class DatabaseManager {
     
     //MARK: - PUBLIC
     @discardableResult
-    func modify<Entry: Object>(_ entry: Entry, closure: @escaping (Entry) -> Void) -> Single<Void> {
+    func modify(closure: @escaping () -> Void) -> Single<Void> {
         return Single.create(subscribe: { (single) -> Disposable in
             self.backgroundQueue.async {
                 do {
                     try Realm.init(configuration: self.config).write {
-                        closure(entry)
+                        closure()
                     }
                     single(.success(()))
                 }
