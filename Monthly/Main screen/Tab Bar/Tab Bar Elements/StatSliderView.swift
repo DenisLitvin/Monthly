@@ -10,20 +10,37 @@ import UIKit
 import FlexLayout
 import Charts
 
+import RxSwift
+import RxCocoa
+
+protocol StatSliderViewViewModelProtocol {
+    var chartData: Driver<[ChartDataEntry]>! { get }
+}
+
+extension StatSliderView: ViewModelBindable {
+    func set(viewModel: StatSliderViewViewModelProtocol) {
+        self.viewModel = viewModel
+        setUpBindings()
+    }
+}
+
 class StatSliderView: UIScrollView {
+    
+    private let disposeBag = DisposeBag()
     
     private let contentView = UIView()
     
     private var lineView: UIImageView!
-    private var chartView: UIView!
+    private var chartView: LineChartView!
     
+    var viewModel: StatSliderViewViewModelProtocol!
+
     init() {
         super.init(frame: .zero)
         
         setUpViews()
         setUpLayout()
         setUpSelf()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,6 +53,14 @@ class StatSliderView: UIScrollView {
     }
     
     //MARK: PRIVATE
+    private func setUpBindings() {
+        viewModel.chartData
+            .drive(onNext: { [weak self] entries in
+               self?.chartView.data = LineChartData(dataSet: self?.makeChartDataSet(with: entries))
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func setUpSelf() {
         clipsToBounds = false
         showsVerticalScrollIndicator = false
@@ -75,96 +100,8 @@ class StatSliderView: UIScrollView {
             .horizontallyAligned(.stretch)
         paddingsContainer.addSubview(chartView)
     }
-    private func fetchData(closure: @escaping (LineChartData) -> ()) {
-        let calendar = Calendar.current
-
-        DatabaseManager.init().getAllEntries().subscribe(onNext: { entries in
-            var months = [Int: Float]()
-            var days = [Int: Float]()
-            
-            for entry in entries {
-                let traversalComponent: Calendar.Component
-                switch Sub.Category.get(index: entry.category)! {
-                case .daily: traversalComponent = Calendar.Component.day
-                case .weekly: traversalComponent = Calendar.Component.weekOfYear
-                case .monthly: traversalComponent = Calendar.Component.month
-                case .yearly: traversalComponent = Calendar.Component.year
-                }
-                
-               var currentDate = entry.firstPayout
-                let referenceDate = Date().addingTimeInterval(-(60 * 60 * 24)) //up to yesterday
-                
-                while currentDate < referenceDate {
-                    guard let date = calendar.date(byAdding: traversalComponent,
-                                                   value: 1,
-                                                   to: currentDate)
-                        else { break }
-                    
-                    let daysX = calendar.dateComponents([.day],
-                                                        from: Date(timeIntervalSince1970: 0),
-                                                        to: currentDate).day!
-                    
-                    let monthsX = calendar.dateComponents([.month],
-                                                          from: Date(timeIntervalSince1970: 0),
-                                                          to: currentDate).month!
-                    
-                    months[monthsX] = (months[monthsX] ?? 0) + entry.value
-                    days[daysX] =  (days[daysX] ?? 0) + entry.value
-                    currentDate = date
-                }
-            }
-            print(months.count)
-            print(months)
-            print(days.count)
-            print(days)
-            let monthsValues = months
-                .mapValues { value in
-                    let date = calendar.date(byAdding: .month,
-                                  value: Int(value),
-                                  to: Date(timeIntervalSince1970: 0))
-                    return date!.timeIntervalSince1970
-                }
-                .sorted { $0.key < $1.key }
-                .map { (key: Int, value: Double) -> ChartDataEntry in
-                    return ChartDataEntry(x: Double(key), y: value)
-            }
-            let daysValues = days
-                .mapValues { value in
-                    let date = calendar.date(byAdding: .day,
-                                             value: Int(value),
-                                             to: Date(timeIntervalSince1970: 0))
-                    return date!.timeIntervalSince1970
-                }
-                .sorted { $0.key < $1.key }
-                .suffix(25)
-                .map { (key: Int, value: Double) -> ChartDataEntry in
-                    return ChartDataEntry(x: Double(key), y: value)
-            }
-
-            let set1 = LineChartDataSet(values: daysValues, label: nil)
-            set1.drawIconsEnabled = false
-            
-            set1.setColor(UIColor.Elements.chartGraph)
-            set1.drawCirclesEnabled = false
-            set1.lineWidth = 3
-            set1.drawValuesEnabled = false
-            set1.mode = .cubicBezier
-            set1.form = .none
-            
-            let gradientColors = [UIColor.white.cgColor,
-                                  UIColor.Elements.chartGraph.cgColor]
-            let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
-            
-            set1.fillAlpha = 0.2
-            
-            set1.fill = Fill(linearGradient: gradient, angle: 90)
-            set1.drawFilledEnabled = true
-            set1.lineCapType = .round
-            closure(LineChartData(dataSet: set1))
-        })
-        
-    }
-    private func makeData() -> LineChartData {
+   
+    private func makeMockData() -> LineChartData {
         let values = ([0,10,20,10, 10, 10, 50, 40]).map { (i) -> ChartDataEntry in
             let val = Double(3)
             return ChartDataEntry(x: Double(i), y: val)
@@ -228,14 +165,36 @@ class StatSliderView: UIScrollView {
             xAxis.labelFont = UIFont.dynamic(8, family: .avenir).bolded
             xAxis.labelPosition = .bottom
             xAxis.valueFormatter = DateValueFormatter()
-
+            xAxis.labelCount = 4
             chartView.backgroundColor = .white
-            //test
-            fetchData(closure: { (data) in
-                chartView.data = data
-            })
+            //todo
+//            fetchData(closure: { (data) in
+//                chartView.data = data
+//            })
             return chartView
         }()
+    }
+    private func makeChartDataSet(with entries: [ChartDataEntry]) -> LineChartDataSet {
+            let set = LineChartDataSet(values: entries, label: nil)
+            set.drawIconsEnabled = false
+            
+            set.setColor(UIColor.Elements.chartGraph)
+            set.drawCirclesEnabled = false
+            set.lineWidth = 3
+            set.drawValuesEnabled = false
+            set.mode = .cubicBezier
+            set.form = .none
+            
+            let gradientColors = [UIColor.white.cgColor,
+                                  UIColor.Elements.chartGraph.cgColor]
+            let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+            
+            set.fillAlpha = 0.2
+            
+            set.fill = Fill(linearGradient: gradient, angle: 90)
+            set.drawFilledEnabled = true
+            set.lineCapType = .round
+            return set
     }
 }
 

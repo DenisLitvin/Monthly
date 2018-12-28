@@ -7,25 +7,32 @@
 //
 
 import UIKit
-import MobileCoreServices
-
 import RxSwift
 import RxCocoa
 
 import ClipLayout
 import Pinner
-
 import VisualEffectView
+
+extension MainVC: MVVMView {
+    func didSetDependencies() {
+        disposeBag = DisposeBag()
+        sliderView.set(viewModel: viewModel.sliderViewModel)
+        tabBarView.set(viewModel: viewModel.tabBarViewModel)
+        statSliderView.set(viewModel: viewModel.statSliderViewViewModel)
+        setUpBindings()
+    }
+}
 
 final class MainVC: UIViewController {
     var disposeBag = DisposeBag()
     
     let viewModel = MainVCViewModel()
     
-    var blurView: VisualEffectView!
-    var tabBarView: TabBarView!
-    var sliderView: SliderView!
-    var statSliderView: StatSliderView!
+    let blurView: VisualEffectView
+    let tabBarView: TabBarView
+    let sliderView: SliderView
+    let statSliderView: StatSliderView
     var collectionView: CollectionView<SubCell, SubCell, SubCell>!
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,12 +45,14 @@ final class MainVC: UIViewController {
          sliderView: SliderView,
          blurView: VisualEffectView,
          statSliderView: StatSliderView) {
-        super.init(nibName: nil, bundle: nil)
         
         self.tabBarView = tabBarView
         self.sliderView = sliderView
         self.blurView = blurView
         self.statSliderView = statSliderView
+        
+        super.init(nibName: nil, bundle: nil)
+        
         setUpSelf()
         setUpViews()
         setUpLayout()
@@ -52,7 +61,7 @@ final class MainVC: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     //MARK: - PRIVATE
     private func setUpBindings() {
         
@@ -169,6 +178,7 @@ final class MainVC: UIViewController {
             return cv
         }()
     }
+    
     private func setUpSelf() {
         view.backgroundColor = UIColor.Elements.background
         //title
@@ -178,26 +188,5 @@ final class MainVC: UIViewController {
         let str = "MONTHLY".localized()
         titleLabel.attributedText = NSAttributedString(string: str, attributes: [.kern: 3.15])
         navigationItem.titleView = titleLabel
-    }
-}
-
-//extension MainVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        picker.dismiss(animated: true)
-//        let image = info[UIImagePickerControllerEditedImage] ??
-//            info[UIImagePickerControllerOriginalImage] ??
-//            info[UIImagePickerControllerCropRect] ?? UIImage()
-//        viewModel.imageData = UIImagePNGRepresentation(image)
-//    }
-//
-//}
-
-extension MainVC: MVVMView {
-    func didSetDependencies() {
-        disposeBag = DisposeBag()
-        sliderView.set(viewModel: viewModel.sliderViewModel)
-        tabBarView.set(viewModel: viewModel.tabBarViewModel)
-        setUpBindings()
     }
 }

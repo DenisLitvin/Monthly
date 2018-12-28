@@ -222,9 +222,9 @@
 		3E820573217A849800723677 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				3E99396F21727CC400BCB9CA /* Tab Bar Elements */,
 				3E1138372137AA5C00028202 /* TabBarView.swift */,
 				3ED7E833213A35C1009D889F /* TabBarViewModel.swift */,
+				3E99396F21727CC400BCB9CA /* Tab Bar Elements */,
 			);
 			path = "Tab Bar";
 			sourceTree = "<group>";

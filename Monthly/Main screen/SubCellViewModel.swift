@@ -14,15 +14,15 @@ class SubCellViewModel {
     private let disposeBag = DisposeBag()
     
     //INPUT
-    var model: AnyObserver<Sub>!
+    let model: AnyObserver<Sub>
     
     //OUTPUT
-    var titleText: Driver<String>!
-    var valueText: Driver<NSAttributedString>!
-    var dateText: Driver<NSAttributedString>!
-    var categoryText: Driver<NSAttributedString>!
-    var iconImage: Driver<UIImage>!
-    var bellViewIcon: Driver<UIImage>!
+    let titleText: Driver<String>
+    let valueText: Driver<NSAttributedString>
+    let dateText: Driver<NSAttributedString>
+    let categoryText: Driver<NSAttributedString>
+    let iconImage: Driver<UIImage>
+    let bellViewIcon: Driver<UIImage>
     
     init() {
         let modelSubject = BehaviorSubject<Sub>.init(value: Sub())

@@ -27,6 +27,15 @@ class Sub: Object {
             default: return nil
             }
         }
+        
+        var calendarComponent: Calendar.Component {
+            switch self {
+            case .daily: return Calendar.Component.day
+            case .weekly: return Calendar.Component.weekOfYear
+            case .monthly: return Calendar.Component.month
+            case .yearly: return Calendar.Component.year
+            }
+        }
     }
     
     dynamic var id = ""
